@@ -128,16 +128,16 @@ Heading spacing rules:
 
 ### Families and weights
 
-The active brand family is **Inter** throughout:
+The active body family is **Inter**, while headings and titles use **Google Sans** by default. Merchants can switch Google Sans on or off independently for body text and headings with the Typography checkboxes; when a checkbox is off, its Shopify font picker controls that role.
 
 | Role | Setting | CSS family token | Active face | Standard weight |
 | --- | --- | --- | --- | ---: |
 | Body / paragraph | `type_body_font` | `--font-body--family` | Inter regular | 400 |
 | Subheading / labels | `type_subheading_font` | `--font-subheading--family` | Inter medium | 500 |
-| Heading | `type_heading_font` | `--font-heading--family` | Inter bold | 700 |
+| Heading | `type_heading_google_sans` / `type_heading_font` | `--font-heading--family` | Google Sans bold | 700 |
 | Accent | `type_accent_font` | `--font-accent--family` | Inter bold | 700 |
 
-Use `--font-<role>--family`, `--font-<role>--style`, and `--font-<role>--weight`; never write `Inter` directly in component CSS. Use only the loaded 400, 500, and 700 brand weights (plus generated bold/italic faces where the design semantically requires them). Do not simulate bold or italic. Body copy remains 400, labels/subheadings 500, and headings/accent text 700.
+Use `--font-<role>--family`, `--font-<role>--style`, and `--font-<role>--weight`; never write `Inter` or `Google Sans` directly in component CSS. Google Sans is loaded centrally by `snippets/fonts.liquid` whenever either Google Sans setting is enabled. Use only the loaded 400, 500, and 700 brand weights (plus generated bold/italic faces where the design semantically requires them). Do not simulate bold or italic. Body copy remains 400, labels/subheadings 500, and headings/accent text 700.
 
 ### Global hierarchy
 
@@ -147,8 +147,8 @@ Use `--font-<role>--family`, `--font-<role>--style`, and `--font-<role>--weight`
 | H2 | 48px max | `clamp(36px, 4.8vw, 48px)` | Heading / 700 | 1.0 | 0 |
 | H3 | 32px | 32px | Heading / 700 | 1.1 | 0 |
 | H4 | 24px | 24px | Heading / 700 | 1.0 | 0 |
-| H5 | 14px | 14px | Subheading / 500 | 1.6 | configured preset/default 0 |
-| H6 | 12px | 12px | Subheading / 500 | 1.6 | configured preset/default 0 |
+| H5 | 14px | 14px | Heading / 700 | 1.6 | configured preset/default 0 |
+| H6 | 12px | 12px | Heading / 700 | 1.6 | configured preset/default 0 |
 | Paragraph | 14px | 14px | Body / 400 | 1.6 | body default 0 |
 
 The theme makes configured preset sizes fluid at 48px and above, then derives the lower bound from the next smaller configured size. With the active scale, H1 and H2 resolve to the clamps shown; H3 and below remain fixed.

@@ -616,6 +616,11 @@ body,
 
 /* Typography presets */
 
+/* Semantic titles use the merchant-selected heading family at every preset size. */
+[role='heading'] {
+  font-family: var(--font-heading--family);
+}
+
 h1,
 .h1.h1,
 .text-block.h1 > *,
