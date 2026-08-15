@@ -99,10 +99,25 @@
         "enable_transparent_header_product": false,
         "enable_transparent_header_collection": false
       }
+    },
+    "mobile_information_bar": {
+      "type": "mobile-information-bar",
+      "name": "Mobile information bar",
+      "settings": {
+        "text_1": "100% Natural",
+        "text_2": "No Added Preservatives",
+        "text_3": "Proudly Indian",
+        "background_color": "#ab1730",
+        "text_color": "#ffffff",
+        "icon_size": 28,
+        "column_spacing": 12,
+        "vertical_spacing": 12
+      }
     }
   },
   "order": [
     "header_announcements_9jGBFp",
-    "header_section"
+    "header_section",
+    "mobile_information_bar"
   ]
 }

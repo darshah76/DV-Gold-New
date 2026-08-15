@@ -1,0 +1,195 @@
+{% if template.name == 'index' %}
+  <div
+    class="mobile-information-bar"
+    style="
+      --information-bar-background: {{ section.settings.background_color }};
+      --information-bar-text: {{ section.settings.text_color }};
+      --information-bar-icon-size: {{ section.settings.icon_size }}px;
+      --information-bar-gap: {{ section.settings.column_spacing }}px;
+      --information-bar-block-padding: {{ section.settings.vertical_spacing }}px;
+    "
+  >
+    <ul class="mobile-information-bar__list" role="list">
+      {% for index in (1..3) %}
+        {% liquid
+          assign icon_key = 'icon_' | append: index
+          assign text_key = 'text_' | append: index
+          assign icon = section.settings[icon_key]
+          assign item_text = section.settings[text_key]
+        %}
+
+        <li class="mobile-information-bar__item">
+          {% if icon != blank %}
+            {{-
+              icon
+              | image_url: width: 96
+              | image_tag:
+                class: 'mobile-information-bar__icon',
+                widths: '32, 48, 64, 96',
+                loading: 'eager'
+            -}}
+          {% endif %}
+          {% if item_text != blank %}
+            <span class="mobile-information-bar__text">{{ item_text | escape }}</span>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+{% endif %}
+
+{% stylesheet %}
+  .mobile-information-bar {
+    display: none;
+  }
+
+  @media screen and (max-width: 749px) {
+    .mobile-information-bar {
+      display: block;
+      width: 100%;
+      padding: var(--information-bar-block-padding) clamp(8px, 2.5vw, 16px);
+      color: var(--information-bar-text);
+      background: var(--information-bar-background);
+    }
+
+    .mobile-information-bar__list {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(4px, var(--information-bar-gap), 24px);
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .mobile-information-bar__item {
+      display: flex;
+      flex: 0 1 auto;
+      align-items: center;
+      min-width: 0;
+      gap: clamp(3px, 1.2vw, 8px);
+      white-space: nowrap;
+    }
+
+    .mobile-information-bar__icon {
+      flex: 0 1 var(--information-bar-icon-size);
+      width: clamp(12px, var(--information-bar-icon-size), 48px);
+      height: auto;
+      max-height: clamp(12px, var(--information-bar-icon-size), 48px);
+      object-fit: contain;
+    }
+
+    .mobile-information-bar__text {
+      min-width: 0;
+      font-size: clamp(0.55rem, 2.9vw, 1rem);
+      line-height: 1.2;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Mobile information bar",
+  "tag": "section",
+  "class": "mobile-information-bar-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "First column"
+    },
+    {
+      "type": "image_picker",
+      "id": "icon_1",
+      "label": "Icon"
+    },
+    {
+      "type": "text",
+      "id": "text_1",
+      "label": "Text",
+      "default": "100% Natural"
+    },
+    {
+      "type": "header",
+      "content": "Second column"
+    },
+    {
+      "type": "image_picker",
+      "id": "icon_2",
+      "label": "Icon"
+    },
+    {
+      "type": "text",
+      "id": "text_2",
+      "label": "Text",
+      "default": "No Added Preservatives"
+    },
+    {
+      "type": "header",
+      "content": "Third column"
+    },
+    {
+      "type": "image_picker",
+      "id": "icon_3",
+      "label": "Icon"
+    },
+    {
+      "type": "text",
+      "id": "text_3",
+      "label": "Text",
+      "default": "Proudly Indian"
+    },
+    {
+      "type": "header",
+      "content": "Style"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#ab1730"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "icon_size",
+      "label": "Icon size",
+      "min": 12,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "column_spacing",
+      "label": "Space between columns",
+      "min": 4,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "vertical_spacing",
+      "label": "Vertical spacing",
+      "min": 4,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    }
+  ],
+  "presets": [
+    {
+      "name": "Mobile information bar"
+    }
+  ]
+}
+{% endschema %}
