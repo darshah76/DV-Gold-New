@@ -130,8 +130,11 @@
       "type": "mobile-information-bar",
       "name": "Mobile information bar",
       "settings": {
+        "icon_1": "shopify://shop_images/image_41.png",
         "text_1": "100% Natural",
+        "icon_2": "shopify://shop_images/image_42.png",
         "text_2": "No Added Preservatives",
+        "icon_3": "shopify://shop_images/image_45.png",
         "text_3": "Proudly Indian",
         "background_color": "#9B1B30",
         "text_color": "#ffffff",
