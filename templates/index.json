@@ -93,9 +93,56 @@
         "padding-block-start": 100,
         "padding-block-end": 72
       }
+    },
+    "home_categories_KPM8pk": {
+      "type": "home-categories",
+      "blocks": {
+        "category_y8qDYD": {
+          "type": "category",
+          "settings": {
+            "name": "Tea",
+            "link": ""
+          }
+        },
+        "category_83R437": {
+          "type": "category",
+          "settings": {
+            "name": "Spices",
+            "link": ""
+          }
+        },
+        "category_PHPy9r": {
+          "type": "category",
+          "settings": {
+            "name": "Dry fruits",
+            "link": ""
+          }
+        },
+        "category_zJV3eV": {
+          "type": "category",
+          "settings": {
+            "name": "Farali Items",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "category_y8qDYD",
+        "category_83R437",
+        "category_PHPy9r",
+        "category_zJV3eV"
+      ],
+      "name": "Home Categories",
+      "settings": {
+        "title": "Shop by category",
+        "gap": 28,
+        "padding-block-start": 48,
+        "padding-block-end": 48
+      }
     }
   },
   "order": [
-    "hero_jVaWmY"
+    "hero_jVaWmY",
+    "home_categories_KPM8pk"
   ]
 }
