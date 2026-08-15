@@ -173,7 +173,7 @@ Type rules:
 
 | Palette key | Value | Purpose |
 | --- | --- | --- |
-| `background` | `#FFFFFF` | Primary canvas and light surface. |
+| `background` | `#FDF3E5` | Primary canvas and light surface. |
 | `foreground` | `#000000` | Primary text, icons, and maximum contrast. |
 | `color1` | `#333333` | Dark supporting neutral. |
 | `color2` | `#EEF1EA` | Soft pale neutral / sold-out supporting surface. |
