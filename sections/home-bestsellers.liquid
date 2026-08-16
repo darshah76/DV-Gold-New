@@ -1,0 +1,419 @@
+{% liquid
+  assign product_limit = section.settings.product_count
+  assign selected_products = section.settings.products
+%}
+
+<div class="section-background"></div>
+
+<section
+  class="section section--page-width home-bestsellers spacing-style"
+  style="{% render 'spacing-style', settings: section.settings %}"
+  {% if section.settings.title != blank %}
+    aria-labelledby="HomeBestsellersTitle-{{ section.id }}"
+  {% else %}
+    aria-label="Home bestsellers"
+  {% endif %}
+>
+  <div class="home-bestsellers__inner gap-style" style="{% render 'gap-style', value: section.settings.gap %}">
+    {% capture carousel_header %}
+      <div class="home-bestsellers__header">
+        {% if section.settings.title != blank %}
+          <h2 class="home-bestsellers__title h2" id="HomeBestsellersTitle-{{ section.id }}">
+            {{ section.settings.title | escape }}
+          </h2>
+        {% endif %}
+
+        {% if section.settings.view_all_text != blank and section.settings.view_all_link != blank %}
+          <a class="home-bestsellers__view-all" href="{{ section.settings.view_all_link }}">
+            <span>{{ section.settings.view_all_text | escape }}</span>
+            <svg aria-hidden="true" viewBox="0 0 14 14" fill="none">
+              <path d="M10.7917 7H2.91669" />
+              <path d="M7.58331 10.5C7.58331 10.5 11.0833 7.92231 11.0833 7C11.0833 6.07763 7.58331 3.5 7.58331 3.5" />
+            </svg>
+          </a>
+        {% endif %}
+
+        <div class="home-bestsellers__arrows" aria-label="Bestseller carousel controls">
+          <button
+            class="home-bestsellers__arrow button button-unstyled"
+            type="button"
+            aria-label="{{ 'accessibility.slideshow_previous' | t }}"
+            on:click="/previous"
+            ref="previous"
+          >
+            <svg aria-hidden="true" viewBox="0 0 14 14" fill="none">
+              <path d="M3.20831 7.0011H11.0833" />
+              <path d="M6.41665 10.5011C6.41665 10.5011 2.91669 7.92338 2.91669 7.00107C2.91668 6.07876 6.4167 3.5011 6.4167 3.5011" />
+            </svg>
+          </button>
+          <button
+            class="home-bestsellers__arrow button button-unstyled"
+            type="button"
+            aria-label="{{ 'accessibility.slideshow_next' | t }}"
+            on:click="/next"
+            ref="next"
+          >
+            <svg aria-hidden="true" viewBox="0 0 14 14" fill="none">
+              <path d="M10.7917 7H2.91669" />
+              <path d="M7.58331 10.5C7.58331 10.5 11.0833 7.92231 11.0833 7C11.0833 6.07763 7.58331 3.5 7.58331 3.5" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    {% endcapture %}
+
+    {% capture slides %}
+      {% if selected_products != blank %}
+        {% for product in selected_products limit: product_limit %}
+          {% capture card %}
+            {% content_for 'block',
+              type: '_product-card',
+              id: 'bestseller-product-card',
+              closest.product: product,
+              product_view_context: 'collection'
+            %}
+          {% endcapture %}
+          {% render 'slideshow-slide', index: forloop.index0, children: card, class: 'home-bestsellers__slide' %}
+        {% endfor %}
+      {% else %}
+        {% for i in (1..product_limit) %}
+          {% capture card %}
+            {% content_for 'block', type: '_product-card', id: 'bestseller-product-card', closest.product: null %}
+          {% endcapture %}
+          {% render 'slideshow-slide', index: forloop.index0, children: card, class: 'home-bestsellers__slide' %}
+        {% endfor %}
+      {% endif %}
+    {% endcapture %}
+
+    {% assign slide_count = selected_products.size | at_most: product_limit %}
+    {% if selected_products == blank %}
+      {% assign slide_count = product_limit %}
+    {% endif %}
+
+    {% capture mobile_controls %}
+      {% render 'slideshow-controls',
+        style: 'dots',
+        item_count: slide_count,
+        show_arrows: false,
+        class: 'home-bestsellers__dots'
+      %}
+    {% endcapture %}
+
+    {% render 'slideshow',
+      ref: 'homeBestsellers',
+      class: 'home-bestsellers__carousel',
+      slides: slides,
+      slide_count: slide_count,
+      header: carousel_header,
+      controls: mobile_controls,
+      infinite: false,
+      initial_slide: 0
+    %}
+  </div>
+</section>
+
+{% stylesheet %}
+  .home-bestsellers__inner {
+    display: block;
+  }
+
+  .home-bestsellers__carousel {
+    --slide-width: min(82vw, 20rem);
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap);
+    min-width: 0;
+  }
+
+  .home-bestsellers__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--gap-md);
+    min-width: 0;
+  }
+
+  .home-bestsellers__title {
+    margin: 0;
+    color: var(--color-foreground);
+    text-wrap: balance;
+  }
+
+  .home-bestsellers__view-all {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--minimum-touch-target);
+    gap: var(--gap-xs);
+    color: var(--color-primary-button-background);
+    font-family: var(--font-subheading--family);
+    font-weight: var(--font-subheading--weight);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .home-bestsellers__view-all svg,
+  .home-bestsellers__arrow svg {
+    width: var(--icon-size-sm);
+    height: var(--icon-size-sm);
+  }
+
+  .home-bestsellers__view-all path,
+  .home-bestsellers__arrow path {
+    stroke: currentColor;
+    stroke-width: 0.875;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .home-bestsellers__arrows {
+    display: none;
+    align-items: center;
+    gap: var(--gap-xs);
+  }
+
+  .home-bestsellers__arrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: var(--minimum-touch-target);
+    min-height: var(--minimum-touch-target);
+    color: var(--color-primary-button-background);
+    border: var(--style-border-width) solid var(--color-border);
+    border-radius: var(--style-border-radius-50);
+  }
+
+  .home-bestsellers__arrow:disabled {
+    color: var(--color-foreground-subdued);
+    cursor: not-allowed;
+  }
+
+  .home-bestsellers slideshow-container,
+  .home-bestsellers slideshow-slides {
+    min-width: 0;
+  }
+
+  .home-bestsellers slideshow-slides {
+    gap: var(--gap-md);
+    scroll-padding-inline: 0;
+  }
+
+  .home-bestsellers__slide {
+    flex: 0 0 var(--slide-width);
+    width: var(--slide-width);
+    scroll-snap-align: start;
+    overflow: visible;
+  }
+
+  .home-bestsellers__dots {
+    justify-content: center;
+  }
+
+  .home-bestsellers__dots .slideshow-controls__dots {
+    gap: var(--gap-2xs);
+    padding: var(--padding-xs);
+    border-radius: var(--style-border-radius-lg);
+    background: var(--color-foreground);
+  }
+
+  .home-bestsellers__dots .slideshow-controls__dots .slideshow-control {
+    background-color: var(--color-white);
+  }
+
+  .home-bestsellers__dots .slideshow-controls__dots .slideshow-control[aria-selected='true'] {
+    background-color: var(--color-primary-button-background);
+  }
+
+  @media screen and (min-width: 750px) {
+    .home-bestsellers__carousel {
+      --slide-width: calc((100% - (var(--gap-md) * 2)) / 3);
+    }
+
+    .home-bestsellers__view-all,
+    .home-bestsellers__dots {
+      display: none;
+    }
+
+    .home-bestsellers__arrows {
+      display: flex;
+    }
+  }
+
+  @media screen and (min-width: 990px) {
+    .home-bestsellers__carousel {
+      --slide-width: calc((100% - (var(--gap-md) * 3)) / 4);
+    }
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .home-bestsellers__view-all:hover {
+      color: var(--color-primary-button-hover-background);
+    }
+
+    .home-bestsellers__arrow:not(:disabled):hover {
+      color: var(--color-primary-button-hover-background);
+      border-color: currentColor;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .home-bestsellers slideshow-slides {
+      scroll-behavior: auto;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Home Bestsellers",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Bestsellers"
+    },
+    {
+      "type": "text",
+      "id": "view_all_text",
+      "label": "View all button text",
+      "default": "View all"
+    },
+    {
+      "type": "url",
+      "id": "view_all_link",
+      "label": "View all link"
+    },
+    {
+      "type": "product_list",
+      "id": "products",
+      "label": "Bestseller products",
+      "limit": 20
+    },
+    {
+      "type": "range",
+      "id": "product_count",
+      "label": "Number of products",
+      "min": 2,
+      "max": 20,
+      "step": 1,
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "label": "Heading to products gap",
+      "min": 0,
+      "max": 48,
+      "step": 4,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Home Bestsellers",
+      "category": "Products",
+      "settings": {
+        "title": "Bestsellers",
+        "view_all_text": "View all",
+        "product_count": 8,
+        "gap": 28,
+        "padding-block-start": 48,
+        "padding-block-end": 48
+      },
+      "blocks": {
+        "bestseller-product-card": {
+          "type": "_product-card",
+          "name": "Product card",
+          "static": true,
+          "settings": {
+            "product_card_gap": 4,
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 4,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "product-card-gallery": {
+              "type": "_product-card-gallery",
+              "settings": {
+                "image_ratio": "adapt",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              }
+            },
+            "product-title": {
+              "type": "product-title",
+              "settings": {
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "h4",
+                "wrap": "pretty",
+                "padding-block-start": 4,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              }
+            },
+            "price": {
+              "type": "price",
+              "settings": {
+                "show_sale_price_first": true,
+                "show_installments": false,
+                "show_tax_info": false,
+                "type_preset": "paragraph",
+                "width": "100%",
+                "alignment": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              }
+            }
+          },
+          "block_order": ["product-card-gallery", "product-title", "price"]
+        }
+      },
+      "block_order": []
+    }
+  ]
+}
+{% endschema %}
