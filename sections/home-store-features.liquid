@@ -1,0 +1,179 @@
+<div class="section-background"></div>
+
+<section
+  class="section section--page-width home-store-features spacing-style"
+  style="{% render 'spacing-style', settings: section.settings %}"
+  aria-label="{{ section.settings.accessibility_label | escape }}"
+>
+  {% if section.blocks.size > 0 %}
+    <ul class="home-store-features__list" role="list">
+      {% for block in section.blocks %}
+        <li class="home-store-features__card" {{ block.shopify_attributes }}>
+          {% if block.settings.icon != blank %}
+            {{
+              block.settings.icon
+              | image_url: width: 192
+              | image_tag:
+                class: 'home-store-features__icon',
+                widths: '48, 72, 96, 144, 192',
+                sizes: '48px',
+                loading: 'lazy',
+                alt: ''
+            }}
+          {% endif %}
+
+          {% if block.settings.text != blank %}
+            <p class="home-store-features__text">{{ block.settings.text | escape }}</p>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+</section>
+
+{% stylesheet %}
+  .home-store-features__list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--gap-sm);
+    margin: 0;
+    padding: var(--padding-xl) var(--padding-md);
+    color: var(--color-primary-button-text);
+    background: var(--color-primary-button-background);
+    border-radius: var(--style-border-radius-lg);
+    list-style: none;
+  }
+
+  .home-store-features__card {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    justify-content: center;
+    gap: var(--gap-sm);
+    text-align: center;
+  }
+
+  .home-store-features__icon {
+    display: block;
+    flex: 0 0 auto;
+    width: var(--icon-size-lg);
+    height: var(--icon-size-lg);
+    object-fit: contain;
+  }
+
+  .home-store-features__text {
+    margin: 0;
+    font-family: var(--font-subheading--family);
+    font-style: var(--font-subheading--style);
+    font-weight: var(--font-subheading--weight);
+    font-size: var(--font-size--sm);
+    line-height: var(--font-paragraph--line-height);
+    overflow-wrap: anywhere;
+    text-wrap: pretty;
+  }
+
+  @media (max-width: 749px) {
+    .home-store-features__card {
+      flex-direction: column;
+    }
+  }
+
+  @media (min-width: 750px) {
+    .home-store-features__list {
+      gap: var(--gap-xl);
+      padding-inline: var(--padding-xl);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Home store features",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "max_blocks": 3,
+  "settings": [
+    {
+      "type": "text",
+      "id": "accessibility_label",
+      "label": "Accessibility label",
+      "default": "Store features",
+      "info": "Describes this section to screen reader users."
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Store feature"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Home store features",
+      "settings": {
+        "accessibility_label": "Store features",
+        "padding-block-start": 24,
+        "padding-block-end": 24
+      },
+      "blocks": [
+        {
+          "type": "feature",
+          "settings": {
+            "text": "100% natural"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "text": "No added preservatives"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "text": "Proudly Indian"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
