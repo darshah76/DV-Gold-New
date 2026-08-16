@@ -209,6 +209,7 @@ Accessibility requirements:
 Use the existing spacing scale rather than arbitrary values. Available `--padding-*`, `--margin-*`, and `--gap-*` tokens span 2px, 4/4.8px, 8px, about 11px, 12.8/14.4px, 16px, 20px, 24/28px, 32px, 48px, 64px, and 80px according to the token family. Prefer gap for sibling spacing and padding for container inset. Section-level spacing should use section settings that render the shared spacing snippets.
 
 - Standard border width: `--style-border-width` (1px).
+- Subtle category/card surfaces use `--color-card-border-warm` (`rgba(193, 145, 5, 0.12)`) and `--shadow-card-subtle` (`0px 4px 10px rgba(0, 0, 0, 0.05)`).
 - Standard radii: `--style-border-radius-xs` 3.2px, `sm` 9.6px, `md` 12.8px, `lg` 16px, and `--style-border-radius-50` for circles.
 - Active configured radii: cards 4px, product media 0, inputs 4px, primary/secondary buttons 14px, popovers 14px, variant buttons 14px, and swatches 32px.
 - Never add a new radius that is visually indistinguishable from an existing token.
