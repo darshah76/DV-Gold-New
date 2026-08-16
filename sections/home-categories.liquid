@@ -68,6 +68,10 @@
     display: grid;
   }
 
+  .home-categories__inner.gap-style {
+    gap: var(--gap);
+  }
+
   .home-categories__title {
     margin: 0;
     text-wrap: balance;
@@ -102,8 +106,9 @@
     padding: var(--padding-md);
     color: var(--color-foreground);
     background: var(--color-background);
-    border: var(--style-border-width) solid var(--color-border);
+    border: var(--style-border-width) solid var(--color-card-border-warm);
     border-radius: var(--style-border-radius-lg);
+    box-shadow: var(--shadow-card-subtle);
     text-align: center;
     text-decoration: none;
   }
