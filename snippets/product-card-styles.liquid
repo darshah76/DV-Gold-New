@@ -10,7 +10,7 @@
   .product-grid__card.product-grid__card {
     display: flex;
     flex-flow: column nowrap;
-    gap: var(--gap-md);
+    gap: var(--gap-sm);
     align-items: var(--product-card-alignment);
     text-decoration: none;
     color: var(--color, var(--color-foreground));
@@ -22,11 +22,16 @@
     border: var(--style-border-width) solid var(--color-card-border-warm);
     border-radius: var(--style-border-radius-cards);
     box-shadow: var(--shadow-card-subtle);
-    padding-block-end: var(--padding-xl);
+    padding-block-end: var(--padding-lg);
+  }
+
+  .product-card {
+    overflow: hidden;
+    border-radius: var(--style-border-radius-cards);
   }
 
   .product-card .product-card__content > :not(:first-child) {
-    margin-inline: var(--padding-xl);
+    margin-inline: var(--padding-lg);
   }
 
   .product-card .product-card__content > :first-child {
@@ -50,7 +55,7 @@
   }
 
   .product-card__variant-options {
-    width: calc(100% - (var(--padding-xl) * 2));
+    width: calc(100% - (var(--padding-lg) * 2));
   }
 
   .product-card__variant-options swatches-variant-picker-component,
@@ -114,17 +119,17 @@
     color: var(--color-primary-button-background);
     font-family: var(--font-heading--family);
     font-weight: var(--font-heading--weight);
-    font-size: var(--font-h3--size);
-    line-height: var(--font-h3--line-height);
-    letter-spacing: var(--font-h3--letter-spacing);
+    font-size: var(--font-h4--size);
+    line-height: var(--font-h4--line-height);
+    letter-spacing: var(--font-h4--letter-spacing);
   }
 
   .product-card .product-card__content product-price {
     font-family: var(--font-subheading--family);
     font-weight: var(--font-subheading--weight);
-    font-size: var(--font-h3--size);
-    line-height: var(--font-h3--line-height);
-    letter-spacing: var(--font-h3--letter-spacing);
+    font-size: var(--font-h4--size);
+    line-height: var(--font-h4--line-height);
+    letter-spacing: var(--font-h4--letter-spacing);
   }
 
   .product-card .product-card__content product-price [ref='priceContainer'] {
@@ -135,7 +140,9 @@
 
   .product-card .product-card__content product-price .compare-at-price {
     order: -1;
-    font-size: var(--font-h4--size);
+    font-family: var(--font-body--family);
+    font-weight: var(--font-body--weight);
+    font-size: var(--font-paragraph--size);
   }
 
   .product-card .card-gallery {
