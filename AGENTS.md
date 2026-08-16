@@ -211,12 +211,24 @@ Use the existing spacing scale rather than arbitrary values. Available `--paddin
 - Standard border width: `--style-border-width` (1px).
 - Subtle category/card surfaces use `--color-card-border-warm` (`rgba(193, 145, 5, 0.12)`) and `--shadow-card-subtle` (`0px 4px 10px rgba(0, 0, 0, 0.05)`).
 - Standard radii: `--style-border-radius-xs` 3.2px, `sm` 9.6px, `md` 12.8px, `lg` 16px, and `--style-border-radius-50` for circles.
-- Active configured radii: cards 4px, product media 0, inputs 4px, primary/secondary buttons 14px, popovers 14px, variant buttons 14px, and swatches 32px.
+- Active configured radii: cards 4px, product media 0, inputs 4px, primary/secondary buttons 16px, popovers 14px, variant buttons 14px, and swatches 32px.
 - Never add a new radius that is visually indistinguishable from an existing token.
 - Product imagery must not be distorted. Preserve aspect ratio, use the shared responsive image snippets, provide accurate `sizes`, meaningful alt text where the image conveys information, and an empty alt for decorative imagery.
 - Default motion uses the global animation speed/easing tokens. Hover transitions should use the existing 250ms hover token. Never animate layout continuously, and never make content access depend on animation.
 
 ## 7. Components and implementation conventions
+
+### Global button design
+
+All storefront calls to action must reuse `.button`, `.button-secondary`, or `.button-custom`; accelerated checkout uses the matching shared declarations. The active primary button design is merchant-editable and uses the following defaults:
+
+- Background and border: brand burgundy `#9B1B30`, exposed through the primary button palette settings and semantic button color tokens.
+- Text: white `#FFFFFF`, exposed through the primary button text setting and `--color-primary-button-text`.
+- Border radius: 16px through `--style-border-radius-buttons-primary`; secondary buttons use their corresponding 16px setting.
+- Padding: 16px block and 50px inline through `--button-padding-block` and `--button-padding-inline`.
+- Font size: 16px through `--font-size--md`; family, weight, line height, and case continue to use the configured button typography tokens.
+
+Do not reproduce these declarations in a section or block. Apply the shared button class so storefront buttons, custom buttons, and accelerated checkout remain visually consistent, accessible, and merchant-configurable.
 
 - Reuse an existing block/snippet before building a parallel implementation of buttons, text, cards, media, forms, drawers, badges, swatches, quantity controls, or section wrappers.
 - Render sections through the shared `section` structure so width, background, spacing, and full-bleed behavior stay consistent.

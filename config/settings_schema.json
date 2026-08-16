@@ -1309,21 +1309,21 @@
         "type": "color",
         "id": "palette_primary_button_background",
         "label": "t:settings.background",
-        "default": "{{ settings.color_palette.foreground }}",
+        "default": "#9B1B30",
         "alpha": true
       },
       {
         "type": "color",
         "id": "palette_primary_button_text",
         "label": "t:settings.text",
-        "default": "{{ settings.color_palette.background }}",
+        "default": "#FFFFFF",
         "alpha": true
       },
       {
         "type": "color",
         "id": "palette_primary_button_border",
         "label": "t:settings.borders",
-        "default": "{{ settings.color_palette.background }}",
+        "default": "#9B1B30",
         "alpha": true
       },
       {
@@ -1344,7 +1344,7 @@
         "step": 1,
         "unit": "px",
         "label": "t:settings.border_radius",
-        "default": 100
+        "default": 16
       },
       {
         "type": "select",
@@ -1421,7 +1421,7 @@
         "step": 1,
         "unit": "px",
         "label": "t:settings.border_radius",
-        "default": 100
+        "default": 16
       },
       {
         "type": "select",
