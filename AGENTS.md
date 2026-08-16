@@ -252,3 +252,18 @@ Before committing a perceptible storefront change:
 6. Run the repository's available Liquid/theme checks and formatting checks.
 7. Take desktop and mobile screenshots for any perceptible UI change and compare alignment, wrapping, cropping, and spacing with adjacent sections.
 8. Update this contract whenever a foundational design decision or token changes.
+
+## 9. Canonical product card
+
+Every storefront product tile uses the canonical `_product-card` theme block, which delegates its outer markup to `snippets/product-card.liquid`. This includes home-page product lists, collection and search results, recommendations on product and cart pages, and any future product grid or carousel. Do not copy the card markup into a section.
+
+Product-card contract:
+
+- Use a white card surface through `--color-white`, the configured `--style-border-radius-cards`, `--color-card-border-warm`, and `--shadow-card-subtle`. Product imagery remains the visual focus and preserves its source aspect ratio.
+- Keep the hierarchy media, product title, first-option variant choices, price, then the card-owned quick-add action. The canonical card shell always renders variant pills for multi-variant products and owns quick add; child blocks remain merchant configurable around those required controls.
+- Product titles use the heading family and weight; prices and option labels use the established typography tokens. Do not hard-code type values in a section preset.
+- The quick-add control uses the global primary `.button` styling and says “Add to cart” when a variant can be added. Its cart icon changes to the plus-cart artwork on card hover or keyboard focus, and to the checked-cart artwork for one second after a successful add. Motion is suppressed when reduced motion is requested.
+- Quick add must submit the variant currently selected in that card through the existing `product-form-component`; products needing additional choices open the shared quick-add dialog instead. Never add a second cart AJAX implementation.
+- The entire card must remain keyboard accessible, retain a visible focus state, expose product navigation as a link and cart changes as a button, and keep controls at least `--minimum-touch-target` high.
+
+To include a product card in future work, add a `_product-card` block with `_product-card-gallery`, `product-title`, and `price` children to the section or template schema, then render it with `{% content_for 'block', type: '_product-card', id: 'product-card', closest.product: product %}` inside the shared `product-grid` or resource-list structure. `snippets/product-card.liquid` supplies the canonical variant pills and quick-add control automatically. For server-rendered variant refreshes, continue to use `sections/section-rendering-product-card.liquid`; do not create alternate product-card snippets.
