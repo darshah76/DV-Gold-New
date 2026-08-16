@@ -8,7 +8,7 @@
 
 {% liquid
   assign product_form_id = 'QuickAdd-ProductForm-' | append: product.id | append: '-' | append: block.id
-  assign add_to_cart_text = 'actions.add' | t
+  assign add_to_cart_text = 'actions.add_to_cart' | t
   assign choose_options_text = 'actions.choose' | t
   # Logic to determine which variant to use (matching swatch selection logic from product-card)
   assign variant = product.selected_or_first_available_variant
@@ -36,15 +36,8 @@
     assign initial_button = 'add'
     assign render_add = true
   elsif product.options.size == 1
-    assign first_option = product.options_with_values | first
-    assign swatch_count = first_option.values | map: 'swatch' | compact | size
-    assign render_choose = true
-    if product.selected_variant.available
-      assign initial_button = 'add'
-      assign render_add = true
-    elsif swatch_count > 0
-      assign render_add = true
-    endif
+    assign initial_button = 'add'
+    assign render_add = true
   else
     assign render_choose = true
   endif
@@ -120,7 +113,8 @@
           add_to_cart_text: add_to_cart_text,
           class: 'quick-add__button quick-add__button--add add-to-cart-button',
           can_add_to_cart: can_add_to_cart,
-          show_icon: true,
+          show_icon: false,
+          show_card_icon: true,
           product: product
         %}
       {%- endform -%}
