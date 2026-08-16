@@ -10,13 +10,152 @@
   .product-grid__card.product-grid__card {
     display: flex;
     flex-flow: column nowrap;
-    gap: var(--product-card-gap);
+    gap: var(--gap-sm);
     align-items: var(--product-card-alignment);
     text-decoration: none;
     color: var(--color, var(--color-foreground));
     padding-block: var(--padding-block-start) var(--padding-block-end);
     padding-inline: var(--padding-inline-start) var(--padding-inline-end);
     overflow: hidden;
+    position: relative;
+    background: var(--color-white);
+    border: var(--style-border-width) solid var(--color-card-border-warm);
+    border-radius: var(--style-border-radius-cards);
+    box-shadow: var(--shadow-card-subtle);
+    padding-block-end: var(--padding-lg);
+  }
+
+  .product-card {
+    overflow: hidden;
+    border-radius: var(--style-border-radius-cards);
+  }
+
+  .product-card .product-card__content > :not(:first-child) {
+    margin-inline: var(--padding-lg);
+  }
+
+  .product-card .product-card__content > :first-child {
+    margin-block-end: var(--padding-sm);
+  }
+
+  .product-card .product-card__content > :is(product-swatches, .product-card__variant-options) {
+    order: 3;
+  }
+
+  .product-card .product-card__content > product-swatches {
+    display: none;
+  }
+
+  .product-card .product-card__content > product-price {
+    order: 4;
+  }
+
+  .product-card .product-card__content > .quick-add {
+    order: 5;
+  }
+
+  .product-card__variant-options {
+    width: calc(100% - (var(--padding-lg) * 2));
+  }
+
+  .product-card__variant-options swatches-variant-picker-component,
+  .product-card__variant-options form {
+    display: block;
+    width: 100%;
+  }
+
+  .product-card__variant-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--gap-sm);
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  .product-card__variant-label {
+    position: relative;
+    display: inline-flex;
+  }
+
+  .product-card__variant-label span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-block-size: var(--minimum-touch-target);
+    padding-inline: var(--padding-md);
+    border: var(--style-border-width) solid var(--color-primary-button-border);
+    border-radius: var(--variant-picker-button-radius);
+    background: var(--color-variant-background);
+    color: var(--color-variant-text);
+    font-family: var(--font-subheading--family);
+    font-weight: var(--font-subheading--weight);
+    cursor: pointer;
+  }
+
+  .product-card__variant-label input:checked + span {
+    border-color: var(--color-primary-button-border);
+    background: var(--color-primary-button-background);
+    color: var(--color-primary-button-text);
+  }
+
+  .product-card__variant-label input:focus-visible + span {
+    outline: var(--focus-outline-width) solid currentColor;
+    outline-offset: var(--focus-outline-offset);
+  }
+
+  .product-card__variant-label input[data-option-available='false'] + span {
+    opacity: var(--opacity-muted-text);
+    cursor: not-allowed;
+    text-decoration: line-through;
+  }
+
+  .product-card .product-card__content :is([role='heading'], product-price) {
+    color: var(--color-foreground);
+  }
+
+  .product-card .product-card__content [role='heading'] {
+    color: var(--color-primary-button-background);
+    font-family: var(--font-heading--family);
+    font-weight: var(--font-heading--weight);
+    font-size: var(--font-h4--size);
+    line-height: var(--font-h4--line-height);
+    letter-spacing: var(--font-h4--letter-spacing);
+  }
+
+  .product-card .product-card__content product-price {
+    font-family: var(--font-subheading--family);
+    font-weight: var(--font-subheading--weight);
+    font-size: var(--font-h4--size);
+    line-height: var(--font-h4--line-height);
+    letter-spacing: var(--font-h4--letter-spacing);
+  }
+
+  .product-card .product-card__content product-price [ref='priceContainer'] {
+    display: flex;
+    align-items: baseline;
+    gap: var(--gap-md);
+  }
+
+  .product-card .product-card__content product-price .compare-at-price {
+    order: -1;
+    font-family: var(--font-body--family);
+    font-weight: var(--font-body--weight);
+    font-size: var(--font-paragraph--size);
+  }
+
+  .product-card .card-gallery {
+    --gallery-aspect-ratio: 1;
+    background: var(--color-white);
+  }
+
+  .product-card .product-media-container.media-fit img {
+    object-fit: contain;
+  }
+
+  .product-card .product-badges {
+    display: none;
   }
 
   .product-grid__card .group-block > * {

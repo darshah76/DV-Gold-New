@@ -149,6 +149,7 @@ export class AddToCartComponent extends Component {
     await onAnimationEnd(addToCartButton);
 
     // Create new timeout and store it in the array
+    const resetDelay = addToCartButton.closest('product-card') ? 0 : 800;
     const timeoutId = setTimeout(() => {
       addToCartButton.removeAttribute('data-added');
 
@@ -157,7 +158,7 @@ export class AddToCartComponent extends Component {
       if (index > -1) {
         this.#resetTimeouts.splice(index, 1);
       }
-    }, 800);
+    }, resetDelay);
 
     this.#resetTimeouts.push(timeoutId);
   };
