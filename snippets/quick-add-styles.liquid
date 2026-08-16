@@ -32,9 +32,9 @@
 
   .product-card .quick-add {
     position: static;
-    width: calc(100% - (var(--padding-md) * 2));
+    width: calc(100% - (var(--padding-xl) * 2));
     height: auto;
-    margin-inline: var(--padding-md);
+    margin-inline: var(--padding-xl);
   }
 
   .quick-add .variant-option__button-label input[data-option-available='false'] {
@@ -139,7 +139,9 @@
   }
 
   .product-card .quick-add__product-form-component,
-  .product-card .quick-add__product-form-component .shopify-product-form {
+  .product-card .quick-add__product-form-component .shopify-product-form,
+  .product-card .quick-add__product-form-component add-to-cart-component {
+    display: block;
     width: 100%;
     height: auto;
   }

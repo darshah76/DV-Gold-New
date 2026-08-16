@@ -259,7 +259,7 @@ Every storefront product tile uses the canonical `_product-card` theme block, wh
 
 Product-card contract:
 
-- Use a white card surface through `--color-white`, the configured `--style-border-radius-cards`, `--color-card-border-warm`, and `--shadow-card-subtle`. Product imagery remains the visual focus and preserves its source aspect ratio.
+- Use a white card surface through `--color-white`, the configured `--style-border-radius-cards`, `--color-card-border-warm`, and `--shadow-card-subtle`. Product imagery remains the visual focus, uses a square contain-fit media region without distortion, and is not covered by promotional badges; sale information is communicated by the compare-at price.
 - Keep the hierarchy media, product title, first-option variant choices, price, then the card-owned quick-add action. The canonical card shell always renders variant pills for multi-variant products and owns quick add; child blocks remain merchant configurable around those required controls.
 - Product titles use the heading family and weight; prices and option labels use the established typography tokens. Do not hard-code type values in a section preset.
 - The quick-add control uses the global primary `.button` styling and says “Add to cart” when a variant can be added. Its cart icon changes to the plus-cart artwork on card hover or keyboard focus, and to the checked-cart artwork for one second after a successful add. Motion is suppressed when reduced motion is requested.
