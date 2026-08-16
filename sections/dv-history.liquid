@@ -1,0 +1,255 @@
+<div class="section-background"></div>
+
+<section
+  class="section section--page-width dv-history spacing-style"
+  style="{% render 'spacing-style', settings: section.settings %}"
+  {% if section.settings.title != blank %}
+    aria-labelledby="DVHistoryTitle-{{ section.id }}"
+  {% else %}
+    aria-label="DV History"
+  {% endif %}
+>
+  <div
+    class="dv-history__inner{% if section.settings.title != blank %} dv-history__inner--has-title gap-style{% endif %}"
+    {% if section.settings.title != blank %}
+      style="{% render 'gap-style', value: section.settings.gap, name: 'history-heading-gap' %}"
+    {% endif %}
+  >
+    {% if section.settings.title != blank %}
+      <header class="dv-history__header">
+        <h2 class="dv-history__title h2" id="DVHistoryTitle-{{ section.id }}">
+          {{ section.settings.title | escape }}
+        </h2>
+      </header>
+    {% endif %}
+
+    <div class="dv-history__media">
+      {% if section.settings.image != blank %}
+        {{
+          section.settings.image
+          | image_url: width: 1600
+          | image_tag:
+            class: 'dv-history__image',
+            widths: '320, 480, 640, 960, 1280, 1600',
+            sizes: '(max-width: 749px) calc(100vw - 32px), (max-width: 1519px) calc((100vw - 128px) / 2), 672px',
+            loading: 'lazy'
+        }}
+      {% else %}
+        {{ 'lifestyle-1' | placeholder_svg_tag: 'dv-history__image dv-history__placeholder' }}
+      {% endif %}
+    </div>
+
+    {% if section.settings.text != blank or section.settings.cta_text != blank and section.settings.cta_link != blank %}
+      <div class="dv-history__content">
+        {% if section.settings.text != blank %}
+          <div class="dv-history__text rte">
+            {{ section.settings.text }}
+          </div>
+        {% endif %}
+
+        {% if section.settings.cta_text != blank and section.settings.cta_link != blank %}
+          <a class="button dv-history__button" href="{{ section.settings.cta_link }}">
+            {{ section.settings.cta_text | escape }}
+          </a>
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% stylesheet %}
+  .dv-history__inner {
+    display: grid;
+    width: 100%;
+    max-width: var(--normal-content-width);
+    justify-self: center;
+  }
+
+  .dv-history__header {
+    text-align: start;
+  }
+
+  .dv-history__title {
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  .dv-history__content {
+    display: grid;
+    justify-items: center;
+    gap: var(--gap-xl);
+    margin-block-start: var(--gap-xl);
+  }
+
+  .dv-history__media {
+    width: 100%;
+    margin-block-start: var(--history-heading-gap, 0px);
+    overflow: hidden;
+    border: var(--style-border-width) solid var(--color-card-border-warm);
+    border-radius: var(--style-border-radius-cards);
+    box-shadow: var(--shadow-card-subtle);
+  }
+
+  .dv-history__image {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .dv-history__placeholder {
+    color: var(--color-foreground-muted);
+    background: var(--color-background);
+  }
+
+  .dv-history__text {
+    width: 100%;
+    max-width: var(--narrow-content-width);
+    text-align: center;
+    text-wrap: pretty;
+  }
+
+  .dv-history__text > * {
+    margin-block: 0;
+  }
+
+  .dv-history__text > * + * {
+    margin-block-start: var(--margin-sm);
+  }
+
+  .dv-history__button {
+    justify-self: center;
+  }
+
+  @media (min-width: 750px) {
+    .dv-history__inner {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-areas:
+        'media header'
+        'media content';
+      column-gap: var(--gap-3xl);
+      max-width: none;
+    }
+
+    .dv-history__header {
+      grid-area: header;
+      align-self: end;
+    }
+
+    .dv-history__media {
+      grid-area: media;
+      align-self: center;
+      margin-block-start: 0;
+    }
+
+    .dv-history__content {
+      grid-area: content;
+      align-content: start;
+      justify-items: start;
+      margin-block-start: var(--history-heading-gap, 0px);
+    }
+
+    .dv-history__text {
+      max-width: var(--normal-content-width);
+      text-align: start;
+    }
+
+    .dv-history__button {
+      justify-self: start;
+    }
+
+    .dv-history__inner:not(.dv-history__inner--has-title) {
+      grid-template-areas: 'media content';
+    }
+
+    .dv-history__inner:not(.dv-history__inner--has-title) .dv-history__content {
+      align-self: center;
+      margin-block-start: 0;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "DV History",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "The DV History"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>DV Groups represents a legacy built on trust, quality, and consistency. With roots dating back to 1957, the brand has grown from a traditional trading organization into a brand of choice in premium food products.</p>"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Button label",
+      "default": "Know more"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Button link"
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "label": "Heading to content gap",
+      "min": 0,
+      "max": 48,
+      "step": 4,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "DV History",
+      "settings": {
+        "title": "The DV History",
+        "text": "<p>DV Groups represents a legacy built on trust, quality, and consistency. With roots dating back to 1957, the brand has grown from a traditional trading organization into a brand of choice in premium food products.</p>",
+        "cta_text": "Know more",
+        "gap": 28,
+        "padding-block-start": 48,
+        "padding-block-end": 48
+      }
+    }
+  ]
+}
+{% endschema %}
