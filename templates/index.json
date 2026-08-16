@@ -139,10 +139,24 @@
         "padding-block-start": 48,
         "padding-block-end": 48
       }
+    },
+    "homepicked_masala_spices_E3h4tM": {
+      "type": "homepicked-masala-spices",
+      "name": "Homepicked Masala",
+      "settings": {
+        "heading": "Handpicked Masala & Spices",
+        "description": "<p>Bring depth and warmth to every dish with carefully selected masalas and spices.</p>",
+        "cta_label": "Explore all",
+        "cta_link": "/collections/all",
+        "gap": 28,
+        "padding-block-start": 48,
+        "padding-block-end": 48
+      }
     }
   },
   "order": [
     "hero_jVaWmY",
-    "home_categories_KPM8pk"
+    "home_categories_KPM8pk",
+    "homepicked_masala_spices_E3h4tM"
   ]
 }
