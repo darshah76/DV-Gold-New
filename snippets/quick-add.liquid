@@ -36,15 +36,9 @@
     assign initial_button = 'add'
     assign render_add = true
   elsif product.options.size == 1
-    assign first_option = product.options_with_values | first
-    assign swatch_count = first_option.values | map: 'swatch' | compact | size
     assign render_choose = true
-    if product.selected_variant.available
-      assign initial_button = 'add'
-      assign render_add = true
-    elsif swatch_count > 0
-      assign render_add = true
-    endif
+    assign initial_button = 'add'
+    assign render_add = true
   else
     assign render_choose = true
   endif

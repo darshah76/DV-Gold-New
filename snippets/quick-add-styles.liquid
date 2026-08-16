@@ -31,10 +31,10 @@
   }
 
   .product-card .quick-add {
-    inset-block-start: auto;
-    inset-block-end: var(--padding-md);
-    inset-inline: var(--padding-md);
-    height: var(--minimum-touch-target);
+    position: static;
+    width: calc(100% - (var(--padding-md) * 2));
+    height: auto;
+    margin-inline: var(--padding-md);
   }
 
   .quick-add .variant-option__button-label input[data-option-available='false'] {
@@ -138,6 +138,12 @@
     backdrop-filter: none;
   }
 
+  .product-card .quick-add__product-form-component,
+  .product-card .quick-add__product-form-component .shopify-product-form {
+    width: 100%;
+    height: auto;
+  }
+
   .product-card button.quick-add__button:is(:hover, :focus-visible) {
     width: 100%;
     padding-inline: var(--button-padding-inline);
@@ -161,13 +167,23 @@
     display: none;
   }
 
-  .product-card:is(:hover, :focus-within) .quick-add__button:not([data-added='true']) .product-card-cart-icons__default {
+  .product-card:focus-within .quick-add__button:not([data-added='true']) .product-card-cart-icons__default {
     display: none;
   }
 
-  .product-card:is(:hover, :focus-within) .quick-add__button:not([data-added='true']) .product-card-cart-icons__hover,
+  .product-card:focus-within .quick-add__button:not([data-added='true']) .product-card-cart-icons__hover,
   .product-card .quick-add__button[data-added='true'] .product-card-cart-icons__added {
     display: block;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .product-card:hover .quick-add__button:not([data-added='true']) .product-card-cart-icons__default {
+      display: none;
+    }
+
+    .product-card:hover .quick-add__button:not([data-added='true']) .product-card-cart-icons__hover {
+      display: block;
+    }
   }
 
   .product-card .quick-add__button[data-added='true'] {

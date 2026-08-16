@@ -621,9 +621,27 @@ class SwatchesVariantPickerComponent extends VariantPicker {
 
     // Check if this is a swatch input
     const isSwatchInput = event.target instanceof HTMLInputElement && event.target.name?.includes('-swatch');
+    const isCardPillInput = event.target instanceof HTMLInputElement && event.target.name?.endsWith('-card');
     const clickedSwatch = event.target;
     const hasAvailableVariant = clickedSwatch.dataset.hasAvailableVariant === 'true';
     const firstAvailableVariantId = clickedSwatch.dataset.firstAvailableOrFirstVariantId;
+
+    if (isCardPillInput && firstAvailableVariantId) {
+      event.stopPropagation();
+      this.updateSelectedOption(clickedSwatch);
+
+      const productCard = this.closest('product-card');
+      const variantInput = productCard?.querySelector('quick-add-component input[name="id"]');
+      const addButton = productCard?.querySelector('quick-add-component [ref="addToCartButton"]');
+      const optionAvailable = clickedSwatch.dataset.optionAvailable !== 'false';
+
+      if (variantInput instanceof HTMLInputElement) {
+        variantInput.value = firstAvailableVariantId;
+        variantInput.disabled = !optionAvailable;
+      }
+      if (addButton instanceof HTMLButtonElement) addButton.disabled = !optionAvailable;
+      return;
+    }
 
     // Request the first available variant for this swatch.
     if (isSwatchInput && hasAvailableVariant && firstAvailableVariantId) {
