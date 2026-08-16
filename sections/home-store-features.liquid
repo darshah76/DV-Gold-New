@@ -35,9 +35,9 @@
   .home-store-features__list {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: var(--gap-sm);
+    gap: 0;
     margin: 0;
-    padding: var(--padding-xl) var(--padding-md);
+    padding: var(--padding-xl);
     color: var(--color-primary-button-text);
     background: var(--color-primary-button-background);
     border-radius: var(--style-border-radius-lg);
@@ -45,12 +45,24 @@
   }
 
   .home-store-features__card {
+    position: relative;
     display: flex;
     min-width: 0;
     align-items: center;
     justify-content: center;
     gap: var(--gap-sm);
+    padding-inline: var(--padding-xs);
     text-align: center;
+  }
+
+  .home-store-features__card + .home-store-features__card::before {
+    position: absolute;
+    inset-block: var(--padding-xs);
+    inset-inline-start: 0;
+    width: var(--style-border-width);
+    background: currentColor;
+    content: '';
+    opacity: var(--opacity-30);
   }
 
   .home-store-features__icon {
@@ -80,7 +92,10 @@
 
   @media (min-width: 750px) {
     .home-store-features__list {
-      gap: var(--gap-xl);
+      padding-inline: var(--padding-6xl);
+    }
+
+    .home-store-features__card {
       padding-inline: var(--padding-xl);
     }
   }
