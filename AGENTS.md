@@ -179,6 +179,15 @@ Type rules:
 | `color2` | `#EEF1EA` | Soft pale neutral / sold-out supporting surface. |
 | `color3` | `#DFDFDF` | Borders and subtle separation. |
 
+### Supporting background surfaces
+
+| Semantic token | Value | Purpose |
+| --- | --- | --- |
+| `--color-background-secondary` | `#FFFDF8` | Secondary section and container background. |
+| `--color-background-tertiary` | `#FBF6EF` | Tertiary card and nested surface background. |
+
+Use these fixed supporting surface tokens when a composition calls for the approved warm off-white layers. Do not repeat their hex values in component CSS.
+
 Semantic status tokens are `--color-error: #8B0000`, `--color-success: #006400`, `--color-instock: #3ED660`, `--color-lowstock: #EE9441`, and `--color-outofstock: #C8C8C8`. Use them only for their named status. `--color-white` is a utility, not a replacement for the merchant-controlled background.
 
 ### How global recoloring works
