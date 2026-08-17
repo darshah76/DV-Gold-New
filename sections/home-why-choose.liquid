@@ -1,0 +1,292 @@
+<div class="section-background"></div>
+
+{% liquid
+  assign has_content = false
+  if section.blocks.size > 0
+    assign has_content = true
+  endif
+%}
+
+<section
+  class="section section--page-width home-why-choose spacing-style"
+  style="{% render 'spacing-style', settings: section.settings %}"
+  {% if section.settings.title != blank %}
+    aria-labelledby="HomeWhyChooseHeading-{{ section.id }}"
+  {% else %}
+    aria-label="Why choose us"
+  {% endif %}
+>
+  <div
+    class="home-why-choose__layout{% if section.settings.title != blank and has_content %} gap-style{% endif %}"
+    {% if section.settings.title != blank and has_content %}
+      style="{% render 'gap-style', value: section.settings.gap %}"
+    {% endif %}
+  >
+    {% if section.settings.title != blank %}
+      <h2 class="home-why-choose__heading h2" id="HomeWhyChooseHeading-{{ section.id }}">
+        {{ section.settings.title | escape }}
+      </h2>
+    {% endif %}
+
+    {% if has_content %}
+      <ul class="home-why-choose__cards" role="list">
+        {% for block in section.blocks %}
+          <li class="home-why-choose__card" {{ block.shopify_attributes }}>
+            {% if block.settings.image != blank %}
+              {{
+                block.settings.image
+                | image_url: width: 192
+                | image_tag:
+                  class: 'home-why-choose__image',
+                  widths: '48, 72, 96, 144, 192',
+                  sizes: '48px',
+                  loading: 'lazy',
+                  alt: block.settings.image.alt
+              }}
+            {% endif %}
+
+            <div class="home-why-choose__copy">
+              {% if block.settings.title != blank %}
+                <h3 class="home-why-choose__card-title h4">{{ block.settings.title | escape }}</h3>
+              {% endif %}
+
+              {% if block.settings.description != blank %}
+                <div class="home-why-choose__description rte">{{ block.settings.description }}</div>
+              {% endif %}
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </div>
+</section>
+
+{% stylesheet %}
+  .home-why-choose__layout {
+    display: grid;
+    width: 100%;
+  }
+
+  .home-why-choose__layout.gap-style {
+    gap: var(--gap);
+  }
+
+  .home-why-choose__heading {
+    max-width: var(--max-width--heading-narrow);
+    margin: 0 auto;
+    text-align: center;
+    text-wrap: balance;
+  }
+
+  .home-why-choose__cards {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin: 0;
+    padding: var(--padding-lg);
+    color: var(--color-foreground);
+    background: var(--color-background-secondary);
+    border-radius: var(--style-border-radius-lg);
+    box-shadow: var(--shadow-card-subtle);
+    list-style: none;
+    overflow: hidden;
+  }
+
+  .home-why-choose__card {
+    display: grid;
+    min-width: 0;
+    align-content: start;
+    justify-items: center;
+    gap: var(--gap-sm);
+    padding: var(--padding-lg) var(--padding-xs);
+    text-align: center;
+  }
+
+  .home-why-choose__card:nth-child(odd) {
+    border-inline-end: var(--style-border-width) solid var(--color-border);
+  }
+
+  .home-why-choose__card:nth-child(-n + 2) {
+    border-block-end: var(--style-border-width) solid var(--color-border);
+  }
+
+  .home-why-choose__image {
+    display: block;
+    width: calc(var(--padding-xl) * 2);
+    height: calc(var(--padding-xl) * 2);
+    object-fit: contain;
+  }
+
+  .home-why-choose__copy {
+    display: grid;
+    gap: var(--gap-xs);
+  }
+
+  .home-why-choose__card-title {
+    margin: 0;
+    overflow-wrap: anywhere;
+    text-wrap: balance;
+  }
+
+  .home-why-choose__description {
+    font-family: var(--font-body--family);
+    font-style: var(--font-body--style);
+    font-weight: var(--font-body--weight);
+    font-size: var(--font-size--sm);
+    line-height: var(--font-paragraph--line-height);
+    overflow-wrap: anywhere;
+    text-wrap: pretty;
+  }
+
+  .home-why-choose__description > * {
+    margin-block: 0;
+  }
+
+  @media (min-width: 750px) {
+    .home-why-choose__cards {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      padding: var(--padding-2xl);
+    }
+
+    .home-why-choose__card {
+      align-content: center;
+      gap: var(--gap-lg);
+      padding: var(--padding-2xl) var(--padding-lg);
+    }
+
+    .home-why-choose__card:nth-child(n) {
+      border-block-end: 0;
+      border-inline-end: 0;
+    }
+
+    .home-why-choose__card + .home-why-choose__card {
+      border-inline-start: var(--style-border-width) solid var(--color-border);
+    }
+
+    .home-why-choose__image {
+      width: calc(var(--padding-2xl) * 2);
+      height: calc(var(--padding-2xl) * 2);
+    }
+
+    .home-why-choose__description {
+      font-size: var(--font-size--md);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Home why choose",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "max_blocks": 4,
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Why choose us"
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "label": "Heading to cards gap",
+      "min": 0,
+      "max": 48,
+      "step": 4,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "reason",
+      "name": "Reason",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Pure & natural"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Description",
+          "default": "<p>100% clean and natural ingredients.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Home why choose",
+      "settings": {
+        "title": "Why choose us",
+        "gap": 28,
+        "padding-block-start": 48,
+        "padding-block-end": 48
+      },
+      "blocks": [
+        {
+          "type": "reason",
+          "settings": {
+            "title": "Pure & natural",
+            "description": "<p>100% clean and natural ingredients.</p>"
+          }
+        },
+        {
+          "type": "reason",
+          "settings": {
+            "title": "Sourced with care",
+            "description": "<p>Ethically sourced from trusted farms.</p>"
+          }
+        },
+        {
+          "type": "reason",
+          "settings": {
+            "title": "No compromise",
+            "description": "<p>No additives, fillers, or preservatives.</p>"
+          }
+        },
+        {
+          "type": "reason",
+          "settings": {
+            "title": "Loved by families",
+            "description": "<p>Trusted by thousands of happy homes.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
