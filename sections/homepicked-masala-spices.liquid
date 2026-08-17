@@ -47,7 +47,7 @@
                 {{ section.settings.mobile_image | image_url: width: 640 }} 640w,
                 {{ section.settings.mobile_image | image_url: width: 750 }} 750w
               "
-              sizes="calc(100vw - 32px)"
+              sizes="calc((100vw - 56px) * 0.58)"
             >
           {% endif %}
           {{
@@ -56,7 +56,7 @@
             | image_tag:
               class: 'homepicked-masala__image',
               widths: '320, 480, 640, 800, 1000, 1400, 1800, 2000',
-              sizes: '(max-width: 749px) calc(100vw - 32px), (max-width: 1519px) calc((100vw - 108px) * 0.58), 812px',
+              sizes: '(max-width: 749px) calc((100vw - 56px) * 0.58), (max-width: 1519px) calc((100vw - 108px) * 0.58), 812px',
               loading: 'lazy'
           }}
         </picture>
@@ -70,6 +70,7 @@
 {% stylesheet %}
   .homepicked-masala__layout {
     display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
     gap: var(--gap);
     align-items: center;
   }
@@ -103,6 +104,8 @@
   }
 
   .homepicked-masala__media {
+    grid-column: 2;
+    grid-row: 1;
     min-width: 0;
     overflow: hidden;
   }
@@ -120,16 +123,6 @@
     background: var(--color-background);
   }
 
-  @media screen and (min-width: 750px) {
-    .homepicked-masala__layout {
-      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-    }
-
-    .homepicked-masala__media {
-      grid-column: 2;
-      grid-row: 1;
-    }
-  }
 {% endstylesheet %}
 
 {% schema %}
