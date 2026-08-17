@@ -190,6 +190,8 @@ Use these fixed supporting surface tokens when a composition calls for the appro
 
 Semantic status tokens are `--color-error: #8B0000`, `--color-success: #006400`, `--color-instock: #3ED660`, `--color-lowstock: #EE9441`, and `--color-outofstock: #C8C8C8`. Use them only for their named status. `--color-white` is a utility, not a replacement for the merchant-controlled background.
 
+The service-specific `--color-whatsapp: #25D366` token is reserved for WhatsApp calls to action. Do not use it as a general accent color.
+
 ### How global recoloring works
 
 The merchant-facing master is `settings.color_palette`. Global page settings resolve from it, and `snippets/color-palette.liquid` exposes the runtime semantic variables. To recolor the store globally, update the palette in Theme settings (or both active/preset objects in `config/settings_data.json` during development), not individual selectors.
