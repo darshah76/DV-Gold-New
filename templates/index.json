@@ -363,6 +363,42 @@
         "padding-block-start": 48,
         "padding-block-end": 48
       }
+    },
+    "home_certifications_PLJPpt": {
+      "type": "home-certifications",
+      "blocks": {
+        "certification_dNrKN3": {
+          "type": "certification",
+          "settings": {
+            "text": "FSSAI certified"
+          }
+        },
+        "certification_GVG6Ag": {
+          "type": "certification",
+          "settings": {
+            "text": "ISO 9001 certified"
+          }
+        },
+        "certification_iKHRUB": {
+          "type": "certification",
+          "settings": {
+            "text": "Registered & verified"
+          }
+        }
+      },
+      "block_order": [
+        "certification_dNrKN3",
+        "certification_GVG6Ag",
+        "certification_iKHRUB"
+      ],
+      "name": "Home Certifications",
+      "settings": {
+        "heading": "Certifications & registrations",
+        "description": "<p>Every product undergoes rigorous quality checks to ensure it meets our high standards. From sourcing to packaging, we maintain consistency, safety, and excellence at every step.</p>",
+        "gap": 28,
+        "padding-block-start": 48,
+        "padding-block-end": 48
+      }
     }
   },
   "order": [
@@ -372,6 +408,7 @@
     "home_bestsellers_kYbEL7",
     "home_store_features_CRTxAY",
     "dv_history_hzQ46Q",
-    "home_faq_DaJ4YY"
+    "home_faq_DaJ4YY",
+    "home_certifications_PLJPpt"
   ]
 }
