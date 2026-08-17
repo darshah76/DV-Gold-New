@@ -114,6 +114,7 @@
 
     <div class="dv-footer__bottom">
       <p>&copy; {{ 'now' | date: '%Y' }} {{ section.settings.copyright_text | default: shop.name | escape }}</p>
+      <p>Designed by <a href="https://inventechsolution.com">InvenTech Solution</a></p>
     </div>
   </div>
 </footer>
@@ -139,14 +140,17 @@
   .dv-footer__input-wrap input { flex: 1; min-width: 0; min-height: var(--minimum-touch-target); padding: var(--padding-lg); color: inherit; background: transparent; border: 0; font: inherit; }
   .dv-footer__input-wrap input::placeholder { color: rgb(var(--color-input-text-rgb) / var(--opacity-70)); }
   .dv-footer__input-wrap input:focus-visible { outline-offset: calc(var(--focus-outline-width) * -1); }
-  .dv-footer__input-wrap button { display: grid; place-items: center; flex: 0 0 var(--minimum-touch-target); align-self: stretch; padding: 0; color: inherit; background: transparent; border: 0; cursor: pointer; }
+  .dv-footer__input-wrap button { display: grid; place-items: center; flex: 0 0 var(--minimum-touch-target); align-self: stretch; padding: 0; color: var(--color-primary-button-background); background: transparent; border: 0; cursor: pointer; }
   .dv-footer__input-wrap button svg { width: var(--icon-size-lg); height: var(--icon-size-lg); fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
   .dv-footer__message { margin-block: var(--margin-sm) 0; color: inherit; }
-  .dv-footer__bottom { margin-block-start: var(--margin-6xl); padding-block-start: var(--padding-xl); border-block-start: var(--style-border-width) solid var(--color-border); color: var(--color-foreground-subdued); text-align: center; }
+  .dv-footer__bottom { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--gap-md); margin-block-start: var(--margin-6xl); padding-block-start: var(--padding-xl); border-block-start: var(--style-border-width) solid var(--color-border); color: var(--color-foreground-subdued); text-align: start; }
   .dv-footer__bottom p { margin: 0; }
+  .dv-footer__bottom a { color: inherit; }
+  .dv-footer__bottom p:last-child { margin-inline-start: auto; text-align: end; }
   @media (hover: hover) and (pointer: fine) {
     .dv-footer__menu a:hover { color: inherit; }
     .dv-footer__social-link:hover { background: rgb(var(--color-foreground-rgb) / var(--opacity-10)); }
+    .dv-footer__bottom a:hover { text-decoration-thickness: var(--style-border-width); }
   }
   @media screen and (min-width: 750px) {
     .dv-footer__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
