@@ -444,6 +444,52 @@
         "padding-block-start": 48,
         "padding-block-end": 48
       }
+    },
+    "home_why_choose_CkicYd": {
+      "type": "home-why-choose",
+      "blocks": {
+        "reason_ecqifR": {
+          "type": "reason",
+          "settings": {
+            "title": "Pure & natural",
+            "description": "<p>100% clean and natural ingredients.</p>"
+          }
+        },
+        "reason_9n6gfM": {
+          "type": "reason",
+          "settings": {
+            "title": "Sourced with care",
+            "description": "<p>Ethically sourced from trusted farms.</p>"
+          }
+        },
+        "reason_wxMJrE": {
+          "type": "reason",
+          "settings": {
+            "title": "No compromise",
+            "description": "<p>No additives, fillers, or preservatives.</p>"
+          }
+        },
+        "reason_BKNHPj": {
+          "type": "reason",
+          "settings": {
+            "title": "Loved by families",
+            "description": "<p>Trusted by thousands of happy homes.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "reason_ecqifR",
+        "reason_9n6gfM",
+        "reason_wxMJrE",
+        "reason_BKNHPj"
+      ],
+      "name": "Home why choose",
+      "settings": {
+        "title": "Why choose us",
+        "gap": 28,
+        "padding-block-start": 48,
+        "padding-block-end": 48
+      }
     }
   },
   "order": [
@@ -455,6 +501,7 @@
     "dv_history_hzQ46Q",
     "home_faq_DaJ4YY",
     "home_certifications_PLJPpt",
-    "home_b2b_pMYc9w"
+    "home_b2b_pMYc9w",
+    "home_why_choose_CkicYd"
   ]
 }
