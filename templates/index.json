@@ -399,6 +399,51 @@
         "padding-block-start": 48,
         "padding-block-end": 48
       }
+    },
+    "home_b2b_pMYc9w": {
+      "type": "home-b2b",
+      "blocks": {
+        "support_feature_TDjmyd": {
+          "type": "support_feature",
+          "settings": {
+            "title": "Dedicated support"
+          }
+        },
+        "support_feature_PcxRbW": {
+          "type": "support_feature",
+          "settings": {
+            "title": "Flexible solutions"
+          }
+        },
+        "support_feature_34RyFh": {
+          "type": "support_feature",
+          "settings": {
+            "title": "Reliable partnership"
+          }
+        },
+        "support_feature_yHpN7P": {
+          "type": "support_feature",
+          "settings": {
+            "title": "Secure & trusted"
+          }
+        }
+      },
+      "block_order": [
+        "support_feature_TDjmyd",
+        "support_feature_PcxRbW",
+        "support_feature_34RyFh",
+        "support_feature_yHpN7P"
+      ],
+      "name": "Home B2B",
+      "settings": {
+        "heading": "Bulk inquiries",
+        "description": "For B2B & wholesale partnerships",
+        "button_text": "Chat on WhatsApp",
+        "whatsapp_link": "",
+        "gap": 28,
+        "padding-block-start": 48,
+        "padding-block-end": 48
+      }
     }
   },
   "order": [
@@ -409,6 +454,7 @@
     "home_store_features_CRTxAY",
     "dv_history_hzQ46Q",
     "home_faq_DaJ4YY",
-    "home_certifications_PLJPpt"
+    "home_certifications_PLJPpt",
+    "home_b2b_pMYc9w"
   ]
 }
