@@ -217,24 +217,27 @@
     }
 
     .home-categories__card {
-      transform: translateX(0);
+      position: absolute;
+      inset-block: 0;
+      inset-inline-start: 0;
+      width: 100%;
       transform-origin: center;
       transition:
-        width var(--animation-speed) var(--animation-timing-hover),
-        transform var(--animation-speed) var(--animation-timing-hover),
-        background-color var(--animation-speed) var(--animation-timing-hover),
-        border-color var(--animation-speed) var(--animation-timing-hover);
+        width var(--animation-speed-category-panel) var(--animation-timing-hover),
+        inset-inline-start var(--animation-speed-category-panel) var(--animation-timing-hover),
+        background-color var(--animation-speed-category-panel) var(--animation-timing-hover),
+        border-color var(--animation-speed-category-panel) var(--animation-timing-hover);
     }
 
     .home-categories__media {
       margin-inline-start: 0;
       transition:
-        width var(--animation-speed) var(--animation-timing-hover),
-        margin-inline-start var(--animation-speed) var(--animation-timing-hover);
+        width var(--animation-speed-category-panel) var(--animation-timing-hover),
+        margin-inline-start var(--animation-speed-category-panel) var(--animation-timing-hover);
     }
 
     .home-categories__name {
-      transition: opacity var(--animation-speed) var(--animation-timing-hover);
+      transition: opacity var(--animation-speed-category-panel) var(--animation-timing-hover);
     }
 
     .home-categories__panel-content {
@@ -255,9 +258,9 @@
       opacity: 0;
       transform: translateX(calc(-1 * var(--padding-lg)));
       transition:
-        opacity var(--animation-speed) var(--animation-timing-hover),
-        transform var(--animation-speed) var(--animation-timing-hover),
-        visibility 0s linear var(--animation-speed);
+        opacity var(--animation-speed-category-panel) var(--animation-timing-hover),
+        transform var(--animation-speed-category-panel) var(--animation-timing-hover),
+        visibility 0s linear var(--animation-speed-category-panel);
     }
 
     .home-categories__panel-heading,
@@ -283,15 +286,15 @@
     }
 
     .home-categories__item:nth-child(2):is(:hover, :focus-within) .home-categories__card {
-      transform: translateX(calc(-25% - (var(--gap-xl) * 0.25)));
+      inset-inline-start: calc(-100% - var(--gap-xl));
     }
 
     .home-categories__item:nth-child(3):is(:hover, :focus-within) .home-categories__card {
-      transform: translateX(calc(-50% - (var(--gap-xl) * 0.5)));
+      inset-inline-start: calc(-200% - (var(--gap-xl) * 2));
     }
 
     .home-categories__item:nth-child(4):is(:hover, :focus-within) .home-categories__card {
-      transform: translateX(calc(-75% - (var(--gap-xl) * 0.75)));
+      inset-inline-start: calc(-300% - (var(--gap-xl) * 3));
     }
 
     .home-categories__item:is(:hover, :focus-within) .home-categories__media {
