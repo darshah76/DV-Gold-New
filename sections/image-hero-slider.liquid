@@ -1,0 +1,254 @@
+{% liquid
+  assign slide_count = section.blocks.size
+  assign autoplay = false
+  if slide_count > 1 and section.settings.autoplay
+    assign autoplay = true
+  endif
+
+  assign section_width_class = 'section--' | append: section.settings.section_width
+%}
+
+{% if slide_count > 1 %}
+  {% capture controls %}
+    {% render 'slideshow-controls',
+      style: 'dots',
+      autoplay: autoplay,
+      item_count: slide_count,
+      show_arrows: false,
+      arrows_on_media: true,
+      controls_on_media: true,
+      pagination_position: 'center',
+      icon_style: 'none'
+    %}
+  {% endcapture %}
+{% endif %}
+
+{% capture slides %}
+  {% for block in section.blocks %}
+    {% liquid
+      assign desktop_image = block.settings.desktop_image
+      assign mobile_image = block.settings.mobile_image | default: desktop_image
+      assign loading = 'lazy'
+      assign fetchpriority = 'low'
+
+      if forloop.first and section.index <= 3
+        assign loading = 'eager'
+      endif
+      if forloop.first and section.index == 1
+        assign fetchpriority = 'high'
+      endif
+    %}
+
+    {% capture slide_content %}
+      <picture class="image-hero-slider__picture">
+        {% if mobile_image != blank %}
+          <source
+            media="(max-width: 749px)"
+            srcset="
+              {{ mobile_image | image_url: width: 375 }} 375w,
+              {{ mobile_image | image_url: width: 550 }} 550w,
+              {{ mobile_image | image_url: width: 750 }} 750w,
+              {{ mobile_image | image_url: width: 1100 }} 1100w
+            "
+            sizes="100vw"
+            width="{{ mobile_image.width }}"
+            height="{{ mobile_image.height }}"
+          >
+        {% endif %}
+
+        {% if desktop_image != blank %}
+          {{
+            desktop_image
+            | image_url: width: 3840
+            | image_tag:
+              class: 'image-hero-slider__image',
+              widths: '750, 1100, 1500, 2000, 2400, 3000, 3840',
+              sizes: '100vw',
+              loading: loading,
+              fetchpriority: fetchpriority
+          }}
+        {% elsif mobile_image != blank %}
+          {{
+            mobile_image
+            | image_url: width: 1100
+            | image_tag:
+              class: 'image-hero-slider__image',
+              widths: '375, 550, 750, 1100',
+              sizes: '100vw',
+              loading: loading,
+              fetchpriority: fetchpriority
+          }}
+        {% else %}
+          {{ 'lifestyle-1' | placeholder_svg_tag: 'image-hero-slider__image placeholder-svg' }}
+        {% endif %}
+      </picture>
+    {% endcapture %}
+
+    {% render 'slideshow-slide',
+      index: forloop.index0,
+      children: slide_content,
+      attributes: block.shopify_attributes,
+      slide_size: section.settings.slide_height,
+      slide_id: block.id
+    %}
+  {% endfor %}
+{% endcapture %}
+
+<div class="section-background"></div>
+<div
+  class="image-hero-slider spacing-style section {{ section_width_class }} disable-section-top-offset"
+  style="{% render 'spacing-style', settings: section.settings %}"
+>
+  <h2 class="visually-hidden">{{ 'accessibility.slideshow' | t }}</h2>
+  {% render 'slideshow',
+    class: 'image-hero-slider__slideshow',
+    controls: controls,
+    autoplay: autoplay,
+    autoplay_speed: section.settings.autoplay_speed,
+    slides: slides,
+    slide_count: slide_count,
+    slide_size: section.settings.slide_height,
+    show_arrows: false
+  %}
+</div>
+
+{% stylesheet %}
+  .image-hero-slider__slideshow {
+    border-radius: var(--style-border-radius-lg);
+    overflow: hidden;
+  }
+
+  .image-hero-slider__picture,
+  .image-hero-slider__image {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .image-hero-slider__image {
+    object-fit: cover;
+  }
+
+  .image-hero-slider slideshow-controls[controls-on-media] {
+    inset-inline: 0;
+    z-index: var(--layer-raised);
+  }
+
+  .image-hero-slider .slideshow-controls__dots {
+    padding-inline: var(--padding-sm);
+  }
+
+  .image-hero-slider .slideshow-controls__dots button {
+    color: var(--color-white);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Image-only hero slider",
+  "class": "container-background-image",
+  "max_blocks": 10,
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "Width",
+      "options": [
+        { "value": "page-width", "label": "Page width" },
+        { "value": "full-width", "label": "Full width" }
+      ],
+      "default": "page-width"
+    },
+    {
+      "type": "select",
+      "id": "slide_height",
+      "label": "Image height",
+      "options": [
+        { "value": "small", "label": "Small" },
+        { "value": "medium", "label": "Medium" },
+        { "value": "large", "label": "Large" }
+      ],
+      "default": "medium"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Auto-rotate slides",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "label": "Change slide every",
+      "min": 3,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "default": 5,
+      "visible_if": "{{ section.settings.autoplay }}"
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Image slide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "desktop_image",
+          "label": "Desktop image"
+        },
+        {
+          "type": "image_picker",
+          "id": "mobile_image",
+          "label": "Mobile image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image-only hero slider",
+      "category": "Banners",
+      "blocks": [
+        { "type": "slide" }
+      ],
+      "settings": {
+        "section_width": "page-width",
+        "slide_height": "medium",
+        "autoplay": true,
+        "autoplay_speed": 5,
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    }
+  ]
+}
+{% endschema %}
