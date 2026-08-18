@@ -47,12 +47,12 @@
           "settings": {
             "name": "Tea",
             "image": "shopify://shop_images/tea-home-banner.png",
-            "link": "",
-            "panel_heading": "",
-            "panel_description": "",
-            "cta_text": "Shop category",
-            "cta_link": "",
-            "panel_background": "{{ settings.color_palette.background }}",
+            "link": "shopify://collections/tea",
+            "panel_heading": "Variety of Tea",
+            "panel_description": "<p>This is a demo description</p>",
+            "cta_text": "Shop tea",
+            "cta_link": "shopify://collections/tea",
+            "panel_background": "#C1FAFF",
             "panel_text_color": "{{ settings.color_palette.foreground }}"
           }
         },
