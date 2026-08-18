@@ -92,16 +92,38 @@
         "content": "t:content.fonts"
       },
       {
+        "type": "checkbox",
+        "id": "type_body_google_sans",
+        "label": "Use Google Sans for body text",
+        "default": false,
+        "info": "Turn off to use the body font selected below."
+      },
+      {
         "type": "font_picker",
         "id": "type_body_font",
         "default": "work_sans_n4",
-        "label": "t:options.body"
+        "label": "t:options.body",
+        "visible_if": "{{ settings.type_body_google_sans == false }}"
       },
       {
         "type": "font_picker",
         "id": "type_subheading_font",
         "default": "work_sans_n5",
         "label": "t:options.subheading"
+      },
+      {
+        "type": "checkbox",
+        "id": "type_heading_google_sans",
+        "label": "Use Google Sans for headings and titles",
+        "default": true,
+        "info": "Turn off to use the heading font selected below."
+      },
+      {
+        "type": "font_picker",
+        "id": "type_heading_font",
+        "default": "anonymous_pro_n4",
+        "label": "t:options.heading",
+        "visible_if": "{{ settings.type_heading_google_sans == false }}"
       },
       {
         "type": "font_picker",

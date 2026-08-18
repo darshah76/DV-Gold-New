@@ -84,14 +84,16 @@
         fetchpriority="low"
       >
     {%- endunless -%}
-    <link
-      rel="preload"
-      as="font"
-      href="{{ 'BLUE OCEAN.ttf' | asset_url }}"
-      type="font/ttf"
-      crossorigin
-      fetchpriority="high"
-    >
+    {%- unless settings.type_heading_font.system? -%}
+      <link
+        rel="preload"
+        as="font"
+        href="{{ settings.type_heading_font | font_url }}"
+        type="font/woff2"
+        crossorigin
+        fetchpriority="low"
+      >
+    {%- endunless -%}
     {%- unless settings.type_accent_font.system? -%}
       <link
         rel="preload"
