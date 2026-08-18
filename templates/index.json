@@ -15,13 +15,19 @@
         "slide_hero": {
           "type": "slide",
           "settings": {
-            "desktop_image": "",
-            "mobile_image": ""
+            "desktop_image": "shopify://shop_images/b1.jpg"
+          }
+        },
+        "slide_VNWBBM": {
+          "type": "slide",
+          "settings": {
+            "desktop_image": "shopify://shop_images/b2.jpg"
           }
         }
       },
       "block_order": [
-        "slide_hero"
+        "slide_hero",
+        "slide_VNWBBM"
       ],
       "name": "Image-only hero slider",
       "settings": {
