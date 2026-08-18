@@ -226,6 +226,7 @@ Use the existing spacing scale rather than arbitrary values. Available `--paddin
 - Never add a new radius that is visually indistinguishable from an existing token.
 - Product imagery must not be distorted. Preserve aspect ratio, use the shared responsive image snippets, provide accurate `sizes`, meaningful alt text where the image conveys information, and an empty alt for decorative imagery.
 - Default motion uses the global animation speed/easing tokens. Hover transitions should use the existing 250ms hover token. Never animate layout continuously, and never make content access depend on animation.
+- The Home Categories desktop expansion uses `--animation-speed-category-panel` (500ms) so the panel resize and image repositioning remain legible.
 
 ## 7. Components and implementation conventions
 

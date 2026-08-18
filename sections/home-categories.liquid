@@ -29,12 +29,16 @@
     {% if section.blocks.size > 0 %}
       <ul class="home-categories__list" role="list">
         {% for block in section.blocks %}
-          <li class="home-categories__item" {{ block.shopify_attributes }}>
-            {% if block.settings.link != blank %}
-              <a class="home-categories__card" href="{{ block.settings.link }}">
-            {% else %}
-              <div class="home-categories__card">
-            {% endif %}
+          {% liquid
+            assign panel_heading = block.settings.panel_heading | default: block.settings.name
+            assign panel_link = block.settings.cta_link | default: block.settings.link
+          %}
+          <li
+            class="home-categories__item"
+            style="--home-categories-panel-background: {{ block.settings.panel_background }}; --home-categories-panel-text: {{ block.settings.panel_text_color }};"
+            {{ block.shopify_attributes }}
+          >
+            <div class="home-categories__card">
 
               <div class="home-categories__media">
                 {% if block.settings.image != blank %}
@@ -56,11 +60,32 @@
                 <h3 class="home-categories__name h4">{{ block.settings.name | escape }}</h3>
               {% endif %}
 
-            {% if block.settings.link != blank %}
-              </a>
-            {% else %}
+              {% if block.settings.link != blank %}
+                <a
+                  class="home-categories__card-link"
+                  href="{{ block.settings.link }}"
+                  aria-label="{{ block.settings.name | default: panel_heading | escape }}"
+                ></a>
+              {% endif %}
+
+              <div class="home-categories__panel-content">
+                {% if panel_heading != blank %}
+                  <h3 class="home-categories__panel-heading h3">{{ panel_heading | escape }}</h3>
+                {% endif %}
+
+                {% if block.settings.panel_description != blank %}
+                  <div class="home-categories__panel-description rte">
+                    {{ block.settings.panel_description }}
+                  </div>
+                {% endif %}
+
+                {% if block.settings.cta_text != blank and panel_link != blank %}
+                  <a class="button home-categories__panel-button" href="{{ panel_link }}">
+                    {{ block.settings.cta_text | escape }}
+                  </a>
+                {% endif %}
               </div>
-            {% endif %}
+            </div>
           </li>
         {% endfor %}
       </ul>
@@ -118,6 +143,12 @@
     text-decoration: none;
   }
 
+  .home-categories__card-link {
+    position: absolute;
+    z-index: 1;
+    inset: 0;
+  }
+
   .home-categories__media {
     aspect-ratio: 3 / 4;
     width: 100%;
@@ -154,6 +185,16 @@
     outline-offset: var(--focus-outline-offset);
   }
 
+  .home-categories__card-link:focus-visible,
+  .home-categories__panel-button:focus-visible {
+    outline: var(--focus-outline-width) solid currentColor;
+    outline-offset: var(--focus-outline-offset);
+  }
+
+  .home-categories__panel-content {
+    display: none;
+  }
+
   @media (min-width: 750px) {
     .home-categories__list {
       display: grid;
@@ -165,23 +206,132 @@
 
     .home-categories__item {
       min-width: 0;
+      aspect-ratio: 3 / 4;
     }
 
   }
 
-  @media (hover: hover) and (pointer: fine) {
-    .home-categories__card[href] {
-      transition: border-color var(--animation-speed) var(--animation-timing-hover);
+  @media (min-width: 990px) and (hover: hover) and (pointer: fine) {
+    .home-categories__item {
+      position: relative;
+      z-index: 0;
+      transition: z-index 0s linear var(--animation-speed-category-panel);
     }
 
-    .home-categories__card[href]:hover {
+    .home-categories__card {
+      position: absolute;
+      inset-block: 0;
+      inset-inline-start: 0;
+      width: 100%;
+      transform-origin: center;
+      transition:
+        width var(--animation-speed-category-panel) var(--animation-timing-hover),
+        inset-inline-start var(--animation-speed-category-panel) var(--animation-timing-hover),
+        background-color var(--animation-speed-category-panel) var(--animation-timing-hover),
+        border-color var(--animation-speed-category-panel) var(--animation-timing-hover);
+    }
+
+    .home-categories__media {
+      margin-inline-start: 0;
+      transition:
+        width var(--animation-speed-category-panel) var(--animation-timing-hover),
+        margin-inline-start var(--animation-speed-category-panel) var(--animation-timing-hover);
+    }
+
+    .home-categories__name {
+      transition: opacity var(--animation-speed-category-panel) var(--animation-timing-hover);
+    }
+
+    .home-categories__panel-content {
+      position: absolute;
+      z-index: 2;
+      inset-block: 0;
+      inset-inline-start: 0;
+      display: flex;
+      width: 50%;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      gap: var(--gap-md);
+      padding: var(--padding-xl);
+      color: var(--home-categories-panel-text, var(--color-foreground));
+      text-align: start;
+      visibility: hidden;
+      opacity: 0;
+      transform: translateX(calc(-1 * var(--padding-lg)));
+      transition:
+        opacity var(--animation-speed-category-panel) var(--animation-timing-hover),
+        transform var(--animation-speed-category-panel) var(--animation-timing-hover),
+        visibility 0s linear var(--animation-speed-category-panel);
+    }
+
+    .home-categories__panel-heading,
+    .home-categories__panel-description {
+      margin: 0;
+      color: inherit;
+    }
+
+    .home-categories__panel-description {
+      max-width: var(--max-width--body-normal);
+      text-wrap: pretty;
+    }
+
+    .home-categories__item:is(:hover, :focus-within) {
+      z-index: 3;
+      transition-delay: 0s;
+    }
+
+    .home-categories__item:is(:hover, :focus-within) .home-categories__card {
+      width: calc(400% + (var(--gap-xl) * 3));
+      color: var(--home-categories-panel-text, var(--color-foreground));
+      background: var(--home-categories-panel-background, var(--color-background-secondary));
       border-color: var(--color-foreground);
+    }
+
+    .home-categories__item:nth-child(2):is(:hover, :focus-within) .home-categories__card {
+      inset-inline-start: calc(-100% - var(--gap-xl));
+    }
+
+    .home-categories__item:nth-child(3):is(:hover, :focus-within) .home-categories__card {
+      inset-inline-start: calc(-200% - (var(--gap-xl) * 2));
+    }
+
+    .home-categories__item:nth-child(4):is(:hover, :focus-within) .home-categories__card {
+      inset-inline-start: calc(-300% - (var(--gap-xl) * 3));
+    }
+
+    .home-categories__item:is(:hover, :focus-within) .home-categories__media {
+      width: 50%;
+      margin-inline-start: 50%;
+    }
+
+    .home-categories__item:is(:hover, :focus-within) .home-categories__name {
+      opacity: 0;
+    }
+
+    .home-categories__item:is(:hover, :focus-within) .home-categories__panel-content {
+      visibility: visible;
+      opacity: 1;
+      transform: translateX(0);
+      transition-delay: 0s;
+    }
+
+    .home-categories__item:is(:hover, :focus-within) .home-categories__card-link {
+      inset-inline-start: 50%;
     }
   }
 
   @media (prefers-reduced-motion: reduce) {
     .home-categories__list {
       scroll-behavior: auto;
+    }
+
+    .home-categories__item,
+    .home-categories__card,
+    .home-categories__media,
+    .home-categories__name,
+    .home-categories__panel-content {
+      transition: none;
     }
   }
 {% endstylesheet %}
@@ -262,6 +412,45 @@
           "type": "url",
           "id": "link",
           "label": "Category link"
+        },
+        {
+          "type": "header",
+          "content": "Desktop expanded panel"
+        },
+        {
+          "type": "text",
+          "id": "panel_heading",
+          "label": "Headline",
+          "info": "Defaults to the category name when left blank."
+        },
+        {
+          "type": "richtext",
+          "id": "panel_description",
+          "label": "Description"
+        },
+        {
+          "type": "text",
+          "id": "cta_text",
+          "label": "Button label",
+          "default": "Shop category"
+        },
+        {
+          "type": "url",
+          "id": "cta_link",
+          "label": "Button link",
+          "info": "Defaults to the category link when left blank."
+        },
+        {
+          "type": "color",
+          "id": "panel_background",
+          "label": "Panel background",
+          "default": "{{ settings.color_palette.background }}"
+        },
+        {
+          "type": "color",
+          "id": "panel_text_color",
+          "label": "Panel text color",
+          "default": "{{ settings.color_palette.foreground }}"
         }
       ]
     }
