@@ -46,28 +46,53 @@
           "type": "category",
           "settings": {
             "name": "Tea",
-            "link": ""
+            "image": "shopify://shop_images/tea-home-banner.png",
+            "link": "",
+            "panel_heading": "",
+            "panel_description": "",
+            "cta_text": "Shop category",
+            "cta_link": "",
+            "panel_background": "{{ settings.color_palette.background }}",
+            "panel_text_color": "{{ settings.color_palette.foreground }}"
           }
         },
         "category_83R437": {
           "type": "category",
           "settings": {
             "name": "Spices",
-            "link": ""
+            "link": "",
+            "panel_heading": "",
+            "panel_description": "",
+            "cta_text": "Shop category",
+            "cta_link": "",
+            "panel_background": "{{ settings.color_palette.background }}",
+            "panel_text_color": "{{ settings.color_palette.foreground }}"
           }
         },
         "category_PHPy9r": {
           "type": "category",
           "settings": {
             "name": "Dry fruits",
-            "link": ""
+            "link": "",
+            "panel_heading": "",
+            "panel_description": "",
+            "cta_text": "Shop category",
+            "cta_link": "",
+            "panel_background": "{{ settings.color_palette.background }}",
+            "panel_text_color": "{{ settings.color_palette.foreground }}"
           }
         },
         "category_zJV3eV": {
           "type": "category",
           "settings": {
             "name": "Farali Items",
-            "link": ""
+            "link": "",
+            "panel_heading": "",
+            "panel_description": "",
+            "cta_text": "Shop category",
+            "cta_link": "",
+            "panel_background": "{{ settings.color_palette.background }}",
+            "panel_text_color": "{{ settings.color_palette.foreground }}"
           }
         }
       },
@@ -81,6 +106,7 @@
       "settings": {
         "title": "Shop by category",
         "gap": 28,
+        "card_title_color": "{{ settings.color_palette.foreground }}",
         "padding-block-start": 48,
         "padding-block-end": 48
       }
