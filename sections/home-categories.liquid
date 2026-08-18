@@ -214,6 +214,8 @@
   @media (min-width: 990px) and (hover: hover) and (pointer: fine) {
     .home-categories__item {
       position: relative;
+      z-index: 0;
+      transition: z-index 0s linear var(--animation-speed-category-panel);
     }
 
     .home-categories__card {
@@ -276,6 +278,7 @@
 
     .home-categories__item:is(:hover, :focus-within) {
       z-index: 3;
+      transition-delay: 0s;
     }
 
     .home-categories__item:is(:hover, :focus-within) .home-categories__card {
@@ -323,6 +326,7 @@
       scroll-behavior: auto;
     }
 
+    .home-categories__item,
     .home-categories__card,
     .home-categories__media,
     .home-categories__name,
