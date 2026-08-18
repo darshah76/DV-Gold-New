@@ -119,6 +119,12 @@
         "info": "Turn off to use the heading font selected below."
       },
       {
+        "type": "color",
+        "id": "heading_text_color",
+        "label": "Heading and title color",
+        "default": "#F9C800"
+      },
+      {
         "type": "font_picker",
         "id": "type_heading_font",
         "default": "anonymous_pro_n4",
