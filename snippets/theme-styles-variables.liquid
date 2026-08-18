@@ -160,9 +160,9 @@
     --font-subheading--family: {{ settings.type_subheading_font.family }}, {{ settings.type_subheading_font.fallback_families }};
     --font-subheading--style: {{ settings.type_subheading_font.style }};
     --font-subheading--weight: {{ settings.type_subheading_font.weight }};
-    --font-heading--family: {% if settings.type_heading_google_sans %}"Google Sans", Arial, sans-serif{% else %}{{ settings.type_heading_font.family }}, {{ settings.type_heading_font.fallback_families }}{% endif %};
-    --font-heading--style: {{ settings.type_heading_font.style }};
-    --font-heading--weight: {{ settings.type_heading_font.weight }};
+    --font-heading--family: {% if settings.type_heading_chewy %}"Chewy", cursive{% else %}{{ settings.type_heading_font.family }}, {{ settings.type_heading_font.fallback_families }}{% endif %};
+    --font-heading--style: {% if settings.type_heading_chewy %}normal{% else %}{{ settings.type_heading_font.style }}{% endif %};
+    --font-heading--weight: {% if settings.type_heading_chewy %}400{% else %}{{ settings.type_heading_font.weight }}{% endif %};
     --font-accent--family: {{ settings.type_accent_font.family }}, {{ settings.type_accent_font.fallback_families }};
     --font-accent--style: {{ settings.type_accent_font.style }};
     --font-accent--weight: {{ settings.type_accent_font.weight }};

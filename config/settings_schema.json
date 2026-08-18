@@ -113,8 +113,8 @@
       },
       {
         "type": "checkbox",
-        "id": "type_heading_google_sans",
-        "label": "Use Google Sans for headings and titles",
+        "id": "type_heading_chewy",
+        "label": "Use Chewy for headings and titles",
         "default": true,
         "info": "Turn off to use the heading font selected below."
       },
@@ -123,7 +123,7 @@
         "id": "type_heading_font",
         "default": "anonymous_pro_n4",
         "label": "t:options.heading",
-        "visible_if": "{{ settings.type_heading_google_sans == false }}"
+        "visible_if": "{{ settings.type_heading_chewy == false }}"
       },
       {
         "type": "font_picker",
