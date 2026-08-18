@@ -68,7 +68,7 @@
       assign account_actions_style = ''
       if display_style == 'text' and section
         assign actions_font = section.settings.actions_font | default: 'body'
-        assign font_obj = settings.type_heading_font
+        assign font_obj = settings.type_body_font
         case actions_font
           when 'body'
             assign font_obj = settings.type_body_font
@@ -77,9 +77,13 @@
           when 'accent'
             assign font_obj = settings.type_accent_font
         endcase
-        assign font_family = font_obj.family | append: ', ' | append: font_obj.fallback_families
-        assign font_family_safe = font_family | replace: '"', "'"
-        assign account_actions_style = '--header-actions-font-family: ' | append: font_family_safe | append: '; --header-actions-font-weight: ' | append: font_obj.weight | append: ';'
+        if actions_font == 'heading'
+          assign account_actions_style = '--header-actions-font-family: var(--font-heading--family); --header-actions-font-weight: var(--font-heading--weight);'
+        else
+          assign font_family = font_obj.family | append: ', ' | append: font_obj.fallback_families
+          assign font_family_safe = font_family | replace: '"', "'"
+          assign account_actions_style = '--header-actions-font-family: ' | append: font_family_safe | append: '; --header-actions-font-weight: ' | append: font_obj.weight | append: ';'
+        endif
       endif
     %}
     <div
