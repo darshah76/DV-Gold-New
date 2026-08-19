@@ -2,6 +2,8 @@ class HomeUgc extends HTMLElement {
   connectedCallback() {
     this.track = this.querySelector('[data-ugc-track]');
     this.addEventListener('click', this.handleClick);
+    this.track?.addEventListener('scroll', this.updateNavigation, { passive: true });
+    window.addEventListener('resize', this.updateNavigation);
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     this.querySelectorAll('video').forEach((video) => {
       video.muted = true;
@@ -12,10 +14,13 @@ class HomeUgc extends HTMLElement {
       video.addEventListener('pause', () => this.updateVideoControls(video));
       video.addEventListener('volumechange', () => this.updateVideoControls(video));
     });
+    requestAnimationFrame(this.updateNavigation);
   }
 
   disconnectedCallback() {
     this.removeEventListener('click', this.handleClick);
+    this.track?.removeEventListener('scroll', this.updateNavigation);
+    window.removeEventListener('resize', this.updateNavigation);
   }
 
   handleClick = (event) => {
@@ -57,6 +62,15 @@ class HomeUgc extends HTMLElement {
       volume.setAttribute('aria-pressed', String(!video.muted));
     }
   }
+
+  updateNavigation = () => {
+    if (!this.track) return;
+    const previous = this.querySelector('[data-ugc-previous]');
+    const next = this.querySelector('[data-ugc-next]');
+    const end = this.track.scrollWidth - this.track.clientWidth;
+    if (previous) previous.disabled = this.track.scrollLeft <= 1;
+    if (next) next.disabled = end <= 1 || this.track.scrollLeft >= end - 1;
+  };
 }
 
 if (!customElements.get('home-ugc')) customElements.define('home-ugc', HomeUgc);
