@@ -52,7 +52,7 @@
             "panel_description": "<p>This is a demo description</p>",
             "cta_text": "Shop tea",
             "cta_link": "shopify://collections/tea",
-            "panel_background": "#C1FAFF",
+            "panel_background": "#c1faff",
             "panel_text_color": "{{ settings.color_palette.foreground }}"
           }
         },
@@ -461,6 +461,60 @@
         "padding-block-start": 48,
         "padding-block-end": 48
       }
+    },
+    "home_ugc_Wr9aXj": {
+      "type": "home-ugc",
+      "blocks": {
+        "video_card_XTHRDd": {
+          "type": "video_card",
+          "settings": {
+            "product": "dv-gold-tea",
+            "show_title": true,
+            "show_price": true,
+            "show_compare_price": true
+          }
+        },
+        "video_card_Y8eF7q": {
+          "type": "video_card",
+          "settings": {
+            "product": "rajagaro-kakro",
+            "show_title": true,
+            "show_price": true,
+            "show_compare_price": true
+          }
+        },
+        "video_card_9yfdTT": {
+          "type": "video_card",
+          "settings": {
+            "product": "turmeric-powder",
+            "show_title": true,
+            "show_price": true,
+            "show_compare_price": true
+          }
+        },
+        "video_card_HczWa6": {
+          "type": "video_card",
+          "settings": {
+            "product": "sabudana",
+            "show_title": true,
+            "show_price": true,
+            "show_compare_price": true
+          }
+        }
+      },
+      "block_order": [
+        "video_card_XTHRDd",
+        "video_card_Y8eF7q",
+        "video_card_9yfdTT",
+        "video_card_HczWa6"
+      ],
+      "name": "Home UGC",
+      "settings": {
+        "heading": "Watch & Shop",
+        "gap": 28,
+        "padding-block-start": 48,
+        "padding-block-end": 48
+      }
     }
   },
   "order": [
@@ -473,6 +527,7 @@
     "home_faq_DaJ4YY",
     "home_certifications_PLJPpt",
     "home_b2b_pMYc9w",
-    "home_why_choose_CkicYd"
+    "home_why_choose_CkicYd",
+    "home_ugc_Wr9aXj"
   ]
 }
