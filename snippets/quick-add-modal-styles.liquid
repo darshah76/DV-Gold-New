@@ -41,8 +41,11 @@
   .quick-add-modal {
     padding: 0;
     border: var(--style-border-popover);
+    border-radius: var(--style-border-radius-popover);
+    background: var(--color-background-secondary);
+    color: var(--color-foreground);
     overflow: hidden;
-    box-shadow: 0 5px 30px rgb(0 0 0 / var(--opacity-15));
+    box-shadow: var(--shadow-card-subtle);
 
     @media screen and (max-width: 749px) {
       position: fixed;
@@ -130,6 +133,18 @@
       overflow-y: auto;
       height: auto; /* Prevent a bug in Safari where height:fit-content is not respected */
       max-height: 100vh;
+    }
+  }
+
+  @media screen and (min-width: 750px) {
+    .quick-add-modal__content {
+      gap: var(--gap-lg);
+      padding: var(--padding-lg);
+    }
+
+    .quick-add-modal__content .product-information__media,
+    .quick-add-modal__content .product-details {
+      border-radius: var(--style-border-radius-cards);
     }
   }
 

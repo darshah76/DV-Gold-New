@@ -4,6 +4,7 @@
   @param {object} product - The product object
   @param {string} section_id - The section ID
   @param {object} [block] - The block object
+  @param {boolean} [force_choose] - Open the variant picker whenever the product has multiple variants
 {%- enddoc -%}
 
 {% liquid
@@ -39,6 +40,12 @@
     assign initial_button = 'add'
     assign render_add = true
   else
+    assign render_choose = true
+  endif
+
+  if force_choose and product.variants_count > 1
+    assign initial_button = 'choose'
+    assign render_add = false
     assign render_choose = true
   endif
 
