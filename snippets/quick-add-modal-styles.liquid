@@ -41,8 +41,11 @@
   .quick-add-modal {
     padding: 0;
     border: var(--style-border-popover);
+    border-radius: var(--style-border-radius-popover);
+    background: var(--color-background-secondary);
+    color: var(--color-foreground);
     overflow: hidden;
-    box-shadow: 0 5px 30px rgb(0 0 0 / var(--opacity-15));
+    box-shadow: var(--shadow-card-subtle);
 
     @media screen and (max-width: 749px) {
       position: fixed;
@@ -132,6 +135,8 @@
       max-height: 100vh;
     }
   }
+
+
 
   .quick-add-modal__content .media-gallery--grid .media-gallery__grid {
     grid-template-columns: 1fr;
@@ -611,6 +616,122 @@
     to {
       opacity: 1;
       transform: translateY(0);
+    }
+  }
+  @media screen and (min-width: 750px) {
+    .quick-add-modal {
+      height: auto;
+      max-height: var(--quick-add-modal-height);
+    }
+
+    .quick-add-modal__content {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+      grid-template-rows: auto;
+      gap: 0;
+      min-height: var(--section-height-small);
+      padding: var(--padding-md);
+    }
+
+    .quick-add-modal__content .product-information__media,
+    .quick-add-modal__content .product-details {
+      border-radius: var(--style-border-radius-cards);
+    }
+
+    .quick-add-modal__content .product-information__media {
+      position: relative;
+      grid-column: 1;
+      grid-row: 1;
+      width: 100%;
+      min-height: var(--section-height-small);
+      overflow: hidden;
+      background: var(--color-background-tertiary);
+    }
+
+    .quick-add-modal__content .product-details {
+      grid-column: 2;
+      grid-row: 1;
+      height: auto;
+      overflow: visible;
+      mask-image: none;
+    }
+
+    .quick-add-modal__content .product-details > .group-block {
+      width: 100%;
+      height: 100%;
+      padding-block: 0;
+      background: transparent;
+    }
+
+    .quick-add-modal__content :where(.product-details > .group-block > .group-block-content > *) {
+      padding-inline: var(--padding-lg);
+    }
+
+    .quick-add-modal__content .product-details > .group-block > .group-block-content {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      gap: var(--gap-sm);
+    }
+
+    .quick-add-modal__content .view-product-title {
+      margin: 0;
+    }
+
+    .quick-add-modal__content .view-product-title a {
+      font-family: var(--font-h4--family);
+      font-size: var(--font-h4--size);
+      font-style: var(--font-h4--style);
+      font-weight: var(--font-h4--weight);
+      line-height: var(--font-h4--line-height);
+      letter-spacing: var(--font-h4--letter-spacing);
+    }
+
+    .quick-add-modal__content .product-details .variant-picker {
+      padding-block: var(--padding-sm);
+      margin-block-end: 0;
+    }
+
+    .quick-add-modal__content .product-information__media slideshow-slide:not(:first-child) {
+      display: none;
+    }
+
+    .quick-add-modal__content .variant-option--buttons {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--gap-sm);
+    }
+
+    .quick-add-modal__content .variant-option--buttons legend {
+      grid-column: 1 / -1;
+      margin: 0;
+      font-family: var(--font-subheading--family);
+      font-weight: var(--font-subheading--weight);
+    }
+
+    .quick-add-modal__content .variant-option__button-label {
+      width: 100%;
+      min-width: 0;
+      min-height: var(--minimum-touch-target);
+      padding: var(--padding-sm);
+      white-space: normal;
+      text-wrap: balance;
+    }
+
+    .quick-add-modal__content .product-details .buy-buttons-block,
+    .quick-add-modal__content .product-details .buy-buttons-block__bar {
+      position: static;
+      margin-block-start: auto;
+      padding-block: var(--padding-sm) 0;
+      background: transparent;
+    }
+
+    .quick-add-modal__content .product-details .buy-buttons-block::before,
+    .quick-add-modal__content .product-details .buy-buttons-block__bar::before {
+      display: none;
+    }
+
+    .quick-add-modal__content .product-form-buttons .add-to-cart-button {
+      width: 100%;
     }
   }
 {% endstylesheet %}
