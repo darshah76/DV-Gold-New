@@ -67,7 +67,7 @@
         {% assign menu_key = 'menu_' | append: menu_number %}
         <nav class="dv-footer__column" aria-labelledby="FooterMenu-{{ section.id }}-{{ menu_number }}">
           {% if section.settings[title_key] != blank %}
-            <h2 id="FooterMenu-{{ section.id }}-{{ menu_number }}" class="dv-footer__heading h5">{{ section.settings[title_key] | escape }}</h2>
+            <h2 id="FooterMenu-{{ section.id }}-{{ menu_number }}" class="dv-footer__heading h4">{{ section.settings[title_key] | escape }}</h2>
           {% endif %}
           {% if section.settings[menu_key] != blank %}
             <ul class="dv-footer__menu" role="list">
@@ -81,7 +81,7 @@
 
       <div class="dv-footer__column dv-footer__newsletter">
         {% if section.settings.newsletter_title != blank %}
-          <h2 class="dv-footer__heading h5">{{ section.settings.newsletter_title | escape }}</h2>
+          <h2 class="dv-footer__heading h4">{{ section.settings.newsletter_title | escape }}</h2>
         {% endif %}
         {% if section.settings.newsletter_text != blank %}
           <div class="dv-footer__newsletter-text rte">{{ section.settings.newsletter_text }}</div>

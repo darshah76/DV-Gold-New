@@ -122,8 +122,8 @@
     .dv-history__inner {
       grid-template-columns: repeat(2, minmax(0, 1fr));
       grid-template-areas:
-        'media header'
-        'media content';
+        'header media'
+        'content media';
       column-gap: var(--gap-3xl);
       max-width: none;
     }
@@ -156,7 +156,7 @@
     }
 
     .dv-history__inner:not(.dv-history__inner--has-title) {
-      grid-template-areas: 'media content';
+      grid-template-areas: 'content media';
     }
 
     .dv-history__inner:not(.dv-history__inner--has-title) .dv-history__content {
