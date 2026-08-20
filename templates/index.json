@@ -384,24 +384,28 @@
         "support_feature_TDjmyd": {
           "type": "support_feature",
           "settings": {
+            "image": "shopify://shop_images/Support.png",
             "title": "Dedicated support"
           }
         },
         "support_feature_PcxRbW": {
           "type": "support_feature",
           "settings": {
+            "image": "shopify://shop_images/customised_solution.png",
             "title": "Flexible solutions"
           }
         },
         "support_feature_34RyFh": {
           "type": "support_feature",
           "settings": {
+            "image": "shopify://shop_images/relicable_partnership.png",
             "title": "Reliable partnership"
           }
         },
         "support_feature_yHpN7P": {
           "type": "support_feature",
           "settings": {
+            "image": "shopify://shop_images/secure_trusted.png",
             "title": "Secure & trusted"
           }
         }
