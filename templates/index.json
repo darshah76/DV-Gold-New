@@ -107,9 +107,59 @@
       ],
       "name": "Home Categories",
       "settings": {
-        "title": "Shop by category",
+        "title": "DV Offerings",
         "gap": 28,
         "card_title_color": "{{ settings.color_palette.foreground }}",
+        "padding-block-start": 48,
+        "padding-block-end": 48
+      }
+    },
+    "home_why_choose_CkicYd": {
+      "type": "home-why-choose",
+      "blocks": {
+        "reason_ecqifR": {
+          "type": "reason",
+          "settings": {
+            "image": "shopify://shop_images/Pure_and_Natural.png",
+            "title": "Pure & natural",
+            "description": "<p>100% clean and natural ingredients.</p>"
+          }
+        },
+        "reason_9n6gfM": {
+          "type": "reason",
+          "settings": {
+            "image": "shopify://shop_images/loved_by_family.png",
+            "title": "Sourced with care",
+            "description": "<p>Ethically sourced from trusted farms.</p>"
+          }
+        },
+        "reason_wxMJrE": {
+          "type": "reason",
+          "settings": {
+            "image": "shopify://shop_images/no_compromise.png",
+            "title": "No compromise",
+            "description": "<p>No additives, fillers, or preservatives.</p>"
+          }
+        },
+        "reason_BKNHPj": {
+          "type": "reason",
+          "settings": {
+            "image": "shopify://shop_images/source_care.png",
+            "title": "Loved by families",
+            "description": "<p>Trusted by thousands of happy homes.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "reason_ecqifR",
+        "reason_9n6gfM",
+        "reason_wxMJrE",
+        "reason_BKNHPj"
+      ],
+      "name": "Home why choose",
+      "settings": {
+        "title": "Why choose us",
+        "gap": 28,
         "padding-block-start": 48,
         "padding-block-end": 48
       }
@@ -175,9 +225,9 @@
             "product_title_Tf7bgy": {
               "type": "product-title",
               "settings": {
-                "width": "fit-content",
+                "width": "100%",
                 "max_width": "normal",
-                "alignment": "left",
+                "alignment": "center",
                 "type_preset": "h4",
                 "font": "var(--font-body--family)",
                 "font_size": "1rem",
@@ -235,7 +285,6 @@
           "dhana-jeeru-powder",
           "dhana-powder",
           "dv-gold-tea",
-          "dv-klassik-tea",
           "dv-silver-tea",
           "ganthoda-powder",
           "ginger-powder",
@@ -245,46 +294,13 @@
           "rajagaro-kakro",
           "sabudana",
           "shinghoda-flour",
-          "turmeric-powder"
+          "turmeric-powder",
+          "dv-klassik-tea"
         ],
         "product_count": 8,
         "gap": 28,
         "padding-block-start": 48,
         "padding-block-end": 48
-      }
-    },
-    "home_store_features_CRTxAY": {
-      "type": "home-store-features",
-      "blocks": {
-        "feature_TfRH8K": {
-          "type": "feature",
-          "settings": {
-            "text": "100% natural"
-          }
-        },
-        "feature_VwEg9L": {
-          "type": "feature",
-          "settings": {
-            "text": "No added preservatives"
-          }
-        },
-        "feature_Te9aKX": {
-          "type": "feature",
-          "settings": {
-            "text": "Proudly Indian"
-          }
-        }
-      },
-      "block_order": [
-        "feature_TfRH8K",
-        "feature_VwEg9L",
-        "feature_Te9aKX"
-      ],
-      "name": "Home store features",
-      "settings": {
-        "accessibility_label": "Store features",
-        "padding-block-start": 48,
-        "padding-block-end": 24
       }
     },
     "dv_history_hzQ46Q": {
@@ -296,52 +312,6 @@
         "text": "<p>DV Groups represents a legacy built on trust, quality, and consistency. With roots dating back to 1957, the brand has grown from a traditional trading organization into a brand of choice in premium food products.</p>",
         "cta_text": "Know more",
         "cta_link": "",
-        "gap": 28,
-        "padding-block-start": 48,
-        "padding-block-end": 48
-      }
-    },
-    "home_faq_DaJ4YY": {
-      "type": "home-faq",
-      "blocks": {
-        "faq_kXFkLH": {
-          "type": "faq",
-          "settings": {
-            "question": "Global shipping & delivery",
-            "answer": "<p>Share shipping destinations, delivery estimates, and tracking information here.</p>"
-          }
-        },
-        "faq_Y8b4hd": {
-          "type": "faq",
-          "settings": {
-            "question": "Product care guide",
-            "answer": "<p>Explain how customers can care for and enjoy their purchase.</p>"
-          }
-        },
-        "faq_bwCBQC": {
-          "type": "faq",
-          "settings": {
-            "question": "Ethical sourcing standards",
-            "answer": "<p>Describe your sourcing standards and product quality commitments.</p>"
-          }
-        },
-        "faq_YUkXAQ": {
-          "type": "faq",
-          "settings": {
-            "question": "Wholesale accounts",
-            "answer": "<p>Tell business customers how to contact you about wholesale opportunities.</p>"
-          }
-        }
-      },
-      "block_order": [
-        "faq_kXFkLH",
-        "faq_Y8b4hd",
-        "faq_bwCBQC",
-        "faq_YUkXAQ"
-      ],
-      "name": "Home FAQ",
-      "settings": {
-        "heading": "FAQs",
         "gap": 28,
         "padding-block-start": 48,
         "padding-block-end": 48
@@ -384,6 +354,40 @@
         "gap": 28,
         "padding-block-start": 48,
         "padding-block-end": 48
+      }
+    },
+    "home_store_features_CRTxAY": {
+      "type": "home-store-features",
+      "blocks": {
+        "feature_TfRH8K": {
+          "type": "feature",
+          "settings": {
+            "text": "100% natural"
+          }
+        },
+        "feature_VwEg9L": {
+          "type": "feature",
+          "settings": {
+            "text": "No added preservatives"
+          }
+        },
+        "feature_Te9aKX": {
+          "type": "feature",
+          "settings": {
+            "text": "Proudly Indian"
+          }
+        }
+      },
+      "block_order": [
+        "feature_TfRH8K",
+        "feature_VwEg9L",
+        "feature_Te9aKX"
+      ],
+      "name": "Home store features",
+      "settings": {
+        "accessibility_label": "Store features",
+        "padding-block-start": 48,
+        "padding-block-end": 24
       }
     },
     "home_b2b_pMYc9w": {
@@ -430,56 +434,6 @@
         "description": "For B2B & wholesale partnerships",
         "button_text": "Chat on WhatsApp",
         "whatsapp_link": "",
-        "gap": 28,
-        "padding-block-start": 48,
-        "padding-block-end": 48
-      }
-    },
-    "home_why_choose_CkicYd": {
-      "type": "home-why-choose",
-      "blocks": {
-        "reason_ecqifR": {
-          "type": "reason",
-          "settings": {
-            "image": "shopify://shop_images/Pure_and_Natural.png",
-            "title": "Pure & natural",
-            "description": "<p>100% clean and natural ingredients.</p>"
-          }
-        },
-        "reason_9n6gfM": {
-          "type": "reason",
-          "settings": {
-            "image": "shopify://shop_images/loved_by_family.png",
-            "title": "Sourced with care",
-            "description": "<p>Ethically sourced from trusted farms.</p>"
-          }
-        },
-        "reason_wxMJrE": {
-          "type": "reason",
-          "settings": {
-            "image": "shopify://shop_images/no_compromise.png",
-            "title": "No compromise",
-            "description": "<p>No additives, fillers, or preservatives.</p>"
-          }
-        },
-        "reason_BKNHPj": {
-          "type": "reason",
-          "settings": {
-            "image": "shopify://shop_images/source_care.png",
-            "title": "Loved by families",
-            "description": "<p>Trusted by thousands of happy homes.</p>"
-          }
-        }
-      },
-      "block_order": [
-        "reason_ecqifR",
-        "reason_9n6gfM",
-        "reason_wxMJrE",
-        "reason_BKNHPj"
-      ],
-      "name": "Home why choose",
-      "settings": {
-        "title": "Why choose us",
         "gap": 28,
         "padding-block-start": 48,
         "padding-block-end": 48
@@ -564,19 +518,65 @@
         "padding-block-start": 48,
         "padding-block-end": 48
       }
+    },
+    "home_faq_DaJ4YY": {
+      "type": "home-faq",
+      "blocks": {
+        "faq_kXFkLH": {
+          "type": "faq",
+          "settings": {
+            "question": "Global shipping & delivery",
+            "answer": "<p>Share shipping destinations, delivery estimates, and tracking information here.</p>"
+          }
+        },
+        "faq_Y8b4hd": {
+          "type": "faq",
+          "settings": {
+            "question": "Product care guide",
+            "answer": "<p>Explain how customers can care for and enjoy their purchase.</p>"
+          }
+        },
+        "faq_bwCBQC": {
+          "type": "faq",
+          "settings": {
+            "question": "Ethical sourcing standards",
+            "answer": "<p>Describe your sourcing standards and product quality commitments.</p>"
+          }
+        },
+        "faq_YUkXAQ": {
+          "type": "faq",
+          "settings": {
+            "question": "Wholesale accounts",
+            "answer": "<p>Tell business customers how to contact you about wholesale opportunities.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq_kXFkLH",
+        "faq_Y8b4hd",
+        "faq_bwCBQC",
+        "faq_YUkXAQ"
+      ],
+      "name": "Home FAQ",
+      "settings": {
+        "heading": "FAQs",
+        "gap": 28,
+        "padding-block-start": 48,
+        "padding-block-end": 48
+      }
     }
   },
   "order": [
     "hero_jVaWmY",
     "home_categories_KPM8pk",
+    "home_why_choose_CkicYd",
     "homepicked_masala_spices_E3h4tM",
     "home_bestsellers_kYbEL7",
-    "home_store_features_CRTxAY",
     "dv_history_hzQ46Q",
-    "home_faq_DaJ4YY",
     "home_certifications_PLJPpt",
+    "home_store_features_CRTxAY",
     "home_b2b_pMYc9w",
-    "home_why_choose_CkicYd",
-    "home_ugc_Wr9aXj"
+    "home_ugc_Wr9aXj",
+    "home_faq_DaJ4YY"
   ]
 }
