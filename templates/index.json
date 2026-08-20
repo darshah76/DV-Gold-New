@@ -442,7 +442,7 @@
         "reason_9n6gfM": {
           "type": "reason",
           "settings": {
-            "image": "shopify://shop_images/source_care.png",
+            "image": "shopify://shop_images/loved_by_family.png",
             "title": "Sourced with care",
             "description": "<p>Ethically sourced from trusted farms.</p>"
           }
@@ -458,7 +458,7 @@
         "reason_BKNHPj": {
           "type": "reason",
           "settings": {
-            "image": "shopify://shop_images/loved_by_family.png",
+            "image": "shopify://shop_images/source_care.png",
             "title": "Loved by families",
             "description": "<p>Trusted by thousands of happy homes.</p>"
           }
