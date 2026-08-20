@@ -272,6 +272,35 @@ export class QuickAddComponent extends Component {
     morph(modalContent, productGrid);
 
     this.#syncVariantSelection(modalContent);
+    this.#addModalGalleryNavigation(modalContent);
+  }
+
+  /**
+   * Adds modal-owned controls so product media remains browsable even when the
+   * product page itself is configured to use a desktop grid.
+   * @param {Element} modalContent - The modal content element
+   */
+  #addModalGalleryNavigation(modalContent) {
+    const slideshow = /** @type {import('./slideshow').Slideshow | null} */ (
+      modalContent.querySelector('.product-information__media slideshow-component')
+    );
+    const slides = slideshow?.querySelectorAll('slideshow-slide');
+    if (!slideshow || !slides || slides.length < 2) return;
+
+    const navigation = document.createElement('div');
+    navigation.className = 'quick-add-modal__gallery-navigation';
+    navigation.setAttribute('aria-label', 'Product image controls');
+    navigation.innerHTML = `
+      <button type="button" data-quick-add-gallery-previous aria-label="Previous product image">
+        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none"><path d="m14.5 6.5-5.5 5.5 5.5 5.5"/></svg>
+      </button>
+      <button type="button" data-quick-add-gallery-next aria-label="Next product image">
+        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none"><path d="m9.5 6.5 5.5 5.5-5.5 5.5"/></svg>
+      </button>`;
+
+    navigation.querySelector('[data-quick-add-gallery-previous]')?.addEventListener('click', () => slideshow.previous());
+    navigation.querySelector('[data-quick-add-gallery-next]')?.addEventListener('click', () => slideshow.next());
+    slideshow.appendChild(navigation);
   }
 
   /**
