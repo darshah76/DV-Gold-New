@@ -52,7 +52,7 @@
             "panel_description": "<p>This is a demo description</p>",
             "cta_text": "Shop tea",
             "cta_link": "shopify://collections/tea",
-            "panel_background": "#E6FFE0",
+            "panel_background": "#62793A",
             "panel_text_color": "{{ settings.color_palette.foreground }}"
           }
         },
@@ -60,12 +60,13 @@
           "type": "category",
           "settings": {
             "name": "Spices",
+            "image": "shopify://shop_images/dhana_powder.png",
             "link": "",
             "panel_heading": "",
             "panel_description": "",
             "cta_text": "Shop category",
             "cta_link": "",
-            "panel_background": "{{ settings.color_palette.background }}",
+            "panel_background": "#57511B",
             "panel_text_color": "{{ settings.color_palette.foreground }}"
           }
         },
@@ -73,12 +74,13 @@
           "type": "category",
           "settings": {
             "name": "Dry fruits",
+            "image": "shopify://shop_images/dry-fruit.png",
             "link": "",
             "panel_heading": "",
             "panel_description": "",
             "cta_text": "Shop category",
             "cta_link": "",
-            "panel_background": "{{ settings.color_palette.background }}",
+            "panel_background": "#97627C",
             "panel_text_color": "{{ settings.color_palette.foreground }}"
           }
         },
@@ -86,12 +88,13 @@
           "type": "category",
           "settings": {
             "name": "Farali Items",
+            "image": "shopify://shop_images/farali.png",
             "link": "",
             "panel_heading": "",
             "panel_description": "",
             "cta_text": "Shop category",
             "cta_link": "",
-            "panel_background": "{{ settings.color_palette.background }}",
+            "panel_background": "#4F6687",
             "panel_text_color": "{{ settings.color_palette.foreground }}"
           }
         }
