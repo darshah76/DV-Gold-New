@@ -178,8 +178,9 @@
     min-width: var(--minimum-touch-target);
     min-height: var(--minimum-touch-target);
     color: var(--color-primary-button-background);
-    border: var(--style-border-width) solid var(--color-border);
+    border: var(--style-border-width) solid currentColor;
     border-radius: var(--style-border-radius-50);
+    background: transparent;
   }
 
   .home-bestsellers__arrow:disabled {
@@ -249,8 +250,9 @@
     }
 
     .home-bestsellers__arrow:not(:disabled):hover {
-      color: var(--color-primary-button-hover-background);
-      border-color: currentColor;
+      color: var(--color-primary-button-text);
+      border-color: var(--color-primary-button-background);
+      background: var(--color-primary-button-background);
     }
   }
 

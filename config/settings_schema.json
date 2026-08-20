@@ -101,14 +101,14 @@
       {
         "type": "font_picker",
         "id": "type_body_font",
-        "default": "quicksand_n4",
+        "default": "quicksand_n5",
         "label": "t:options.body",
         "visible_if": "{{ settings.type_body_google_sans == false }}"
       },
       {
         "type": "font_picker",
         "id": "type_subheading_font",
-        "default": "quicksand_n5",
+        "default": "quicksand_n6",
         "label": "t:options.subheading"
       },
       {
