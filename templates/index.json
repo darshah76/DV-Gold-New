@@ -288,6 +288,7 @@
       "name": "DV History",
       "settings": {
         "title": "The DV History",
+        "image": "shopify://shop_images/DV_History.png",
         "text": "<p>DV Groups represents a legacy built on trust, quality, and consistency. With roots dating back to 1957, the brand has grown from a traditional trading organization into a brand of choice in premium food products.</p>",
         "cta_text": "Know more",
         "cta_link": "",
