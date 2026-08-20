@@ -69,11 +69,12 @@
           {% assign particle_setting = 'particle_' | append: index %}
           {% assign particle = section.settings[particle_setting] %}
           {% if particle != blank %}
+            {% assign particle_class = 'homepicked-masala__particle homepicked-masala__particle--' | append: index %}
             {{
               particle
               | image_url: width: 100
               | image_tag:
-                class: 'homepicked-masala__particle homepicked-masala__particle--' | append: index,
+                class: particle_class,
                 widths: '24, 32, 48, 64, 80, 100',
                 sizes: '(max-width: 749px) 24px, 32px',
                 loading: 'lazy',
@@ -132,10 +133,11 @@
 
   .homepicked-masala__image {
     display: block;
-    width: 100%;
+    width: auto;
+    max-width: 100%;
     height: auto;
-    aspect-ratio: 4 / 3;
-    object-fit: cover;
+    margin-inline: auto;
+    object-fit: contain;
   }
 
   .homepicked-masala__placeholder {
