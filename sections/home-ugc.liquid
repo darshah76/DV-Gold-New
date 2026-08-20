@@ -15,8 +15,9 @@
       </header>
     {% endif %}
 
-    <div class="home-ugc__track" data-ugc-track>
-      {% for block in section.blocks %}
+    <div class="home-ugc__content">
+      <div class="home-ugc__track" data-ugc-track>
+        {% for block in section.blocks %}
         {% liquid
           assign product = block.settings.product
           assign current_variant = product.selected_or_first_available_variant
@@ -65,21 +66,22 @@
             {% endif %}
           </div>
         </product-card>
-      {% else %}
-        <p class="home-ugc__empty">Add a video card to get started.</p>
-      {% endfor %}
-    </div>
-
-    {% if section.blocks.size > 1 %}
-      <div class="home-ugc__navigation" aria-label="Video carousel controls">
-        <button class="button button-secondary home-ugc__arrow" type="button" data-ugc-previous aria-label="Previous videos">
-          <svg aria-hidden="true" viewBox="0 0 24 24" fill="none"><path d="m14.5 6.5-5.5 5.5 5.5 5.5"/></svg>
-        </button>
-        <button class="button button-secondary home-ugc__arrow" type="button" data-ugc-next aria-label="Next videos">
-          <svg aria-hidden="true" viewBox="0 0 24 24" fill="none"><path d="m9.5 6.5 5.5 5.5-5.5 5.5"/></svg>
-        </button>
+        {% else %}
+          <p class="home-ugc__empty">Add a video card to get started.</p>
+        {% endfor %}
       </div>
-    {% endif %}
+
+      {% if section.blocks.size > 1 %}
+        <div class="home-ugc__navigation" aria-label="Video carousel controls">
+          <button class="button button-secondary home-ugc__arrow" type="button" data-ugc-previous aria-label="Previous videos">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none"><path d="m14.5 6.5-5.5 5.5 5.5 5.5"/></svg>
+          </button>
+          <button class="button button-secondary home-ugc__arrow" type="button" data-ugc-next aria-label="Next videos">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none"><path d="m9.5 6.5 5.5 5.5-5.5 5.5"/></svg>
+          </button>
+        </div>
+      {% endif %}
+    </div>
   </div>
 </home-ugc>
 
@@ -87,12 +89,13 @@
   .home-ugc__inner { display: flex; flex-direction: column; }
   .home-ugc__header { text-align: center; }
   .home-ugc__heading { margin: 0; color: var(--color-heading); text-wrap: balance; }
+  .home-ugc__content { display: flex; flex-direction: column; gap: var(--gap-sm); min-width: 0; }
   .home-ugc__track { display: grid; grid-auto-flow: column; grid-auto-columns: min(82vw, 20rem); gap: var(--gap-sm); overflow-x: auto; overscroll-behavior-inline: contain; scroll-snap-type: inline mandatory; scrollbar-width: none; padding-block-end: var(--padding-2xs); }
   .home-ugc__track::-webkit-scrollbar { display: none; }
-  .home-ugc__card { position: relative; display: flex; flex-direction: column; min-width: 0; overflow: hidden; scroll-snap-align: start; background: var(--color-white); border: var(--style-border-width) solid var(--color-card-border-warm); border-radius: var(--style-border-radius-cards); box-shadow: var(--shadow-card-subtle); }
+  .home-ugc__card { position: relative; display: flex; flex-direction: column; min-width: 0; overflow: hidden; isolation: isolate; scroll-snap-align: start; background: var(--color-white); border: var(--style-border-width) solid var(--color-card-border-warm); border-radius: var(--style-border-radius-cards); box-shadow: var(--shadow-card-subtle); }
   .home-ugc__card > .product-card__link { position: absolute; inset: 0; z-index: 0; }
-  .home-ugc__media { position: relative; aspect-ratio: 9 / 16; overflow: hidden; background: var(--color-background-tertiary); }
-  .home-ugc__media video, .home-ugc__placeholder { width: 100%; height: 100%; display: block; object-fit: cover; border-radius: var(--style-border-radius-cards); }
+  .home-ugc__media { position: relative; aspect-ratio: 9 / 16; overflow: hidden; border-radius: var(--style-border-radius-cards) var(--style-border-radius-cards) 0 0; background: var(--color-background-tertiary); }
+  .home-ugc__media video, .home-ugc__placeholder { width: 100%; height: 100%; display: block; object-fit: cover; }
   .home-ugc__video-controls { position: absolute; inset: var(--padding-sm) var(--padding-sm) auto; z-index: var(--layer-raised); display: flex; justify-content: space-between; pointer-events: none; }
   .home-ugc__video-control { display: grid; place-items: center; width: var(--minimum-touch-target); height: var(--minimum-touch-target); padding: 0; border: var(--style-border-width) solid var(--color-border); border-radius: var(--style-border-radius-50); background: var(--color-background); color: var(--color-foreground); box-shadow: var(--shadow-card-subtle); cursor: pointer; pointer-events: auto; }
   .home-ugc__video-control:focus-visible { outline: var(--focus-outline-width) solid currentColor; outline-offset: var(--focus-outline-offset); }
