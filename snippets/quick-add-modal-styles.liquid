@@ -575,7 +575,6 @@
     transform: none;
     opacity: 1;
     visibility: visible;
-    transition: opacity 0.3s var(--animation-easing);
   }
 
   .quick-add-modal__content .product-information__media slideshow-slide:nth-child(1) {
@@ -601,8 +600,23 @@
     inset: auto var(--padding-sm) var(--padding-sm);
     z-index: var(--layer-raised);
     display: flex;
+    align-items: center;
     justify-content: space-between;
     pointer-events: none;
+  }
+
+  .quick-add-modal__gallery-status {
+    min-width: var(--minimum-touch-target);
+    padding: var(--padding-2xs) var(--padding-xs);
+    border-radius: var(--style-border-radius-buttons-secondary);
+    background: var(--color-background-secondary);
+    color: var(--color-foreground);
+    box-shadow: var(--shadow-card-subtle);
+    font-family: var(--font-subheading--family);
+    font-size: var(--font-size--sm);
+    font-weight: var(--font-subheading--weight);
+    line-height: var(--font-paragraph--line-height);
+    text-align: center;
   }
 
   .quick-add-modal__gallery-navigation button {
@@ -635,6 +649,37 @@
     stroke-width: var(--icon-stroke-width);
     stroke-linecap: round;
     stroke-linejoin: round;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .quick-add-modal__content .product-information__media slideshow-slides {
+      cursor: grab;
+    }
+
+    .quick-add-modal__content .product-information__media slideshow-slides:active {
+      cursor: grabbing;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .quick-add-modal__content .product-information__media slideshow-slides {
+      scroll-behavior: smooth;
+    }
+
+    .quick-add-modal__content .product-information__media slideshow-slide {
+      transition: opacity var(--animation-speed) var(--animation-easing),
+        transform var(--animation-speed) var(--animation-easing);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .quick-add-modal__content .product-information__media slideshow-slides {
+      scroll-behavior: auto;
+    }
+
+    .quick-add-modal__content .product-information__media slideshow-slide {
+      animation: none;
+    }
   }
 
   .quick-add-modal__content .sticky-content,
