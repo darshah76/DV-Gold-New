@@ -434,6 +434,7 @@
         "reason_ecqifR": {
           "type": "reason",
           "settings": {
+            "image": "shopify://shop_images/Pure_and_Natural.png",
             "title": "Pure & natural",
             "description": "<p>100% clean and natural ingredients.</p>"
           }
@@ -441,6 +442,7 @@
         "reason_9n6gfM": {
           "type": "reason",
           "settings": {
+            "image": "shopify://shop_images/source_care.png",
             "title": "Sourced with care",
             "description": "<p>Ethically sourced from trusted farms.</p>"
           }
@@ -448,6 +450,7 @@
         "reason_wxMJrE": {
           "type": "reason",
           "settings": {
+            "image": "shopify://shop_images/no_compromise.png",
             "title": "No compromise",
             "description": "<p>No additives, fillers, or preservatives.</p>"
           }
@@ -455,6 +458,7 @@
         "reason_BKNHPj": {
           "type": "reason",
           "settings": {
+            "image": "shopify://shop_images/loved_by_family.png",
             "title": "Loved by families",
             "description": "<p>Trusted by thousands of happy homes.</p>"
           }
