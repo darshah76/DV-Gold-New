@@ -128,16 +128,16 @@ Heading spacing rules:
 
 ### Families and weights
 
-The active body family is **Inter**, while headings and titles use **Chewy** by default. Merchants can switch Google Sans on or off for body text and Chewy on or off for headings with the Typography checkboxes; when a checkbox is off, its Shopify font picker controls that role.
+The active body family is **Quicksand**, while headings and titles use **Chewy** by default. Merchants can switch Google Sans on or off for body text and Chewy on or off for headings with the Typography checkboxes; when a checkbox is off, its Shopify font picker controls that role.
 
 | Role | Setting | CSS family token | Active face | Standard weight |
 | --- | --- | --- | --- | ---: |
-| Body / paragraph | `type_body_font` | `--font-body--family` | Inter regular | 400 |
-| Subheading / labels | `type_subheading_font` | `--font-subheading--family` | Inter medium | 500 |
+| Body / paragraph | `type_body_font` | `--font-body--family` | Quicksand regular | 400 |
+| Subheading / labels | `type_subheading_font` | `--font-subheading--family` | Quicksand medium | 500 |
 | Heading | `type_heading_chewy` / `type_heading_font` | `--font-heading--family` | Chewy regular | 400 |
-| Accent | `type_accent_font` | `--font-accent--family` | Inter bold | 700 |
+| Accent | `type_accent_font` | `--font-accent--family` | Quicksand bold | 700 |
 
-Use `--font-<role>--family`, `--font-<role>--style`, and `--font-<role>--weight`; never write `Inter`, `Google Sans`, or `Chewy` directly in component CSS. Google Sans and Chewy are loaded centrally by `snippets/fonts.liquid` when their settings are enabled. Use Chewy only at its supplied 400 weight; use only the loaded 400, 500, and 700 weights for the other brand faces (plus generated bold/italic faces where the design semantically requires them). Do not simulate bold or italic. Body copy remains 400, labels/subheadings 500, Chewy headings 400, and accent text 700.
+Use `--font-<role>--family`, `--font-<role>--style`, and `--font-<role>--weight`; never write `Quicksand`, `Google Sans`, or `Chewy` directly in component CSS. Quicksand is loaded centrally by `snippets/fonts.liquid`; Google Sans and Chewy are loaded there when their settings are enabled. Use Chewy only at its supplied 400 weight; use only the loaded 400, 500, and 700 weights for the other brand faces (plus generated bold/italic faces where the design semantically requires them). Do not simulate bold or italic. Body copy remains 400, labels/subheadings 500, Chewy headings 400, and accent text 700.
 
 ### Global hierarchy
 
