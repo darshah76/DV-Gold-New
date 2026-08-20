@@ -4,6 +4,7 @@ import { DialogComponent, DialogCloseEvent } from '@theme/dialog';
 import { mediaQueryLarge, isMobileBreakpoint, getIOSVersion } from '@theme/utilities';
 import VariantPicker from '@theme/variant-picker';
 import { StandardEvents, ProductSelectEvent, CartLinesUpdateEvent } from '@shopify/events';
+import { SlideshowSelectEvent } from '@theme/events';
 
 export class QuickAddComponent extends Component {
   /** @type {AbortController | null} */
@@ -272,6 +273,60 @@ export class QuickAddComponent extends Component {
     morph(modalContent, productGrid);
 
     this.#syncVariantSelection(modalContent);
+    this.#addModalGalleryNavigation(modalContent);
+  }
+
+  /**
+   * Adds modal-owned controls so product media remains browsable even when the
+   * product page itself is configured to use a desktop grid.
+   * @param {Element} modalContent - The modal content element
+   */
+  #addModalGalleryNavigation(modalContent) {
+    const slideshow = /** @type {import('./slideshow').Slideshow | null} */ (
+      modalContent.querySelector('.product-information__media slideshow-component')
+    );
+    const slides = slideshow?.querySelectorAll('slideshow-slide');
+    if (!slideshow || !slides || slides.length < 2) return;
+
+    const navigation = document.createElement('div');
+    navigation.className = 'quick-add-modal__gallery-navigation';
+    navigation.setAttribute('aria-label', 'Product image controls');
+    const previous = this.#createGalleryButton('Previous product image', 'm14.5 6.5-5.5 5.5 5.5 5.5');
+    const status = document.createElement('span');
+    const next = this.#createGalleryButton('Next product image', 'm9.5 6.5 5.5 5.5-5.5 5.5');
+
+    status.className = 'quick-add-modal__gallery-status';
+    status.setAttribute('aria-live', 'polite');
+    status.textContent = `1 / ${slides.length}`;
+
+    previous.addEventListener('click', (event) => slideshow.previous(event));
+    next.addEventListener('click', (event) => slideshow.next(event));
+    slideshow.addEventListener(SlideshowSelectEvent.eventName, (event) => {
+      if (!(event instanceof SlideshowSelectEvent)) return;
+      status.textContent = `${event.detail.index + 1} / ${slides.length}`;
+    });
+
+    navigation.append(previous, status, next);
+    slideshow.appendChild(navigation);
+  }
+
+  /** @param {string} label @param {string} path */
+  #createGalleryButton(label, path) {
+    const button = document.createElement('button');
+    const icon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    const iconPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+
+    button.type = 'button';
+    button.className = 'button button-secondary';
+    button.setAttribute('aria-label', label);
+    icon.setAttribute('aria-hidden', 'true');
+    icon.setAttribute('viewBox', '0 0 24 24');
+    icon.setAttribute('fill', 'none');
+    iconPath.setAttribute('d', path);
+    icon.appendChild(iconPath);
+    button.appendChild(icon);
+
+    return button;
   }
 
   /**
