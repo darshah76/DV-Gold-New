@@ -114,10 +114,11 @@
   .home-ugc__product .quick-add__button > .product-card-cart-icons { display: grid; place-items: center; width: var(--icon-size-md); height: var(--icon-size-md); margin: 0; flex: none; }
   .home-ugc__product .quick-add__button > :is(.add-to-cart-icon, .product-card-cart-icons) svg { width: var(--icon-size-md); height: var(--icon-size-md); }
   .home-ugc__navigation { align-self: center; display: flex; gap: var(--gap-xs); }
-  .home-ugc__arrow.button { display: grid; place-items: center; min-width: var(--minimum-touch-target); width: var(--minimum-touch-target); min-height: var(--minimum-touch-target); height: var(--minimum-touch-target); padding: 0; border-radius: var(--style-border-radius-50); }
+  .home-ugc__arrow.button { --button-color: var(--color-primary-button-background); --button-background-color: transparent; --button-border-color: var(--color-primary-button-background); display: grid; place-items: center; min-width: var(--minimum-touch-target); width: var(--minimum-touch-target); min-height: var(--minimum-touch-target); height: var(--minimum-touch-target); padding: 0; border-radius: var(--style-border-radius-50); }
   .home-ugc__arrow svg { width: var(--icon-size-md); height: var(--icon-size-md); }
   .home-ugc__arrow path { stroke: currentColor; stroke-width: var(--icon-stroke-width); stroke-linecap: round; stroke-linejoin: round; }
   .home-ugc__arrow:disabled { opacity: var(--opacity-50); cursor: not-allowed; }
+  @media (hover: hover) and (pointer: fine) { .home-ugc__arrow:not(:disabled):hover { --button-color: var(--color-primary-button-text); --button-background-color: var(--color-primary-button-background); --button-border-color: var(--color-primary-button-background); } }
   .home-ugc__empty { margin: 0; color: var(--color-foreground-muted); }
   @media screen and (min-width: 750px) { .home-ugc__track { grid-auto-columns: min(38vw, 20rem); } }
   @media screen and (min-width: 1200px) { .home-ugc__track { grid-auto-columns: calc((100% - (var(--gap-sm) * 4)) / 5); } }

@@ -132,12 +132,12 @@ The active body family is **Quicksand**, while headings and titles use **Chewy**
 
 | Role | Setting | CSS family token | Active face | Standard weight |
 | --- | --- | --- | --- | ---: |
-| Body / paragraph | `type_body_font` | `--font-body--family` | Quicksand regular | 400 |
-| Subheading / labels | `type_subheading_font` | `--font-subheading--family` | Quicksand medium | 500 |
+| Body / paragraph | `type_body_font` | `--font-body--family` | Quicksand medium | 500 |
+| Subheading / labels | `type_subheading_font` | `--font-subheading--family` | Quicksand semibold | 600 |
 | Heading | `type_heading_chewy` / `type_heading_font` | `--font-heading--family` | Chewy regular | 400 |
 | Accent | `type_accent_font` | `--font-accent--family` | Quicksand bold | 700 |
 
-Use `--font-<role>--family`, `--font-<role>--style`, and `--font-<role>--weight`; never write `Quicksand`, `Google Sans`, or `Chewy` directly in component CSS. Quicksand is loaded centrally by `snippets/fonts.liquid`; Google Sans and Chewy are loaded there when their settings are enabled. Use Chewy only at its supplied 400 weight; use only the loaded 400, 500, and 700 weights for the other brand faces (plus generated bold/italic faces where the design semantically requires them). Do not simulate bold or italic. Body copy remains 400, labels/subheadings 500, Chewy headings 400, and accent text 700.
+Use `--font-<role>--family`, `--font-<role>--style`, and `--font-<role>--weight`; never write `Quicksand`, `Google Sans`, or `Chewy` directly in component CSS. Quicksand is loaded centrally by `snippets/fonts.liquid`; Google Sans and Chewy are loaded there when their settings are enabled. Use Chewy only at its supplied 400 weight; use only loaded weights for the other brand faces (plus generated bold/italic faces where the design semantically requires them). Do not simulate bold or italic. Body copy uses 500, labels/subheadings use 600, Chewy headings use 400, and accent text uses 700.
 
 ### Global hierarchy
 
@@ -149,7 +149,7 @@ Use `--font-<role>--family`, `--font-<role>--style`, and `--font-<role>--weight`
 | H4 | 24px | 24px | Heading / 400 | 1.0 | 0 |
 | H5 | 14px | 14px | Heading / 400 | 1.6 | configured preset/default 0 |
 | H6 | 12px | 12px | Heading / 400 | 1.6 | configured preset/default 0 |
-| Paragraph | 14px | 14px | Body / 400 | 1.6 | body default 0 |
+| Paragraph | 14px | 14px | Body / 500 | 1.6 | body default 0 |
 
 The theme makes configured preset sizes fluid at 48px and above, then derives the lower bound from the next smaller configured size. With the active scale, H1 and H2 resolve to the clamps shown; H3 and below remain fixed.
 
