@@ -107,17 +107,18 @@ Use this matrix for **every storefront section**:
 
 | Section type | Theme-editor top setting | Theme-editor bottom setting | Effective top/bottom below 990px | Effective top/bottom at 990px+ | Heading-to-content `gap` setting | Effective gap below 990px / at 990px+ |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| Standard content section: product/collection lists, recommendations, blogs, rich text, forms, carousels | 48px | 48px | 33.6px | 48px | 28px | 24px / 28px |
-| Compact/utility section: breadcrumbs, collection links, small notices, secondary navigation | 24px | 24px | 20px | 24px | 24px | 24px / 24px |
-| Hero, slideshow, full-bleed media, or intentionally flush section | 0px | 0px | 0px | 0px | 28px if it contains an internal title/content stack | 24px / 28px |
+| Standard content section: product/collection lists, recommendations, blogs, rich text, forms, carousels | 48px | 48px | 48px | 48px | 28px | 28px / 28px |
+| Compact/utility section: breadcrumbs, collection links, small notices, secondary navigation | 24px | 24px | 24px | 24px | 24px | 24px / 24px |
+| Hero, slideshow, full-bleed media, or intentionally flush section | 0px | 0px | 0px | 0px | 28px if it contains an internal title/content stack | 28px / 28px |
 | Header, announcement bar, footer, drawer, modal | Component-owned | Component-owned | Use that component's existing tokens/settings | Use that component's existing tokens/settings | Component-owned | Component-owned |
 
-The responsive results above come from the existing system, not separate breakpoint values: `.spacing-style` uses `--spacing-scale-md: 0.7` below 990px and `--spacing-scale-default: 1` from 990px; values above 20px have a 20px floor. `.gap-style` uses the same scale with a 24px floor for values above 24px. Always render section padding with `{% render 'spacing-style', settings: section.settings %}` on a `.spacing-style` element and header/content separation with `{% render 'gap-style', value: section.settings.gap %}` on a `.gap-style` element.
+The responsive results above come from the existing system, not separate breakpoint values: storefront section roots use `--spacing-scale-default: 1` at every viewport so mobile retains the full configured section padding, while nested component spacing continues to use `--spacing-scale-md: 0.7` below 990px. Section-level `.gap-style` wrappers similarly use the default scale on mobile, while component gaps retain their responsive scale. Values above 20px have a 20px padding floor, and gaps above 24px have a 24px floor. Always render section padding with `{% render 'spacing-style', settings: section.settings %}` on a `.spacing-style` element and header/content separation with `{% render 'gap-style', value: section.settings.gap %}` on a `.gap-style` element.
 
 Heading spacing rules:
 
 - The section-level `gap` is the single source of space between the **entire section header region** (eyebrow, title, description, and header action) and the **section content region** (grid, carousel, media, list, or form).
-- Standard section headers use a 28px gap setting, which resolves to 24px below 990px and 28px at 990px and above. Compact sections use 24px at every viewport.
+- Standard section headers use a 28px gap setting at every viewport. Compact sections use 24px at every viewport.
+- Below 750px, section headings, supporting text, and section content are centered horizontally and text is center-aligned. FAQ is the deliberate content-alignment exception: its question and answer content remains start-aligned for scanability, while its section heading remains centered.
 - Spacing inside the header region remains component-owned: use the shared layout `gap` tokens for eyebrow-to-title, title-to-description, and description-to-action. Do not add bottom padding to the title itself to imitate the section-level gap.
 - When the header or content region is empty, hide it and collapse the associated gap; never leave an empty 24–28px row.
 - Adjacent sections each retain their own top and bottom padding. Do not collapse or remove one section's boundary spacing merely because the neighboring section uses the same background.

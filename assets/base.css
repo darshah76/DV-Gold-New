@@ -363,6 +363,29 @@ p:empty {
   .section--mobile-full-width > * {
     grid-column: 1 / -1;
   }
+
+  /* Keep mobile storefront sections spacious and centered without changing component-owned chrome. */
+  main .section.spacing-style {
+    --spacing-scale: var(--spacing-scale-default);
+  }
+
+  main .section > .gap-style,
+  main .section .section-content-wrapper {
+    --gap-scale: var(--spacing-scale-default);
+  }
+
+  main .section:not(.home-faq) {
+    text-align: center;
+  }
+
+  main .section:not(.home-faq) :is(h1, h2, h3, h4, h5, h6, p) {
+    margin-inline: auto;
+    text-align: center;
+  }
+
+  main .section:not(.home-faq) .section-content-wrapper {
+    align-items: center;
+  }
 }
 
 /* For full-width sections with margin, content still spans full width but with space on the sides */
