@@ -129,6 +129,7 @@
         "particle_4": "shopify://shop_images/cashew.png",
         "particle_5": "shopify://shop_images/pishtasio.png",
         "particle_6": "shopify://shop_images/cashew.png",
+        "particle_scale": 150,
         "gap": 48,
         "padding-block-start": 48,
         "padding-block-end": 48
