@@ -479,6 +479,7 @@
         "video_card_XTHRDd": {
           "type": "video_card",
           "settings": {
+            "video": "shopify://files/videos/Video-53535.mp4",
             "product": "dv-gold-tea",
             "show_title": true,
             "show_price": true,
@@ -488,6 +489,7 @@
         "video_card_Y8eF7q": {
           "type": "video_card",
           "settings": {
+            "video": "shopify://files/videos/Video-37126.mp4",
             "product": "rajagaro-kakro",
             "show_title": true,
             "show_price": true,
@@ -497,6 +499,7 @@
         "video_card_9yfdTT": {
           "type": "video_card",
           "settings": {
+            "video": "shopify://files/videos/Video-93230.mp4",
             "product": "turmeric-powder",
             "show_title": true,
             "show_price": true,
@@ -506,6 +509,27 @@
         "video_card_HczWa6": {
           "type": "video_card",
           "settings": {
+            "video": "shopify://files/videos/Video-22900.mp4",
+            "product": "sabudana",
+            "show_title": true,
+            "show_price": true,
+            "show_compare_price": true
+          }
+        },
+        "video_card_mqAREg": {
+          "type": "video_card",
+          "settings": {
+            "video": "shopify://files/videos/Video-65566.mp4",
+            "product": "sabudana",
+            "show_title": true,
+            "show_price": true,
+            "show_compare_price": true
+          }
+        },
+        "video_card_JdWEjK": {
+          "type": "video_card",
+          "settings": {
+            "video": "shopify://files/videos/Video-14018.mp4",
             "product": "sabudana",
             "show_title": true,
             "show_price": true,
@@ -517,7 +541,9 @@
         "video_card_XTHRDd",
         "video_card_Y8eF7q",
         "video_card_9yfdTT",
-        "video_card_HczWa6"
+        "video_card_HczWa6",
+        "video_card_mqAREg",
+        "video_card_JdWEjK"
       ],
       "name": "Home UGC",
       "settings": {
