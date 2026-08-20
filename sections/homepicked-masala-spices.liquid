@@ -80,17 +80,19 @@
                 loading: 'lazy',
                 alt: ''
             }}
-            {% assign duplicate_particle_class = particle_class | append: ' homepicked-masala__particle--duplicate' %}
-            {{
-              particle
-              | image_url: width: 200
-              | image_tag:
-                class: duplicate_particle_class,
-                widths: '32, 48, 64, 80, 100, 120, 160, 200',
-                sizes: '(max-width: 749px) 60px, 80px',
-                loading: 'lazy',
-                alt: ''
-            }}
+            {% if index == 1 or index == 3 or index == 5 %}
+              {% assign duplicate_particle_class = particle_class | append: ' homepicked-masala__particle--duplicate' %}
+              {{
+                particle
+                | image_url: width: 200
+                | image_tag:
+                  class: duplicate_particle_class,
+                  widths: '32, 48, 64, 80, 100, 120, 160, 200',
+                  sizes: '(max-width: 749px) 60px, 80px',
+                  loading: 'lazy',
+                  alt: ''
+              }}
+            {% endif %}
           {% endif %}
         {% endfor %}
       </div>
@@ -232,6 +234,21 @@
     --particle-rotation: -230deg;
     --particle-duration: calc(var(--animation-speed-floating-particle) * 0.95);
     --particle-delay: calc(var(--animation-speed-floating-particle) * -1.05);
+  }
+
+  .homepicked-masala__particle--1.homepicked-masala__particle--duplicate {
+    inset-block-start: 62%;
+    inset-inline-start: 30%;
+  }
+
+  .homepicked-masala__particle--3.homepicked-masala__particle--duplicate {
+    inset-block-start: 5%;
+    inset-inline-end: 30%;
+  }
+
+  .homepicked-masala__particle--5.homepicked-masala__particle--duplicate {
+    inset-block-end: 38%;
+    inset-inline-start: 52%;
   }
 
   @media (max-width: 749px) {
@@ -391,7 +408,7 @@
     },
     {
       "type": "paragraph",
-      "content": "Upload 4–6 small transparent PNG images. Each particle is duplicated across two complementary, responsive animations around the main image."
+      "content": "Upload 4–6 small transparent PNG images. Selected particles are repeated in different positions with a complementary responsive animation."
     },
     {
       "type": "range",
