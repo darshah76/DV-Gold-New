@@ -15,18 +15,19 @@
       "type": "footer",
       "name": "Main footer",
       "settings": {
-        "brand_text": "<p>Curating the world's finest sensory experiences through artisanal teas, heritage spices, and premium dry fruits since 1957.</p>",
+        "logo": "shopify://shop_images/favicon.png",
+        "brand_text": "<p>Curating exceptional products and memorable experiences.</p>",
         "menu_1_title": "Quick links",
-        "menu_1": "main-menu",
+        "menu_1": "footer",
         "menu_2_title": "Policies",
-        "menu_2": "footer",
+        "menu_2": "policies",
         "newsletter_title": "Newsletter",
-        "newsletter_text": "<p>Join our inner circle for exclusive seasonal releases and stories.</p>",
+        "newsletter_text": "<p>Join our list for exclusive releases and stories.</p>",
         "email_placeholder": "Enter your email address",
-        "facebook_url": "https://www.facebook.com",
-        "instagram_url": "https://www.instagram.com",
-        "twitter_url": "https://www.x.com",
-        "youtube_url": "https://www.youtube.com",
+        "facebook_url": "",
+        "instagram_url": "",
+        "twitter_url": "",
+        "youtube_url": "",
         "copyright_text": "DV Gold Foods",
         "background_color": "{{ settings.color_palette.foreground }}",
         "padding-block-start": 64,
@@ -34,5 +35,7 @@
       }
     }
   },
-  "order": ["footer"]
+  "order": [
+    "footer"
+  ]
 }
