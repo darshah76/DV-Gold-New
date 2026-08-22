@@ -208,6 +208,8 @@ Heading and title text uses the merchant-editable `heading_text_color` setting, 
 
 The service-specific `--color-whatsapp: #25D366` token is reserved for WhatsApp calls to action. Do not use it as a general accent color.
 
+The fixed `--color-brand-gold: #F9C800` token is the approved gold used for highlighted Chewy titles and the selection background when burgundy text is selected.
+
 ### How global recoloring works
 
 The merchant-facing master is `settings.color_palette`. Global page settings resolve from it, and `snippets/color-palette.liquid` exposes the runtime semantic variables. To recolor the store globally, update the palette in Theme settings (or both active/preset objects in `config/settings_data.json` during development), not individual selectors.
