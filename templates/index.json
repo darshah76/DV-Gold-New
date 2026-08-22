@@ -386,8 +386,9 @@
       "name": "Home store features",
       "settings": {
         "accessibility_label": "Store features",
-        "padding-block-start": 48,
-        "padding-block-end": 24
+        "speed": 25,
+        "padding-block-start": 0,
+        "padding-block-end": 0
       }
     },
     "home_ugc_Wr9aXj": {
