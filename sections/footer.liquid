@@ -180,7 +180,7 @@
     { "type": "url", "id": "twitter_url", "label": "X URL" },
     { "type": "url", "id": "youtube_url", "label": "YouTube URL" },
     { "type": "text", "id": "copyright_text", "label": "Copyright name", "default": "DV Gold Foods" },
-    { "type": "color", "id": "background_color", "label": "Background color", "default": "{{ settings.color_palette.foreground }}" },
+    { "type": "color", "id": "background_color", "label": "Background color", "default": "{{ settings.palette_primary_button_background }}" },
     { "type": "header", "content": "Padding" },
     { "type": "range", "id": "padding-block-start", "label": "Top", "min": 0, "max": 300, "step": 3, "unit": "px", "default": 264 },
     { "type": "range", "id": "padding-block-end", "label": "Bottom", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 32 }
@@ -188,7 +188,7 @@
   "presets": [{
     "name": "Main footer",
     "category": "Footer",
-    "settings": { "padding-block-start": 264, "padding-block-end": 32 }
+    "settings": { "background_color": "{{ settings.palette_primary_button_background }}", "padding-block-start": 264, "padding-block-end": 32 }
   }]
 }
 {% endschema %}
