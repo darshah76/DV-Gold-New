@@ -512,7 +512,7 @@
       "name": "Home B2B",
       "settings": {
         "heading": "Bulk inquiries",
-        "description": "<p>For B2B & wholesale partnerships</p>",
+        "description": "For B2B & wholesale partnerships",
         "button_text": "Chat on WhatsApp",
         "whatsapp_link": "",
         "gap": 28,
