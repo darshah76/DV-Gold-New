@@ -1,69 +1,97 @@
-<div class="section-background"></div>
+<script
+  src="{{ 'marquee.js' | asset_url }}"
+  type="module"
+  fetchpriority="low"
+></script>
+
+<div class="section-background home-store-features__background"></div>
 
 <section
-  class="section section--page-width home-store-features spacing-style"
+  class="section section--full-width home-store-features spacing-style"
   style="{% render 'spacing-style', settings: section.settings %}"
   aria-label="{{ section.settings.accessibility_label | escape }}"
 >
   {% if section.blocks.size > 0 %}
-    <ul class="home-store-features__list" role="list">
-      {% for block in section.blocks %}
-        <li class="home-store-features__card" {{ block.shopify_attributes }}>
-          {% if block.settings.icon != blank %}
-            {{
-              block.settings.icon
-              | image_url: width: 192
-              | image_tag:
-                class: 'home-store-features__icon',
-                widths: '48, 72, 96, 144, 192',
-                sizes: '48px',
-                loading: 'lazy',
-                alt: ''
-            }}
-          {% endif %}
+    <marquee-component
+      class="home-store-features__marquee"
+      data-speed-factor="{{ section.settings.speed }}"
+    >
+      <div class="home-store-features__track" ref="wrapper">
+        <div class="home-store-features__content" ref="content">
+          <ul class="home-store-features__list" ref="marqueeItems[]" role="list">
+            {% for block in section.blocks %}
+              <li class="home-store-features__item" {{ block.shopify_attributes }}>
+                {% if block.settings.icon != blank %}
+                  {{
+                    block.settings.icon
+                    | image_url: width: 192
+                    | image_tag:
+                      class: 'home-store-features__icon',
+                      widths: '48, 72, 96, 144, 192',
+                      sizes: '48px',
+                      loading: 'lazy',
+                      alt: ''
+                  }}
+                {% endif %}
 
-          {% if block.settings.text != blank %}
-            <p class="home-store-features__text">{{ block.settings.text | escape }}</p>
-          {% endif %}
-        </li>
-      {% endfor %}
-    </ul>
+                {% if block.settings.text != blank %}
+                  <span class="home-store-features__text">{{ block.settings.text | escape }}</span>
+                {% endif %}
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </marquee-component>
   {% endif %}
 </section>
 
 {% stylesheet %}
-  .home-store-features__list {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 0;
-    margin: 0;
-    padding: var(--padding-xl);
-    color: var(--color-primary-button-text);
+  .home-store-features__background,
+  .home-store-features {
     background: var(--color-primary-button-background);
-    border-radius: var(--style-border-radius-lg);
+  }
+
+  .home-store-features__marquee {
+    display: block;
+    width: 100%;
+    overflow: hidden;
+    color: var(--color-primary-button-text);
+  }
+
+  .home-store-features__track {
+    display: flex;
+    width: fit-content;
+  }
+
+  .home-store-features__content {
+    display: flex;
+    min-width: max-content;
+  }
+
+  .home-store-features__list {
+    display: flex;
+    min-width: max-content;
+    align-items: center;
+    gap: var(--gap-2xl);
+    margin: 0;
+    padding-block: var(--padding-3xl);
+    padding-inline: var(--padding-xl);
     list-style: none;
   }
 
-  .home-store-features__card {
-    position: relative;
+  .home-store-features__item {
     display: flex;
-    min-width: 0;
     align-items: center;
-    justify-content: center;
-    gap: var(--gap-sm);
-    padding-block: var(--padding-lg);
-    padding-inline: var(--padding-xs);
-    text-align: center;
+    gap: var(--gap-2xl);
+    white-space: nowrap;
   }
 
-  .home-store-features__card + .home-store-features__card::before {
-    position: absolute;
-    inset-block: var(--padding-xs);
-    inset-inline-start: 0;
-    width: var(--style-border-width);
-    background: currentColor;
-    content: '';
-    opacity: var(--opacity-30);
+  .home-store-features__item::after {
+    color: var(--color-primary-button-background);
+    content: '✦';
+    font-size: var(--font-size--3xl);
+    line-height: 1;
   }
 
   .home-store-features__icon {
@@ -75,30 +103,36 @@
   }
 
   .home-store-features__text {
-    margin: 0;
-    color: var(--color-primary-button-text);
-    font-family: var(--font-body--family);
-    font-style: normal;
-    font-weight: var(--font-body--weight);
-    font-size: var(--font-size--lg);
-    line-height: var(--font-paragraph--line-height);
-    overflow-wrap: anywhere;
-    text-wrap: pretty;
+    color: var(--color-primary-button-background);
+    font-family: var(--font-heading--family);
+    font-style: var(--font-heading--style);
+    font-weight: var(--font-heading--weight);
+    font-size: var(--font-h1--size);
+    line-height: var(--font-h1--line-height);
+    letter-spacing: var(--font-h1--letter-spacing);
   }
 
-  @media (max-width: 749px) {
-    .home-store-features__card {
-      flex-direction: column;
+  @media (prefers-reduced-motion: no-preference) {
+    .home-store-features__marquee:not([data-disabled]) .home-store-features__track {
+      animation: home-store-features-marquee var(--marquee-speed) linear infinite;
+    }
+  }
+
+  @keyframes home-store-features-marquee {
+    to {
+      transform: translate3d(-50%, 0, 0);
     }
   }
 
   @media (min-width: 750px) {
     .home-store-features__list {
-      padding-inline: var(--padding-6xl);
+      gap: var(--gap-3xl);
+      padding-block: var(--padding-4xl);
+      padding-inline: var(--padding-3xl);
     }
 
-    .home-store-features__card {
-      padding-inline: var(--padding-xl);
+    .home-store-features__item {
+      gap: var(--gap-3xl);
     }
   }
 {% endstylesheet %}
@@ -109,7 +143,7 @@
   "disabled_on": {
     "groups": ["header", "footer"]
   },
-  "max_blocks": 3,
+  "max_blocks": 6,
   "settings": [
     {
       "type": "text",
@@ -117,6 +151,17 @@
       "label": "Accessibility label",
       "default": "Store features",
       "info": "Describes this section to screen reader users."
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "label": "Marquee speed",
+      "min": 10,
+      "max": 50,
+      "step": 5,
+      "unit": "s",
+      "default": 25,
+      "info": "Lower values move faster."
     },
     {
       "type": "header",
@@ -167,8 +212,9 @@
       "name": "Home store features",
       "settings": {
         "accessibility_label": "Store features",
-        "padding-block-start": 24,
-        "padding-block-end": 24
+        "speed": 25,
+        "padding-block-start": 0,
+        "padding-block-end": 0
       },
       "blocks": [
         {

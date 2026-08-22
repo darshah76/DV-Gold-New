@@ -44,6 +44,53 @@
         </div>
       {% endif %}
 
+      <div class="home-b2b__form-region">
+        {% form 'contact', class: 'home-b2b__form' %}
+          {% if section.settings.recipient_email != blank %}
+            <input type="hidden" name="contact[Recipient]" value="{{ section.settings.recipient_email | escape }}">
+          {% endif %}
+          <div class="home-b2b__fields">
+            <div class="home-b2b__field">
+              <label for="HomeB2bName-{{ section.id }}">Full name</label>
+              <input id="HomeB2bName-{{ section.id }}" type="text" name="contact[name]" autocomplete="name" required>
+            </div>
+            <div class="home-b2b__field">
+              <label for="HomeB2bEmail-{{ section.id }}">Email address</label>
+              <input id="HomeB2bEmail-{{ section.id }}" type="email" name="contact[email]" autocomplete="email" value="{{ form.email | escape }}" required>
+            </div>
+            <div class="home-b2b__field">
+              <label for="HomeB2bPhone-{{ section.id }}">Phone number</label>
+              <input id="HomeB2bPhone-{{ section.id }}" type="tel" name="contact[phone]" autocomplete="tel" required>
+            </div>
+            <div class="home-b2b__field">
+              <label for="HomeB2bLocation-{{ section.id }}">City or location</label>
+              <input id="HomeB2bLocation-{{ section.id }}" type="text" name="contact[City or location]" autocomplete="address-level2">
+            </div>
+            <div class="home-b2b__field home-b2b__field--message">
+              <label for="HomeB2bMessage-{{ section.id }}">Message</label>
+              <textarea id="HomeB2bMessage-{{ section.id }}" name="contact[body]" required></textarea>
+            </div>
+          </div>
+
+          {% if form.errors %}
+            <div class="home-b2b__message home-b2b__message--error" role="alert">{{ form.errors | default_errors }}</div>
+          {% endif %}
+          {% if form.posted_successfully? %}
+            <p class="home-b2b__message home-b2b__message--success" role="status" tabindex="-1">{{ section.settings.success_message | escape }}</p>
+          {% endif %}
+
+          <div class="home-b2b__actions">
+            <button class="button" type="submit">{{ section.settings.submit_button_text | escape }}</button>
+            {% if section.settings.button_text != blank %}
+              <a class="button-custom home-b2b__button" {% if section.settings.whatsapp_link != blank %}href="{{ section.settings.whatsapp_link }}"{% else %}role="link" aria-disabled="true"{% endif %}>
+                <span class="home-b2b__whatsapp-icon" aria-hidden="true">{% render 'icon', icon: 'whatsapp' %}</span>
+                <span>{{ section.settings.button_text | escape }}</span>
+              </a>
+            {% endif %}
+          </div>
+        {% endform %}
+      </div>
+
       {% if section.blocks.size > 0 %}
         <ul class="home-b2b__cards" role="list">
           {% for block in section.blocks %}
