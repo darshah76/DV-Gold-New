@@ -168,6 +168,19 @@ Type rules:
 - Do not choose a heading size merely to achieve bold text. Use the correct family/weight token.
 - Preserve the configured case. Do not hard-code uppercase or letter spacing in a component.
 
+### New section supporting-copy standard
+
+All new storefront sections must style their primary supporting copy consistently. This includes section descriptions, card descriptions, feature text, history or editorial copy, B2B supporting text, certification text, and FAQ answers. Use the following declarations rather than section-specific typography values:
+
+- `color: var(--color-foreground)` on light and neutral surfaces. When the copy sits on a contrasting semantic surface, use that surface's semantic text token instead (for example, `var(--color-primary-button-text)` on the primary-button background) so contrast remains accessible.
+- `font-family: var(--font-body--family)`.
+- `font-style: normal`; supporting copy must never be italic, even when the configured body font style is italic.
+- `font-weight: var(--font-body--weight)`.
+- `font-size: var(--font-size--lg)` at every viewport; do not add smaller mobile or larger desktop overrides.
+- `line-height: var(--font-paragraph--line-height)`.
+
+This standard applies to primary supporting copy, not headings, buttons, form controls, navigation, prices, badges, short metadata, or other specialized UI text; those elements continue to use their existing component or typography-preset contracts.
+
 ## 5. Color palette and variables
 
 ### Active master palette
