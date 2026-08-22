@@ -114,6 +114,27 @@
         "padding-block-end": 48
       }
     },
+    "homepicked_masala_spices_E3h4tM": {
+      "type": "homepicked-masala-spices",
+      "name": "Homepicked Masala",
+      "settings": {
+        "heading": "From a small town in Gujarat to your kitchen",
+        "description": "<p>From a spice desk in 1957's Madhupura market to your kitchen — 65+ years of purity, now packed for your home.</p><p>Our tea leaves are hand-picked from 13,000+ gardens across India; our spices are graded at origin, our dry fruits selected kernel by kernel. All of it, now packed for one destination — yours.</p>",
+        "cta_label": "Explore all",
+        "cta_link": "/collections/all",
+        "image": "shopify://shop_images/ChatGPT_Image_Aug_21_2026_12_27_46_AM.png",
+        "particle_scale": 150,
+        "particle_1": "shopify://shop_images/almond.png",
+        "particle_2": "shopify://shop_images/black_current.png",
+        "particle_3": "shopify://shop_images/pishtasio.png",
+        "particle_4": "shopify://shop_images/cashew.png",
+        "particle_5": "shopify://shop_images/pishtasio.png",
+        "particle_6": "shopify://shop_images/cashew.png",
+        "gap": 48,
+        "padding-block-start": 48,
+        "padding-block-end": 48
+      }
+    },
     "home_why_choose_CkicYd": {
       "type": "home-why-choose",
       "blocks": {
@@ -160,27 +181,6 @@
       "settings": {
         "title": "Why choose us",
         "gap": 28,
-        "padding-block-start": 48,
-        "padding-block-end": 48
-      }
-    },
-    "homepicked_masala_spices_E3h4tM": {
-      "type": "homepicked-masala-spices",
-      "name": "Homepicked Masala",
-      "settings": {
-        "heading": "From a small town in Gujarat to your kitchen",
-        "description": "<p>From a spice desk in 1957's Madhupura market to your kitchen — 65+ years of purity, now packed for your home.</p><p>Our tea leaves are hand-picked from 13,000+ gardens across India; our spices are graded at origin, our dry fruits selected kernel by kernel. All of it, now packed for one destination — yours.</p>",
-        "cta_label": "Explore all",
-        "cta_link": "/collections/all",
-        "image": "shopify://shop_images/ChatGPT_Image_Aug_21_2026_12_27_46_AM.png",
-        "particle_scale": 150,
-        "particle_1": "shopify://shop_images/almond.png",
-        "particle_2": "shopify://shop_images/black_current.png",
-        "particle_3": "shopify://shop_images/pishtasio.png",
-        "particle_4": "shopify://shop_images/cashew.png",
-        "particle_5": "shopify://shop_images/pishtasio.png",
-        "particle_6": "shopify://shop_images/cashew.png",
-        "gap": 48,
         "padding-block-start": 48,
         "padding-block-end": 48
       }
@@ -573,9 +573,9 @@
   "order": [
     "hero_jVaWmY",
     "home_categories_KPM8pk",
-    "home_why_choose_CkicYd",
     "homepicked_masala_spices_E3h4tM",
     "home_bestsellers_kYbEL7",
+    "home_why_choose_CkicYd",
     "dv_history_hzQ46Q",
     "home_certifications_PLJPpt",
     "home_store_features_CRTxAY",
