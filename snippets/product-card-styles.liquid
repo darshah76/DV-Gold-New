@@ -21,13 +21,12 @@
     background: var(--color-white);
     border: var(--style-border-width) solid var(--color-card-border-warm);
     border-radius: var(--style-border-radius-cards);
-    box-shadow: var(--shadow-card-subtle);
     padding-block-end: var(--padding-lg);
   }
 
   .product-card {
     overflow: hidden;
-    border-radius: var(--style-border-radius-lg);
+    border-radius: var(--style-border-radius-cards);
   }
 
   .product-card .product-card__content > :not(:first-child) {
@@ -196,6 +195,16 @@
 
   .product-card__content slideshow-component {
     --cursor: pointer;
+  }
+
+  .product-card slideshow-arrows .slideshow-control:focus-visible {
+    opacity: 1;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .product-card:is(:hover, :focus-within) slideshow-arrows .slideshow-control {
+      opacity: 1;
+    }
   }
 
   @media screen and (max-width: 749px) {
