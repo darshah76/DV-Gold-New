@@ -17,28 +17,30 @@
       data-speed-factor="{{ section.settings.speed }}"
     >
       <div class="home-store-features__track" ref="wrapper">
-        <ul class="home-store-features__list" ref="content" role="list">
-          {% for block in section.blocks %}
-            <li class="home-store-features__item" ref="marqueeItems[]" {{ block.shopify_attributes }}>
-              {% if block.settings.icon != blank %}
-                {{
-                  block.settings.icon
-                  | image_url: width: 192
-                  | image_tag:
-                    class: 'home-store-features__icon',
-                    widths: '48, 72, 96, 144, 192',
-                    sizes: '48px',
-                    loading: 'lazy',
-                    alt: ''
-                }}
-              {% endif %}
+        <div class="home-store-features__content" ref="content">
+          <ul class="home-store-features__list" ref="marqueeItems[]" role="list">
+            {% for block in section.blocks %}
+              <li class="home-store-features__item" {{ block.shopify_attributes }}>
+                {% if block.settings.icon != blank %}
+                  {{
+                    block.settings.icon
+                    | image_url: width: 192
+                    | image_tag:
+                      class: 'home-store-features__icon',
+                      widths: '48, 72, 96, 144, 192',
+                      sizes: '48px',
+                      loading: 'lazy',
+                      alt: ''
+                  }}
+                {% endif %}
 
-              {% if block.settings.text != blank %}
-                <span class="home-store-features__text">{{ block.settings.text | escape }}</span>
-              {% endif %}
-            </li>
-          {% endfor %}
-        </ul>
+                {% if block.settings.text != blank %}
+                  <span class="home-store-features__text">{{ block.settings.text | escape }}</span>
+                {% endif %}
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
       </div>
     </marquee-component>
   {% endif %}
@@ -60,6 +62,11 @@
   .home-store-features__track {
     display: flex;
     width: fit-content;
+  }
+
+  .home-store-features__content {
+    display: flex;
+    min-width: max-content;
   }
 
   .home-store-features__list {
