@@ -18,8 +18,8 @@
 >
   <div class="home-b2b__container">
     <div
-      class="home-b2b__layout{% if has_intro and section.blocks.size > 0 %} gap-style{% endif %}"
-      {% if has_intro and section.blocks.size > 0 %}
+      class="home-b2b__layout{% if has_intro %} gap-style{% endif %}"
+      {% if has_intro %}
         style="{% render 'gap-style', value: section.settings.gap %}"
       {% endif %}
     >
@@ -30,7 +30,6 @@
               {{ section.settings.heading | escape }}
             </h2>
           {% endif %}
-
           {% if section.settings.description != blank %}
             <div class="home-b2b__description">
               <span class="home-b2b__phone-icon" aria-hidden="true">
@@ -42,25 +41,55 @@
             </div>
           {% endif %}
 
-          {% if section.settings.button_text != blank %}
-            <a
-              class="button-custom home-b2b__button"
-              {% if section.settings.whatsapp_link != blank %}
-                href="{{ section.settings.whatsapp_link }}"
-              {% else %}
-                role="link" aria-disabled="true"
-              {% endif %}
-            >
-              <span class="home-b2b__whatsapp-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M17.472 14.382C17.175 14.233 15.714 13.515 15.442 13.415C15.169 13.316 14.971 13.267 14.772 13.565C14.575 13.862 14.005 14.531 13.832 14.729C13.659 14.928 13.485 14.952 13.188 14.804C12.891 14.654 11.933 14.341 10.798 13.329C9.91501 12.541 9.31801 11.568 9.14501 11.27C8.97201 10.973 9.12701 10.812 9.27501 10.664C9.40901 10.531 9.57301 10.317 9.72101 10.144C9.87001 9.97004 9.91901 9.84604 10.019 9.64704C10.118 9.44904 10.069 9.27604 9.99401 9.12704C9.91901 8.97804 9.32501 7.51504 9.07801 6.92004C8.83601 6.34104 8.59101 6.42004 8.40901 6.41004C8.23601 6.40204 8.03801 6.40004 7.83901 6.40004C7.64101 6.40004 7.31901 6.47404 7.04701 6.77204C6.77501 7.06904 6.00701 7.78804 6.00701 9.25104C6.00701 10.713 7.07201 12.126 7.22001 12.325C7.36901 12.523 9.31601 15.525 12.297 16.812C13.006 17.118 13.559 17.301 13.991 17.437C14.703 17.664 15.351 17.632 15.862 17.555C16.433 17.47 17.62 16.836 17.868 16.142C18.116 15.448 18.116 14.853 18.041 14.729C17.967 14.605 17.769 14.531 17.471 14.382H17.472ZM12.05 21.785H12.046C10.2758 21.7852 8.53809 21.3092 7.01501 20.407L6.65401 20.193L2.91301 21.175L3.91101 17.527L3.67601 17.153C2.68645 15.5773 2.16295 13.7537 2.16601 11.893C2.16701 6.44304 6.60201 2.00904 12.054 2.00904C14.694 2.00904 17.176 3.03904 19.042 4.90704C20.9017 6.75848 21.9434 9.27691 21.935 11.901C21.932 17.351 17.498 21.786 12.05 21.786V21.785ZM20.463 3.48904C18.2376 1.24846 15.2079 -0.00801345 12.05 3.84623e-05C5.49501 3.84623e-05 0.160007 5.33504 0.157007 11.892C0.157007 13.988 0.704007 16.034 1.74501 17.837L0.0570068 24L6.36201 22.346C8.1056 23.296 10.0594 23.7938 12.045 23.794H12.05C18.604 23.794 23.94 18.459 23.943 11.901C23.9528 8.74456 22.6997 5.71527 20.463 3.48804V3.48904Z" fill="currentColor"/>
-                </svg>
-              </span>
-              <span>{{ section.settings.button_text | escape }}</span>
-            </a>
-          {% endif %}
         </div>
       {% endif %}
+
+      <div class="home-b2b__form-region">
+        {% form 'contact', class: 'home-b2b__form' %}
+          {% if section.settings.recipient_email != blank %}
+            <input type="hidden" name="contact[Recipient]" value="{{ section.settings.recipient_email | escape }}">
+          {% endif %}
+          <div class="home-b2b__fields">
+            <div class="home-b2b__field">
+              <label for="HomeB2bName-{{ section.id }}">Full name</label>
+              <input id="HomeB2bName-{{ section.id }}" type="text" name="contact[name]" autocomplete="name" required>
+            </div>
+            <div class="home-b2b__field">
+              <label for="HomeB2bEmail-{{ section.id }}">Email address</label>
+              <input id="HomeB2bEmail-{{ section.id }}" type="email" name="contact[email]" autocomplete="email" value="{{ form.email | escape }}" required>
+            </div>
+            <div class="home-b2b__field">
+              <label for="HomeB2bPhone-{{ section.id }}">Phone number</label>
+              <input id="HomeB2bPhone-{{ section.id }}" type="tel" name="contact[phone]" autocomplete="tel" required>
+            </div>
+            <div class="home-b2b__field">
+              <label for="HomeB2bLocation-{{ section.id }}">City or location</label>
+              <input id="HomeB2bLocation-{{ section.id }}" type="text" name="contact[City or location]" autocomplete="address-level2">
+            </div>
+            <div class="home-b2b__field home-b2b__field--message">
+              <label for="HomeB2bMessage-{{ section.id }}">Message</label>
+              <textarea id="HomeB2bMessage-{{ section.id }}" name="contact[body]" required></textarea>
+            </div>
+          </div>
+
+          {% if form.errors %}
+            <div class="home-b2b__message home-b2b__message--error" role="alert">{{ form.errors | default_errors }}</div>
+          {% endif %}
+          {% if form.posted_successfully? %}
+            <p class="home-b2b__message home-b2b__message--success" role="status" tabindex="-1">{{ section.settings.success_message | escape }}</p>
+          {% endif %}
+
+          <div class="home-b2b__actions">
+            <button class="button" type="submit">{{ section.settings.submit_button_text | escape }}</button>
+            {% if section.settings.button_text != blank %}
+              <a class="button-custom home-b2b__button" {% if section.settings.whatsapp_link != blank %}href="{{ section.settings.whatsapp_link }}"{% else %}role="link" aria-disabled="true"{% endif %}>
+                <span class="home-b2b__whatsapp-icon" aria-hidden="true">{% render 'icon', icon: 'whatsapp' %}</span>
+                <span>{{ section.settings.button_text | escape }}</span>
+              </a>
+            {% endif %}
+          </div>
+        {% endform %}
+      </div>
 
       {% if section.blocks.size > 0 %}
         <ul class="home-b2b__cards" role="list">
@@ -114,6 +143,69 @@
     justify-items: center;
     gap: var(--gap-2xl);
     text-align: center;
+  }
+
+  .home-b2b__form,
+  .home-b2b__fields,
+  .home-b2b__field {
+    display: grid;
+  }
+
+  .home-b2b__form {
+    gap: var(--gap-lg);
+  }
+
+  .home-b2b__fields {
+    gap: var(--gap-md);
+  }
+
+  .home-b2b__field {
+    gap: var(--gap-xs);
+    text-align: start;
+  }
+
+  .home-b2b__field label {
+    font-family: var(--font-subheading--family);
+    font-weight: var(--font-subheading--weight);
+  }
+
+  .home-b2b__field input,
+  .home-b2b__field textarea {
+    width: 100%;
+    min-height: var(--minimum-touch-target);
+    padding: var(--padding-lg);
+    color: var(--color-input-text);
+    background: var(--color-input-background);
+    border: var(--style-border-width-inputs) solid var(--color-input-border);
+    border-radius: var(--style-border-radius-inputs);
+    font: inherit;
+  }
+  .home-b2b__field textarea {
+    min-height: calc(var(--minimum-touch-target) * 3);
+    resize: vertical;
+  }
+
+  .home-b2b__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--gap-md);
+  }
+
+  .home-b2b__actions .button,
+  .home-b2b__actions .home-b2b__button {
+    width: 100%;
+  }
+
+  .home-b2b__message {
+    margin: 0;
+  }
+
+  .home-b2b__message--error {
+    color: var(--color-error);
+  }
+
+  .home-b2b__message--success {
+    color: var(--color-success);
   }
 
   .home-b2b__heading {
@@ -255,7 +347,20 @@
     }
 
     .home-b2b__button.button-custom {
-      width: min(100%, var(--narrow-content-width));
+      width: auto;
+    }
+
+    .home-b2b__fields {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .home-b2b__field--message {
+      grid-column: 1 / -1;
+    }
+
+    .home-b2b__actions .button,
+    .home-b2b__actions .home-b2b__button {
+      width: auto;
     }
 
     .home-b2b__cards {
@@ -282,6 +387,27 @@
 
     .home-b2b__card:nth-child(n)::after {
       content: none;
+    }
+  }
+
+  @media (min-width: 990px) {
+    .home-b2b {
+      position: relative;
+      z-index: 1;
+      margin-block-end: calc(var(--padding-6xl) * -2);
+    }
+
+    .home-b2b__container {
+      max-width: var(--narrow-page-width);
+    }
+
+    .home-b2b__layout {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+      align-items: center;
+    }
+
+    .home-b2b__cards {
+      grid-column: 1 / -1;
     }
   }
 {% endstylesheet %}
@@ -316,6 +442,24 @@
       "type": "url",
       "id": "whatsapp_link",
       "label": "WhatsApp link"
+    },
+    {
+      "type": "text",
+      "id": "recipient_email",
+      "label": "Recipient email",
+      "info": "Included with each inquiry. Shopify sends contact notifications to the store sender email configured in Notifications."
+    },
+    {
+      "type": "text",
+      "id": "submit_button_text",
+      "label": "Submit button text",
+      "default": "Submit"
+    },
+    {
+      "type": "text",
+      "id": "success_message",
+      "label": "Success message",
+      "default": "Thanks for contacting us. We'll get back to you soon."
     },
     {
       "type": "range",
@@ -378,6 +522,8 @@
         "heading": "Bulk inquiries",
         "description": "For B2B & wholesale partnerships",
         "button_text": "Chat on WhatsApp",
+        "submit_button_text": "Submit",
+        "success_message": "Thanks for contacting us. We'll get back to you soon.",
         "gap": 28,
         "padding-block-start": 48,
         "padding-block-end": 48
