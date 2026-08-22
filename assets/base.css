@@ -21,7 +21,7 @@ body {
 html {
   /* Firefox */
   scrollbar-width: thin;
-  scrollbar-color: rgb(var(--color-foreground-rgb) / var(--opacity-40)) var(--color-background);
+  scrollbar-color: var(--color-heading) var(--color-background);
   scroll-behavior: smooth;
 }
 
@@ -51,7 +51,7 @@ html[scroll-lock] .page-wrapper {
     overflow-y: auto;
     scroll-behavior: smooth;
     scrollbar-width: thin;
-    scrollbar-color: rgb(var(--color-foreground-rgb) / var(--opacity-40)) var(--color-background);
+    scrollbar-color: var(--color-heading) var(--color-background);
   }
 
   .page-wrapper--drawer-open shopify-account::part(dialog) {
@@ -1785,6 +1785,16 @@ input[type='radio'] {
 
 /* Global scrollbar styles */
 
+::selection {
+  color: var(--color-white);
+  background-color: var(--color-heading);
+}
+
+:is([role='heading'], h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6)::selection {
+  color: var(--color-foreground);
+  background-color: var(--color-brand-gold);
+}
+
 /* Webkit browsers */
 ::-webkit-scrollbar {
   width: 20px;
@@ -1795,7 +1805,7 @@ input[type='radio'] {
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: rgb(var(--color-foreground-rgb) / var(--opacity-40));
+  background-color: var(--color-heading);
   border-radius: 20px;
   border: 6px solid transparent;
   background-clip: content-box;
@@ -1803,7 +1813,7 @@ input[type='radio'] {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: rgb(var(--color-foreground-rgb) / var(--opacity-60));
+  background-color: var(--color-heading);
 }
 
 /* Prevent iOS zoom on input focus by ensuring minimum 16px font size on mobile */

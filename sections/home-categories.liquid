@@ -4,6 +4,7 @@
   class="section section--page-width home-categories spacing-style"
   style="
     {% render 'spacing-style', settings: section.settings %}
+    --home-categories-heading-color: {{ section.settings.heading_color }};
     {% if section.settings.card_title_color != blank %}
       --home-categories-title-color: {{ section.settings.card_title_color }};
     {% endif %}
@@ -35,7 +36,7 @@
           %}
           <li
             class="home-categories__item"
-            style="--home-categories-panel-background: {{ block.settings.panel_background }}; --home-categories-panel-text: {{ block.settings.panel_text_color }};"
+            style="--home-categories-panel-background: {{ block.settings.panel_background }}; --home-categories-panel-heading: {{ block.settings.panel_heading_color }}; --home-categories-panel-description: {{ block.settings.panel_description_color }}; --home-categories-button-text: {{ block.settings.button_text_color }}; --home-categories-button-background: {{ block.settings.button_background_color }};"
             {{ block.shopify_attributes }}
           >
             <div class="home-categories__card">
@@ -80,7 +81,7 @@
                 {% endif %}
 
                 {% if block.settings.cta_text != blank and panel_link != blank %}
-                  <a class="button home-categories__panel-button" href="{{ panel_link }}">
+                  <a class="button-custom home-categories__panel-button" href="{{ panel_link }}">
                     {{ block.settings.cta_text | escape }}
                   </a>
                 {% endif %}
@@ -104,6 +105,7 @@
 
   .home-categories__title {
     margin: 0;
+    color: var(--home-categories-heading-color);
     text-wrap: balance;
   }
 
@@ -267,12 +269,33 @@
     .home-categories__panel-heading,
     .home-categories__panel-description {
       margin: 0;
-      color: inherit;
+    }
+
+    .home-categories__panel-heading {
+      color: var(--home-categories-panel-heading);
     }
 
     .home-categories__panel-description {
       max-width: var(--max-width--body-normal);
+      color: var(--home-categories-panel-description);
+      font-family: var(--font-body--family);
+      font-style: normal;
+      font-weight: var(--font-body--weight);
+      font-size: var(--font-size--lg);
+      line-height: var(--font-paragraph--line-height);
       text-wrap: pretty;
+    }
+
+    .home-categories__panel-button.button-custom {
+      --button-color: var(--home-categories-button-text);
+      --button-background-color: var(--home-categories-button-background);
+      --button-border-color: var(--home-categories-button-background);
+    }
+
+    .home-categories__panel-button.button-custom:hover {
+      --button-color: var(--home-categories-button-text);
+      --button-background-color: var(--home-categories-button-background);
+      --button-border-color: var(--home-categories-button-background);
     }
 
     .home-categories__item:is(:hover, :focus-within) {
@@ -346,6 +369,12 @@
       "default": "Shop by category"
     },
     {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#F9C800"
+    },
+    {
       "type": "range",
       "id": "gap",
       "label": "Heading to categories gap",
@@ -359,7 +388,7 @@
       "type": "color",
       "id": "card_title_color",
       "label": "Card title color",
-      "default": "{{ settings.color_palette.foreground }}"
+      "default": "#F9C800"
     },
     {
       "type": "header",
@@ -443,9 +472,27 @@
         },
         {
           "type": "color",
-          "id": "panel_text_color",
-          "label": "Panel text color",
+          "id": "panel_heading_color",
+          "label": "Headline color",
+          "default": "#F9C800"
+        },
+        {
+          "type": "color",
+          "id": "panel_description_color",
+          "label": "Description color",
           "default": "{{ settings.color_palette.foreground }}"
+        },
+        {
+          "type": "color",
+          "id": "button_text_color",
+          "label": "Button text color",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "color",
+          "id": "button_background_color",
+          "label": "Button background color",
+          "default": "#9B1B30"
         }
       ]
     }
