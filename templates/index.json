@@ -53,7 +53,10 @@
             "cta_text": "Shop tea",
             "cta_link": "shopify://collections/tea",
             "panel_background": "#62793a",
-            "panel_text_color": "{{ settings.color_palette.foreground }}"
+            "panel_heading_color": "#f9c800",
+            "panel_description_color": "#FFFFFF",
+            "button_text_color": "#ffffff",
+            "button_background_color": "#9b1b30"
           }
         },
         "category_83R437": {
@@ -67,7 +70,10 @@
             "cta_text": "Shop category",
             "cta_link": "",
             "panel_background": "#57511b",
-            "panel_text_color": "{{ settings.color_palette.foreground }}"
+            "panel_heading_color": "#f9c800",
+            "panel_description_color": "{{ settings.color_palette.foreground }}",
+            "button_text_color": "#ffffff",
+            "button_background_color": "#9b1b30"
           }
         },
         "category_PHPy9r": {
@@ -81,7 +87,10 @@
             "cta_text": "Shop category",
             "cta_link": "",
             "panel_background": "#97627c",
-            "panel_text_color": "{{ settings.color_palette.foreground }}"
+            "panel_heading_color": "#f9c800",
+            "panel_description_color": "{{ settings.color_palette.foreground }}",
+            "button_text_color": "#ffffff",
+            "button_background_color": "#9b1b30"
           }
         },
         "category_zJV3eV": {
@@ -95,7 +104,10 @@
             "cta_text": "Shop category",
             "cta_link": "",
             "panel_background": "#4f6687",
-            "panel_text_color": "{{ settings.color_palette.foreground }}"
+            "panel_heading_color": "#f9c800",
+            "panel_description_color": "{{ settings.color_palette.foreground }}",
+            "button_text_color": "#ffffff",
+            "button_background_color": "#9b1b30"
           }
         }
       },
@@ -108,6 +120,7 @@
       "name": "Home Categories",
       "settings": {
         "title": "DV Offerings",
+        "heading_color": "#f9c800",
         "gap": 28,
         "card_title_color": "{{ settings.color_palette.foreground }}",
         "padding-block-start": 48,
@@ -131,56 +144,6 @@
         "particle_5": "shopify://shop_images/pishtasio.png",
         "particle_6": "shopify://shop_images/cashew.png",
         "gap": 48,
-        "padding-block-start": 48,
-        "padding-block-end": 48
-      }
-    },
-    "home_why_choose_CkicYd": {
-      "type": "home-why-choose",
-      "blocks": {
-        "reason_ecqifR": {
-          "type": "reason",
-          "settings": {
-            "image": "shopify://shop_images/Pure_and_Natural.png",
-            "title": "65+ Years of Purity",
-            "description": "<p>Trading spices, dry fruits & tea since 1957 — the same trusted grade now packed for your kitchen.</p>"
-          }
-        },
-        "reason_9n6gfM": {
-          "type": "reason",
-          "settings": {
-            "image": "shopify://shop_images/loved_by_family.png",
-            "title": "Sourced at Origin",
-            "description": "<p>Upper Assam tea estates, 13,000+ gardens, spices graded at source — never from middlemen.</p>"
-          }
-        },
-        "reason_wxMJrE": {
-          "type": "reason",
-          "settings": {
-            "image": "shopify://shop_images/no_compromise.png",
-            "title": "Nothing Added. Ever.",
-            "description": "<p>No colours, no fillers, no preservatives. The purity standard our wholesale buyers demand.</p>"
-          }
-        },
-        "reason_BKNHPj": {
-          "type": "reason",
-          "settings": {
-            "image": "shopify://shop_images/source_care.png",
-            "title": "A Family, Not a Factory",
-            "description": "<p>Three generations of the Patel family still ensure quallitcheck of every tea blend before it ships.</p>"
-          }
-        }
-      },
-      "block_order": [
-        "reason_ecqifR",
-        "reason_9n6gfM",
-        "reason_wxMJrE",
-        "reason_BKNHPj"
-      ],
-      "name": "Home why choose",
-      "settings": {
-        "title": "Why choose us",
-        "gap": 28,
         "padding-block-start": 48,
         "padding-block-end": 48
       }
@@ -298,6 +261,56 @@
           "dv-klassik-tea"
         ],
         "product_count": 8,
+        "gap": 28,
+        "padding-block-start": 48,
+        "padding-block-end": 48
+      }
+    },
+    "home_why_choose_CkicYd": {
+      "type": "home-why-choose",
+      "blocks": {
+        "reason_ecqifR": {
+          "type": "reason",
+          "settings": {
+            "image": "shopify://shop_images/Pure_and_Natural.png",
+            "title": "65+ Years of Purity",
+            "description": "<p>Trading spices, dry fruits & tea since 1957 — the same trusted grade now packed for your kitchen.</p>"
+          }
+        },
+        "reason_9n6gfM": {
+          "type": "reason",
+          "settings": {
+            "image": "shopify://shop_images/loved_by_family.png",
+            "title": "Sourced at Origin",
+            "description": "<p>Upper Assam tea estates, 13,000+ gardens, spices graded at source — never from middlemen.</p>"
+          }
+        },
+        "reason_wxMJrE": {
+          "type": "reason",
+          "settings": {
+            "image": "shopify://shop_images/no_compromise.png",
+            "title": "Nothing Added. Ever.",
+            "description": "<p>No colours, no fillers, no preservatives. The purity standard our wholesale buyers demand.</p>"
+          }
+        },
+        "reason_BKNHPj": {
+          "type": "reason",
+          "settings": {
+            "image": "shopify://shop_images/source_care.png",
+            "title": "A Family, Not a Factory",
+            "description": "<p>Three generations of the Patel family still ensure quallitcheck of every tea blend before it ships.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "reason_ecqifR",
+        "reason_9n6gfM",
+        "reason_wxMJrE",
+        "reason_BKNHPj"
+      ],
+      "name": "Home why choose",
+      "settings": {
+        "title": "Why choose us",
         "gap": 28,
         "padding-block-start": 48,
         "padding-block-end": 48
@@ -560,8 +573,8 @@
         "heading": "Bulk inquiries",
         "description": "For B2B & wholesale partnerships. Whether you're a retailer, distributor, or business partner, we're ready to bring your store premium quality product to grow together. Let's start the conversation.",
         "button_text": "Chat on WhatsApp",
-        "whatsapp_link": "",
-        "recipient_email": "",
+        "whatsapp_link": "https://wa.me/919429608099",
+        "recipient_email": "global@dvgoldfoods.com",
         "submit_button_text": "Submit",
         "success_message": "Thanks for contacting us. We'll get back to you soon.",
         "gap": 28,
