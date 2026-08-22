@@ -37,7 +37,7 @@
                   <path d="M11.2546 6.3C11.2546 4.9375 10.7702 3.77187 9.80148 2.80312C8.83273 1.83437 7.66711 1.35 6.30461 1.35V0C7.17961 0 7.99919 0.16625 8.76335 0.49875C9.52752 0.83125 10.1925 1.28042 10.7584 1.84625C11.3242 2.41208 11.7734 3.07708 12.1059 3.84125C12.4384 4.60542 12.6046 5.425 12.6046 6.3H11.2546ZM8.55461 6.3C8.55461 5.675 8.33586 5.14375 7.89836 4.70625C7.46086 4.26875 6.92961 4.05 6.30461 4.05V2.7C7.30461 2.7 8.15461 3.051 8.85461 3.753C9.55461 4.455 9.9046 5.304 9.9046 6.3H8.55461ZM11.6109 12.6C10.0984 12.4875 8.66398 12.1156 7.30773 11.4844C5.95148 10.8531 4.73586 10 3.66086 8.925C2.58586 7.85 1.73586 6.63437 1.11086 5.27812C0.485855 3.92187 0.117105 2.4875 0.00460527 0.975C-0.0203947 0.7125 0.0563909 0.484375 0.234962 0.290625C0.413534 0.096875 0.636748 0 0.904605 0H3.45461C3.66711 0 3.85148 0.065625 4.00773 0.196875C4.16398 0.328125 4.26711 0.49375 4.31711 0.69375L4.76711 2.7C4.79211 2.8625 4.78273 3.01875 4.73898 3.16875C4.69523 3.31875 4.62336 3.44375 4.52336 3.54375L2.70461 5.38125C2.95461 5.85625 3.24211 6.3125 3.56711 6.75C3.89211 7.1875 4.25441 7.5999 4.65402 7.9872C5.02941 8.3624 5.42961 8.70937 5.85461 9.02812C6.27961 9.34688 6.72961 9.63125 7.20461 9.88125L9.06085 8.08125C9.16086 7.98125 9.28586 7.90937 9.43585 7.86562C9.58585 7.82188 9.7421 7.8125 9.9046 7.8375L11.9109 8.26875C12.1234 8.33125 12.2921 8.44063 12.4171 8.59688C12.5421 8.75313 12.6046 8.9375 12.6046 9.15V11.7C12.6046 11.9679 12.5046 12.1911 12.3046 12.3696C12.1046 12.5482 11.8734 12.625 11.6109 12.6ZM2.08586 4.06875L3.39836 2.75625L3.0766 1.35H1.39211C1.45461 1.825 1.54211 2.2875 1.65461 2.7375C1.76711 3.1875 1.91086 3.63125 2.08586 4.06875ZM8.53586 10.5188C8.9746 10.6968 9.42179 10.8382 9.87742 10.9429C10.333 11.0476 10.7921 11.1313 11.2546 11.1938V9.50625L9.84836 9.20625L8.53586 10.5188Z" fill="currentColor"/>
                 </svg>
               </span>
-              <p>{{ section.settings.description | escape }}</p>
+              <div class="home-b2b__description-content rte">{{ section.settings.description }}</div>
             </div>
           {% endif %}
 
@@ -114,6 +114,54 @@
           {% endfor %}
         </ul>
       {% endif %}
+
+      <div class="home-b2b__form-region">
+        {% form 'contact', class: 'home-b2b__form' %}
+          {% if section.settings.recipient_email != blank %}
+            <input type="hidden" name="contact[Recipient]" value="{{ section.settings.recipient_email | escape }}">
+          {% endif %}
+          <div class="home-b2b__fields">
+            <div class="home-b2b__field">
+              <label for="HomeB2bName-{{ section.id }}">Full name</label>
+              <input id="HomeB2bName-{{ section.id }}" type="text" name="contact[name]" autocomplete="name" required>
+            </div>
+            <div class="home-b2b__field">
+              <label for="HomeB2bEmail-{{ section.id }}">Email address</label>
+              <input id="HomeB2bEmail-{{ section.id }}" type="email" name="contact[email]" autocomplete="email" value="{{ form.email | escape }}" required>
+            </div>
+            <div class="home-b2b__field">
+              <label for="HomeB2bPhone-{{ section.id }}">Phone number</label>
+              <input id="HomeB2bPhone-{{ section.id }}" type="tel" name="contact[phone]" autocomplete="tel" required>
+            </div>
+            <div class="home-b2b__field">
+              <label for="HomeB2bLocation-{{ section.id }}">City or location</label>
+              <input id="HomeB2bLocation-{{ section.id }}" type="text" name="contact[City or location]" autocomplete="address-level2">
+            </div>
+            <div class="home-b2b__field home-b2b__field--message">
+              <label for="HomeB2bMessage-{{ section.id }}">Message</label>
+              <textarea id="HomeB2bMessage-{{ section.id }}" name="contact[body]" required></textarea>
+            </div>
+          </div>
+
+          {% if form.errors %}
+            <div class="home-b2b__message home-b2b__message--error" role="alert">{{ form.errors | default_errors }}</div>
+          {% endif %}
+          {% if form.posted_successfully? %}
+            <p class="home-b2b__message home-b2b__message--success" role="status" tabindex="-1">{{ section.settings.success_message | escape }}</p>
+          {% endif %}
+
+          <div class="home-b2b__actions">
+            <button class="button" type="submit">{{ section.settings.submit_button_text | escape }}</button>
+            {% if section.settings.button_text != blank %}
+              <a class="button-custom home-b2b__button" {% if section.settings.whatsapp_link != blank %}href="{{ section.settings.whatsapp_link }}"{% else %}role="link" aria-disabled="true"{% endif %}>
+                <span class="home-b2b__whatsapp-icon" aria-hidden="true">{% render 'icon', icon: 'whatsapp' %}</span>
+                <span>{{ section.settings.button_text | escape }}</span>
+              </a>
+            {% endif %}
+          </div>
+        {% endform %}
+      </div>
+
     </div>
   </div>
 </section>
@@ -123,7 +171,7 @@
     width: 100%;
     max-width: var(--normal-content-width);
     margin-inline: auto;
-    padding: var(--padding-2xl);
+    padding: var(--padding-xl);
     color: var(--color-foreground);
     background: var(--color-background-secondary);
     border: var(--style-border-width) solid var(--color-card-border-warm);
@@ -152,11 +200,11 @@
   }
 
   .home-b2b__form {
-    gap: var(--gap-lg);
+    gap: var(--gap-md);
   }
 
   .home-b2b__fields {
-    gap: var(--gap-md);
+    gap: var(--gap-sm);
   }
 
   .home-b2b__field {
@@ -173,7 +221,7 @@
   .home-b2b__field textarea {
     width: 100%;
     min-height: var(--minimum-touch-target);
-    padding: var(--padding-lg);
+    padding: var(--padding-sm) var(--padding-md);
     color: var(--color-input-text);
     background: var(--color-input-background);
     border: var(--style-border-width-inputs) solid var(--color-input-border);
@@ -181,7 +229,7 @@
     font: inherit;
   }
   .home-b2b__field textarea {
-    min-height: calc(var(--minimum-touch-target) * 3);
+    min-height: calc(var(--minimum-touch-target) * 2);
     resize: vertical;
   }
 
@@ -215,7 +263,7 @@
 
   .home-b2b__description {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
     gap: var(--gap-xl);
     max-width: var(--max-width--body-normal);
@@ -228,7 +276,7 @@
     text-wrap: pretty;
   }
 
-  .home-b2b__description p,
+  .home-b2b__description-content > *,
   .home-b2b__card-title {
     margin: 0;
   }
@@ -296,11 +344,11 @@
     position: relative;
     display: grid;
     min-width: 0;
-    min-height: calc(var(--minimum-touch-target) * 3);
+    min-height: calc(var(--minimum-touch-target) * 2);
     align-content: center;
     justify-items: center;
     gap: var(--gap-sm);
-    padding: var(--padding-lg) var(--padding-sm);
+    padding: var(--padding-md) var(--padding-sm);
     text-align: center;
   }
 
@@ -343,7 +391,7 @@
 
   @media (min-width: 750px) {
     .home-b2b__container {
-      padding: var(--padding-5xl);
+      padding: var(--padding-2xl);
     }
 
     .home-b2b__button.button-custom {
@@ -368,7 +416,7 @@
     }
 
     .home-b2b__card {
-      padding: var(--padding-xl) var(--padding-sm);
+      padding: var(--padding-lg) var(--padding-sm);
     }
 
     .home-b2b__card:nth-child(n)::before {
@@ -403,11 +451,17 @@
 
     .home-b2b__layout {
       grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
-      align-items: center;
+      align-items: start;
     }
 
-    .home-b2b__cards {
-      grid-column: 1 / -1;
+    .home-b2b__intro {
+      grid-row: 1 / span 2;
+      align-self: center;
+    }
+
+    .home-b2b__cards,
+    .home-b2b__form-region {
+      grid-column: 2;
     }
   }
 {% endstylesheet %}
@@ -427,10 +481,10 @@
       "default": "Bulk inquiries"
     },
     {
-      "type": "text",
+      "type": "richtext",
       "id": "description",
       "label": "Description",
-      "default": "For B2B & wholesale partnerships"
+      "default": "<p>For B2B & wholesale partnerships</p>"
     },
     {
       "type": "text",
@@ -520,7 +574,7 @@
       "name": "Home B2B",
       "settings": {
         "heading": "Bulk inquiries",
-        "description": "For B2B & wholesale partnerships",
+        "description": "<p>For B2B & wholesale partnerships</p>",
         "button_text": "Chat on WhatsApp",
         "submit_button_text": "Submit",
         "success_message": "Thanks for contacting us. We'll get back to you soon.",
