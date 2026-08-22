@@ -127,8 +127,9 @@
     justify-content: center;
     gap: var(--gap-xl);
     max-width: var(--max-width--body-normal);
+    color: var(--color-foreground);
     font-family: var(--font-body--family);
-    font-style: var(--font-body--style);
+    font-style: normal;
     font-weight: var(--font-body--weight);
     font-size: var(--font-size--lg);
     line-height: var(--font-paragraph--line-height);
@@ -239,10 +240,11 @@
   }
 
   .home-b2b__card-title {
+    color: var(--color-foreground);
     font-family: var(--font-body--family);
-    font-style: var(--font-body--style);
+    font-style: normal;
     font-weight: var(--font-body--weight);
-    font-size: var(--font-size--sm);
+    font-size: var(--font-size--lg);
     line-height: var(--font-paragraph--line-height);
     text-wrap: pretty;
   }
@@ -280,10 +282,6 @@
 
     .home-b2b__card:nth-child(n)::after {
       content: none;
-    }
-
-    .home-b2b__card-title {
-      font-size: var(--font-size--md);
     }
   }
 {% endstylesheet %}
