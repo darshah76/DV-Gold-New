@@ -4,6 +4,18 @@
   assign rating = product.metafields.reviews.rating.value.rating
   assign rating_max = product.metafields.reviews.rating.value.scale_max | default: 5
   assign rating_count = product.metafields.reviews.rating_count.value
+
+  if rating == blank or rating_count == blank
+    assign judge_me_badge = product.metafields.judgeme.badge.value | default: product.metafields.judgeme.badge
+    if judge_me_badge contains "data-average-rating='"
+      assign rating = judge_me_badge | split: "data-average-rating='" | last | split: "'" | first
+      assign rating_count = judge_me_badge | split: "data-number-of-reviews='" | last | split: "'" | first
+    elsif judge_me_badge contains 'data-average-rating="'
+      assign rating = judge_me_badge | split: 'data-average-rating="' | last | split: '"' | first
+      assign rating_count = judge_me_badge | split: 'data-number-of-reviews="' | last | split: '"' | first
+    endif
+  endif
+
   assign rating_percent = rating | times: 100.0 | divided_by: rating_max
 %}
 
@@ -47,6 +59,7 @@
     flex-direction: column;
     gap: var(--gap-md);
     width: 100%;
+    text-align: start;
   }
 
   .product-basic-information__tag {
@@ -57,6 +70,7 @@
     font-weight: var(--font-subheading--weight);
     font-size: var(--font-size--sm);
     line-height: var(--font-paragraph--line-height);
+    text-transform: uppercase;
   }
 
   .product-basic-information__title {
@@ -130,6 +144,13 @@
     text-wrap: pretty;
   }
 
+  @media screen and (max-width: 749px) {
+    .product-information .product-basic-information :is(p, h1),
+    .product-information .product-basic-information__rating {
+      margin-inline: 0;
+      text-align: start;
+    }
+  }
 {% endstylesheet %}
 
 {% schema %}

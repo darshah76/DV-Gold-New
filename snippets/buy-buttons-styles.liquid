@@ -12,6 +12,19 @@
     width: 100%;
   }
 
+  .product-information .product-form-buttons {
+    gap: var(--gap-sm);
+  }
+
+  .product-information .add-to-cart-button .svg-wrapper {
+    display: none;
+  }
+
+  .product-information .add-to-cart-button,
+  .product-information shopify-accelerated-checkout {
+    min-height: calc(var(--minimum-touch-target) + var(--padding-xl));
+  }
+
   .product-form-buttons {
     display: flex;
     flex-wrap: wrap;
@@ -113,6 +126,10 @@
   .product-form-buttons:has(.add-to-cart-button.button-secondary) shopify-accelerated-checkout {
     --shopify-accelerated-checkout-button-border-radius: var(--style-border-radius-buttons-secondary);
     --shopify-accelerated-checkout-button-block-size: var(--height-buy-buttons);
+  }
+
+  .product-information shopify-accelerated-checkout {
+    --shopify-accelerated-checkout-button-block-size: calc(var(--minimum-touch-target) + var(--padding-xl));
   }
 
   .product-form-text__error {

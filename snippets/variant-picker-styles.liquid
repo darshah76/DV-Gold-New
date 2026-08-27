@@ -18,6 +18,27 @@
     box-shadow: inset 0 0 0 var(--style-border-width) var(--color-variant-border-gold);
   }
 
+  .product-information .variant-option--equal-width-buttons {
+    display: flex;
+  }
+
+  .product-information .variant-option--buttons legend {
+    width: 100%;
+    color: var(--color-brand-gold);
+    font-family: var(--font-subheading--family);
+    font-style: var(--font-subheading--style);
+    font-weight: var(--font-subheading--weight);
+    font-size: var(--font-size--sm);
+    line-height: var(--font-paragraph--line-height);
+    text-transform: uppercase;
+    text-align: start;
+  }
+
+  .product-information .variant-option--equal-width-buttons .variant-option__button-label {
+    flex: 0 1 auto;
+    min-width: var(--minimum-touch-target);
+  }
+
   .variant-picker__form {
     width: 100%;
   }
