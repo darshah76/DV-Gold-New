@@ -239,6 +239,7 @@ Use the existing spacing scale rather than arbitrary values. Available `--paddin
 
 - Standard border width: `--style-border-width` (1px).
 - Subtle category/card surfaces use `--color-card-border-warm` (`rgba(193, 145, 5, 0.12)`) and `--shadow-card-subtle` (`0px 4px 10px rgba(0, 0, 0, 0.05)`).
+- Product-gallery media uses `--color-product-media-border` (`rgba(193, 145, 5, 0.18)`) for its one-pixel inset stroke.
 - Standard radii: `--style-border-radius-xs` 3.2px, `sm` 9.6px, `md` 12.8px, `lg` 16px, and `--style-border-radius-50` for circles.
 - Active configured radii: cards 4px, product media 0, inputs 4px, primary/secondary buttons 16px, popovers 14px, variant buttons 14px, and swatches 32px.
 - Never add a new radius that is visually indistinguishable from an existing token.
