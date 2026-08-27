@@ -651,6 +651,7 @@ class SwatchesVariantPickerComponent extends VariantPicker {
       const requestUrl = this.buildRequestUrl(clickedSwatch, 'product-card', [optionValueId]);
 
       this.fetchUpdatedSection(requestUrl, {
+        skipVariantPickerUpdate: true,
         detail: { optionValueId, variantId: firstAvailableVariantId, connectedProductUrl },
       });
       return;
