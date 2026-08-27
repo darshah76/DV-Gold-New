@@ -1,0 +1,163 @@
+{% liquid
+  assign product = closest.product
+  assign product_tag = product.metafields.custom.product_tag.value
+  assign rating = product.metafields.reviews.rating.value.rating
+  assign rating_max = product.metafields.reviews.rating.value.scale_max | default: 5
+  assign rating_count = product.metafields.reviews.rating_count.value
+
+  if rating == blank or rating_count == blank
+    assign judge_me_badge = product.metafields.judgeme.badge.value | default: product.metafields.judgeme.badge
+    if judge_me_badge contains "data-average-rating='"
+      assign rating = judge_me_badge | split: "data-average-rating='" | last | split: "'" | first
+      assign rating_count = judge_me_badge | split: "data-number-of-reviews='" | last | split: "'" | first
+    elsif judge_me_badge contains 'data-average-rating="'
+      assign rating = judge_me_badge | split: 'data-average-rating="' | last | split: '"' | first
+      assign rating_count = judge_me_badge | split: 'data-number-of-reviews="' | last | split: '"' | first
+    endif
+  endif
+
+  assign rating_percent = rating | times: 100.0 | divided_by: rating_max
+%}
+
+<div class="product-basic-information" {{ block.shopify_attributes }}>
+  {% if product_tag != blank %}
+    <p class="product-basic-information__tag">{{ product_tag | escape }}</p>
+  {% endif %}
+
+  <h1 class="product-basic-information__title">{{ product.title | escape }}</h1>
+
+  {% if rating != blank and rating_count != blank %}
+    <a class="product-basic-information__rating" href="#judgeme_product_reviews">
+      <span
+        class="product-basic-information__stars"
+        role="img"
+        aria-label="{{ 'accessibility.rating' | t: rating: rating }}"
+      >
+        <span class="product-basic-information__stars-base" aria-hidden="true">
+          {% for star in (1..5) %}{% render 'product-rating-star' %}{% endfor %}
+        </span>
+        <span class="product-basic-information__stars-fill" style="--rating-percent: {{ rating_percent }}%" aria-hidden="true">
+          <span class="product-basic-information__stars-row">
+            {% for star in (1..5) %}{% render 'product-rating-star' %}{% endfor %}
+          </span>
+        </span>
+      </span>
+      <span>{{ rating | round: 2 }} from {{ rating_count }}+ reviews</span>
+    </a>
+  {% endif %}
+
+  {% if product.description != blank %}
+    <p class="product-basic-information__description">
+      {{ product.description | strip_html | truncatewords: 24 | escape }}
+    </p>
+  {% endif %}
+</div>
+
+{% stylesheet %}
+  .product-basic-information {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-md);
+    width: 100%;
+    text-align: start;
+  }
+
+  .product-basic-information__tag {
+    margin: 0;
+    color: var(--color-brand-gold);
+    font-family: var(--font-subheading--family);
+    font-style: var(--font-subheading--style);
+    font-weight: var(--font-subheading--weight);
+    font-size: var(--font-size--sm);
+    line-height: var(--font-paragraph--line-height);
+    text-transform: uppercase;
+  }
+
+  .product-basic-information__title {
+    margin: 0;
+    color: var(--color-heading);
+    font-family: var(--font-h2--family);
+    font-style: var(--font-h2--style);
+    font-weight: var(--font-h2--weight);
+    font-size: var(--font-h2--size);
+    line-height: var(--font-h2--line-height);
+    letter-spacing: var(--font-h2--letter-spacing);
+    text-wrap: balance;
+  }
+
+  .product-basic-information__rating {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-sm);
+    width: fit-content;
+    color: var(--color-foreground);
+    text-decoration: none;
+  }
+
+  .product-basic-information__rating:focus-visible {
+    outline: var(--focus-outline-width) solid currentcolor;
+    outline-offset: var(--focus-outline-offset);
+  }
+
+  .product-basic-information__stars,
+  .product-basic-information__stars-base,
+  .product-basic-information__stars-row {
+    display: flex;
+    gap: var(--gap-3xs);
+  }
+
+  .product-basic-information__stars {
+    position: relative;
+    flex: none;
+  }
+
+  .product-basic-information__stars-base {
+    color: var(--color-border);
+  }
+
+  .product-basic-information__stars-fill {
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: var(--rating-percent);
+    overflow: hidden;
+    color: var(--color-brand-gold);
+  }
+
+  .product-basic-information__stars-row {
+    width: max-content;
+  }
+
+  .product-basic-information__star {
+    display: block;
+    width: var(--icon-size-sm);
+    height: auto;
+  }
+
+  .product-basic-information__description {
+    margin: 0;
+    color: var(--color-foreground);
+    font-family: var(--font-body--family);
+    font-style: normal;
+    font-weight: var(--font-body--weight);
+    font-size: var(--font-size--lg);
+    line-height: var(--font-paragraph--line-height);
+    text-wrap: pretty;
+  }
+
+  @media screen and (max-width: 749px) {
+    .product-information .product-basic-information :is(p, h1),
+    .product-information .product-basic-information__rating {
+      margin-inline: 0;
+      text-align: start;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Basic information",
+  "tag": null,
+  "settings": [],
+  "presets": [{ "name": "Basic information" }]
+}
+{% endschema %}

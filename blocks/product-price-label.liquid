@@ -1,0 +1,36 @@
+<p class="product-price-label" {{ block.shopify_attributes }}>Price</p>
+
+{% stylesheet %}
+  .product-price-label {
+    width: 100%;
+    margin: 0;
+    color: var(--color-brand-gold);
+    font-family: var(--font-subheading--family);
+    font-style: var(--font-subheading--style);
+    font-weight: var(--font-subheading--weight);
+    font-size: var(--font-size--sm);
+    line-height: var(--font-paragraph--line-height);
+    text-align: start;
+    text-transform: uppercase;
+  }
+
+  .product-information product-price .price {
+    color: var(--color-heading);
+  }
+
+  @media screen and (max-width: 749px) {
+    .product-information .product-price-label {
+      margin-inline: 0;
+      text-align: start;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Price label",
+  "tag": null,
+  "settings": [],
+  "presets": [{ "name": "Price label" }]
+}
+{% endschema %}
