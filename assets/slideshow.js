@@ -172,7 +172,11 @@ export class Slideshow extends Component {
 
   /** Indicates whether the slideshow is nested inside another slideshow. */
   get isNested() {
-    return !this.hasAttribute('allow-nested') && this.parentElement?.closest('slideshow-component') !== null;
+    const nestedSlideshow = this.parentElement?.closest('slideshow-component');
+    const isDesktopBestsellerGallery =
+      mediaQueryLarge.matches && this.closest('.home-bestsellers .card-gallery') !== null;
+
+    return Boolean(nestedSlideshow) && !isDesktopBestsellerGallery;
   }
 
   get initialSlide() {
