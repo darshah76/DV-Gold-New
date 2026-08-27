@@ -184,6 +184,13 @@
           endcapture
 
           assign slideshow_attributes = 'data-generic-media-size="[generic_media_size]"' | replace: '[generic_media_size]', generic_media_size
+
+          # Bestseller cards sit inside the section carousel. Their gallery remains
+          # independently navigable on tablet and desktop, while mobile keeps the
+          # nested slideshow disabled to avoid competing touch gestures.
+          if section.type == 'home-bestsellers'
+            assign slideshow_attributes = slideshow_attributes | append: ' allow-nested mobile-disabled'
+          endif
         %}
         {% render 'slideshow',
           ref: 'slideshow',
