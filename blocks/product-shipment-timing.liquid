@@ -1,0 +1,29 @@
+{% assign shipment_timing = closest.product.metafields.custom.shipment_timing.value %}
+
+{% if shipment_timing != blank %}
+  <p class="product-shipment-timing" {{ block.shopify_attributes }}>
+    {{ shipment_timing | escape }}
+  </p>
+{% endif %}
+
+{% stylesheet %}
+  .product-shipment-timing {
+    margin: 0;
+    color: var(--color-success);
+    font-family: var(--font-body--family);
+    font-style: normal;
+    font-weight: var(--font-body--weight);
+    font-size: var(--font-size--sm);
+    line-height: var(--font-paragraph--line-height);
+    text-align: center;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Shipment timing",
+  "tag": null,
+  "settings": [],
+  "presets": [{ "name": "Shipment timing" }]
+}
+{% endschema %}
