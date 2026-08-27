@@ -275,6 +275,11 @@
               },
               "block_order": []
             },
+            "product_features": {
+              "type": "product-features",
+              "settings": {},
+              "blocks": {}
+            },
             "text_aEtTtq": {
               "type": "text",
               "name": "t:names.product_description",
@@ -307,6 +312,7 @@
             "divider_VJhene",
             "variant_picker_R3rGDr",
             "buy_buttons_eYQEYi",
+            "product_features",
             "text_aEtTtq"
           ]
         }
