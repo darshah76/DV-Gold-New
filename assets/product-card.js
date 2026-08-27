@@ -645,6 +645,14 @@ class SwatchesVariantPickerComponent extends VariantPicker {
         variantInput.disabled = !optionAvailable;
       }
       if (addButton instanceof HTMLButtonElement) addButton.disabled = !optionAvailable;
+
+      const optionValueId = clickedSwatch.dataset.optionValueId || '';
+      const connectedProductUrl = clickedSwatch.dataset.connectedProductUrl || '';
+      const requestUrl = this.buildRequestUrl(clickedSwatch, 'product-card', [optionValueId]);
+
+      this.fetchUpdatedSection(requestUrl, {
+        detail: { optionValueId, variantId: firstAvailableVariantId, connectedProductUrl },
+      });
       return;
     }
 
