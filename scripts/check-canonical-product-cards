@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+# Product tiles must flow through the theme block used by Home bestsellers. Keep
+# this check deliberately source-based so it can run without Shopify CLI or a
+# populated store. Transactional cart lines, predictive-search resource rows,
+# and editorial/video cards are separate components, not product tiles.
+required_renderers=(
+  sections/home-bestsellers.liquid
+  sections/main-collection.liquid
+  sections/search-results.liquid
+  sections/product-list.liquid
+  sections/product-recommendations.liquid
+  blocks/product-recommendations.liquid
+)
+
+for renderer in "${required_renderers[@]}"; do
+  if ! rg --quiet "type: '_product-card'" "$renderer"; then
+    printf 'Canonical product-card block missing from %s\n' "$renderer" >&2
+    exit 1
+  fi
+done
+
+required_templates=(
+  templates/index.json
+  templates/collection.json
+  templates/search.json
+  templates/product.json
+  templates/cart.json
+)
+
+for template in "${required_templates[@]}"; do
+  if ! rg --quiet '"type": "_product-card"' "$template"; then
+    printf 'Canonical product-card configuration missing from %s\n' "$template" >&2
+    exit 1
+  fi
+done
+
+# Only the canonical snippet and the server-rendered variant-refresh endpoint
+# may own the product-card custom-element shell. This prevents a new page or
+# section from silently copying the Home bestsellers card markup.
+mapfile -t shell_owners < <(
+  rg -l '<product-card(?:\s|>)' --glob '*.liquid' \
+    | sort \
+    | rg -v '^(sections/home-ugc\.liquid|sections/section-rendering-product-card\.liquid|snippets/product-card\.liquid)$' \
+    || true
+)
+
+if ((${#shell_owners[@]})); then
+  printf 'Product-card markup must be delegated to snippets/product-card.liquid:\n' >&2
+  printf '  %s\n' "${shell_owners[@]}" >&2
+  exit 1
+fi
+
+printf 'Canonical product-card coverage verified.\n'

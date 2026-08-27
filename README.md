@@ -1,5 +1,17 @@
 # Horizon
 
+## Canonical product cards
+
+Home bestsellers, collection and search grids, product lists, and product/cart
+recommendations all render the `_product-card` theme block. The block delegates
+to `snippets/product-card.liquid`, which is the single owner of storefront
+product-tile markup and behavior.
+
+Run `scripts/check-canonical-product-cards` after changing a product surface.
+The check protects the shared rendering path without changing the presentation
+or behavior of transactional cart line items, compact predictive-search result
+rows, or editorial cards, which are not storefront product tiles.
+
 [Getting started](#getting-started) |
 [Staying up to date with Horizon changes](#staying-up-to-date-with-horizon-changes) |
 [Developer tools](#developer-tools) |
