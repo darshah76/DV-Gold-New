@@ -304,9 +304,10 @@ export default class VariantPicker extends Component {
    * @param {string} requestUrl - The request URL.
    * @param {object} [options] - Request options.
    * @param {string} [options.morphElementSelector] - The selector of the element to be morphed. By default, only the variant picker is morphed.
+   * @param {boolean} [options.skipVariantPickerUpdate] - Keep the current picker markup while other listeners consume the response.
    * @param {{ optionValueId?: string, variantId?: string, connectedProductUrl?: string }} [options.detail] - Synchronous product select event detail.
    */
-  fetchUpdatedSection(requestUrl, { morphElementSelector, detail = {} } = {}) {
+  fetchUpdatedSection(requestUrl, { morphElementSelector, skipVariantPickerUpdate = false, detail = {} } = {}) {
     const { optionValueId = '', variantId, connectedProductUrl = '' } = detail;
     // We use this to abort the previous fetch request if it's still pending.
     this.#abortController?.abort();
@@ -362,7 +363,7 @@ export default class VariantPicker extends Component {
           this.updateMain(html);
         } else if (morphElementSelector) {
           this.updateElement(html, morphElementSelector);
-        } else {
+        } else if (!skipVariantPickerUpdate) {
           const { overflowList } = this.refs;
           const wasSwatchesExpanded =
             overflowList instanceof OverflowList && overflowList.getAttribute('disabled') === 'true';

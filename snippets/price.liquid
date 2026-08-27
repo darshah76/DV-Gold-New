@@ -25,29 +25,17 @@
     assign price = 1999
   endif
 
-  # Check if variant has volume pricing
+  # Price ranges must stay scoped to the active variant. Using the product-level
+  # minimum and maximum on cards would keep showing prices from other variants
+  # after the shopper changes the card selection.
   assign has_volume_pricing = null
   assign price_min = null
   assign price_max = null
 
-  # For product cards (collection/search pages), calculate min/max across all variants
-  # For product pages, only use the selected variant's pricing
-  assign is_product_card = false
-  if template.name != 'product'
-    assign is_product_card = true
-  endif
-
-  if is_product_card
-    assign price_min = product_resource.price_min
-    assign price_max = product_resource.price_max
-    assign has_volume_pricing = product_resource.quantity_price_breaks_configured? | default: false
-  else
-    # Product page: only use selected variant's pricing
-    if selected_variant.quantity_price_breaks.size > 0
-      assign has_volume_pricing = true
-      assign price_min = selected_variant.quantity_price_breaks.last.price
-      assign price_max = selected_variant.price
-    endif
+  if selected_variant.quantity_price_breaks.size > 0
+    assign has_volume_pricing = true
+    assign price_min = selected_variant.quantity_price_breaks.last.price
+    assign price_max = selected_variant.price
   endif
 
   # Determine if currency code should be shown
