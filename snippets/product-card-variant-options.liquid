@@ -42,8 +42,10 @@
               endif
 
               assign variant_for_value = first_available_variant | default: option_value_variant
-              assign is_selected = product_option_value.selected
-              if product.selected_variant == blank and forloop.first
+              assign selected_variant = product.selected_or_first_available_variant
+              assign selected_option_value = selected_variant[option_key]
+              assign is_selected = false
+              if product_option_value.name == selected_option_value
                 assign is_selected = true
               endif
             %}

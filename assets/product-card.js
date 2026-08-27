@@ -308,11 +308,16 @@ export class ProductCard extends ProductCardLink {
    * @param {Document} html - The parsed HTML document with updated variant data.
    */
   updatePrice(html) {
-    const priceContainer = this.querySelectorAll(`product-price [ref='priceContainer']`)[1];
+    const priceContainers = this.querySelectorAll(`product-price [ref='priceContainer']`);
     const newPriceElement = html.querySelector(`product-price [ref='priceContainer']`);
 
-    if (newPriceElement && priceContainer) {
-      morph(priceContainer, newPriceElement);
+    if (!newPriceElement) return;
+
+    // A card normally has one visible price, but alternate grid presentations may
+    // render another. Keep every card-owned price synchronized with the active
+    // variant returned by the shared product-card rendering endpoint.
+    for (const priceContainer of priceContainers) {
+      morph(priceContainer, /** @type {Element} */ (newPriceElement.cloneNode(true)));
     }
   }
 
@@ -640,6 +645,14 @@ class SwatchesVariantPickerComponent extends VariantPicker {
         variantInput.disabled = !optionAvailable;
       }
       if (addButton instanceof HTMLButtonElement) addButton.disabled = !optionAvailable;
+
+      const optionValueId = clickedSwatch.dataset.optionValueId || '';
+      const connectedProductUrl = clickedSwatch.dataset.connectedProductUrl || '';
+      const requestUrl = this.buildRequestUrl(clickedSwatch, 'product-card', [optionValueId]);
+
+      this.fetchUpdatedSection(requestUrl, {
+        detail: { optionValueId, variantId: firstAvailableVariantId, connectedProductUrl },
+      });
       return;
     }
 
