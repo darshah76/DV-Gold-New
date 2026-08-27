@@ -27,6 +27,13 @@
 {%- liquid
   assign selected_product = closest.product
   assign selected_variant_media = selected_product.selected_or_first_available_variant.featured_media
+  assign selected_variant = selected_product.selected_or_first_available_variant
+  assign product_gallery_label = selected_product.metafields.custom.product_label_in_collection_page_pill.value | strip
+  assign savings_percentage = 0
+  if selected_variant.compare_at_price > selected_variant.price
+    assign savings_amount = selected_variant.compare_at_price | minus: selected_variant.price
+    assign savings_percentage = savings_amount | times: 100.0 | divided_by: selected_variant.compare_at_price | round
+  endif
   assign first_3d_model = selected_product.media | where: 'media_type', 'model' | first
 
   if block_settings.hide_variants
@@ -119,6 +126,14 @@
     assign sorted_media = selected_product.media
   endif
   assign has_image_drop = sorted_media | has: 'media_type', 'image'
+  assign visible_thumbnail_count = sorted_media.size
+  if visible_thumbnail_count > 5
+    assign visible_thumbnail_count = 5
+  endif
+  assign show_thumbnail_arrows = false
+  if sorted_media.size > 5
+    assign show_thumbnail_arrows = true
+  endif
 
   # Determine if we're in single column mode (carousel or grid with one column)
   assign is_single_column = false
@@ -355,7 +370,7 @@
         media-gallery--extend
       {% endif %}
     "
-    style="{% render 'spacing-style', settings: block_settings %} --thumbnail-width: {{ block_settings.thumbnail_width }}px; --media-radius: {{ block_settings.media_radius }}px;{% if block_settings.icons_style contains 'large' %} --slideshow-icon-padding: 0px;{% endif %}--image-gap: {{ block_settings.image_gap }}px;{% unless block_settings.aspect_ratio == 'adapt' %} --gallery-aspect-ratio: {{ block_settings.aspect_ratio }};{% endunless %}"
+    style="{% render 'spacing-style', settings: block_settings %} --thumbnail-width: {{ block_settings.thumbnail_width }}px; --visible-thumbnail-count: {{ visible_thumbnail_count }}; --media-radius: {{ block_settings.media_radius }}px;{% if block_settings.icons_style contains 'large' %} --slideshow-icon-padding: 0px;{% endif %}--image-gap: {{ block_settings.image_gap }}px;{% unless block_settings.aspect_ratio == 'adapt' %} --gallery-aspect-ratio: {{ block_settings.aspect_ratio }};{% endunless %}"
     data-presentation="{{ media_presentation }}"
     {{ block_shopify_attributes }}
   >
@@ -376,6 +391,22 @@
             </div>
           {% else %}
             {%- render 'product-media', media: media, sizes: media_sizes, is_main_product_media: forloop.first -%}
+          {% endif %}
+          {% if media_presentation == 'carousel' or forloop.first %}
+            {% if product_gallery_label != blank or savings_percentage > 0 %}
+              <div class="product-media-gallery__badges" aria-label="Product highlights">
+                {% if product_gallery_label != blank %}
+                  <span class="product-media-gallery__badge product-media-gallery__badge--label">
+                    {{ product_gallery_label | escape }}
+                  </span>
+                {% endif %}
+                {% if savings_percentage > 0 %}
+                  <span class="product-media-gallery__badge product-media-gallery__badge--savings">
+                    Save {{ savings_percentage }}%
+                  </span>
+                {% endif %}
+              </div>
+            {% endif %}
           {% endif %}
         {% endcapture %}
         {% capture class %}
@@ -412,6 +443,8 @@
             item_count: sorted_media.size,
             thumbnails: sorted_media,
             controls_on_media: controls_on_media,
+            show_arrows: show_thumbnail_arrows,
+            icon_style: block_settings.icons_style,
             pagination_position: pagination_position,
             aspect_ratio: block_settings.aspect_ratio,
             thumbnail_radius: block_settings.thumbnail_radius
@@ -425,6 +458,8 @@
             item_count: sorted_media.size,
             thumbnails: sorted_media,
             controls_on_media: mobile_controls_on_media,
+            show_arrows: show_thumbnail_arrows,
+            icon_style: block_settings.icons_style,
             pagination_position: 'center',
             aspect_ratio: block_settings.aspect_ratio,
             thumbnail_radius: block_settings.thumbnail_radius
@@ -885,6 +920,73 @@
       width: var(--thumbnail-width);
       height: auto;
     }
+  }
+
+  media-gallery :where(:not(.dialog-zoomed-gallery)) > .product-media-container::after {
+    content: '';
+    position: absolute;
+    z-index: var(--layer-raised);
+    inset: 0;
+    border: var(--style-border-width) solid var(--color-product-media-border);
+    border-radius: var(--media-radius);
+    pointer-events: none;
+  }
+
+  .product-media-gallery__badges {
+    position: absolute;
+    z-index: var(--layer-raised);
+    inset-block-start: var(--padding-lg);
+    inset-inline: var(--padding-lg);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--gap-sm);
+    pointer-events: none;
+  }
+
+  .product-media-gallery__badge {
+    min-height: var(--minimum-touch-target);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding-inline: var(--padding-xl);
+    border: var(--style-border-width) solid var(--color-primary-button-border);
+    border-radius: var(--style-border-radius-buttons-primary);
+    background: var(--color-primary-button-background);
+    color: var(--color-primary-button-text);
+    font-family: var(--font-subheading--family);
+    font-style: var(--font-subheading--style);
+    font-weight: var(--font-subheading--weight);
+    font-size: var(--font-size--sm);
+    line-height: var(--font-paragraph--line-height);
+  }
+
+  .product-media-gallery__badge--savings {
+    margin-inline-start: auto;
+    background: var(--color-background);
+    color: var(--color-heading);
+  }
+
+  media-gallery slideshow-controls[thumbnails] {
+    gap: var(--gap-xs);
+  }
+
+  media-gallery slideshow-controls[thumbnails] .slideshow-controls__thumbnails-container {
+    flex: 1;
+    min-width: 0;
+  }
+
+  media-gallery slideshow-controls[thumbnails] .slideshow-controls__thumbnails {
+    width: 100%;
+    margin-inline: 0;
+  }
+
+  media-gallery slideshow-controls[thumbnails] .slideshow-controls__thumbnail {
+    flex: 0 0
+      calc(
+        (100% - (var(--visible-thumbnail-count) - 1) * var(--gap-xs)) / var(--visible-thumbnail-count)
+      );
+    width: auto;
   }
 
   .dialog-zoomed-gallery .product-media-container--zoomable.product-media-container--image {
