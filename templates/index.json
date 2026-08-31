@@ -54,7 +54,7 @@
             "cta_link": "shopify://collections/tea",
             "panel_background": "#62793a",
             "panel_heading_color": "#f9c800",
-            "panel_description_color": "#FFFFFF",
+            "panel_description_color": "#ffffff",
             "button_text_color": "#ffffff",
             "button_background_color": "#9b1b30"
           }
@@ -131,8 +131,8 @@
       "type": "homepicked-masala-spices",
       "name": "Homepicked Masala",
       "settings": {
-        "heading": "From a small town in Gujarat to your kitchen",
-        "description": "<p>From a spice desk in 1957's Madhupura market to your kitchen — 65+ years of purity, now packed for your home.</p><p>Our tea leaves are hand-picked from 13,000+ gardens across India; our spices are graded at origin, our dry fruits selected kernel by kernel. All of it, now packed for one destination — yours.</p>",
+        "heading": "From the heart of Gujarat to your kitchen",
+        "description": "<p>The Madhupura market has been the heart of Gujarat for surcing Spices, tea, dry-fruits & groceries since more than 150 years. </p><p>All our products are hand-picked and sourced from the origin to ensure that the finest quality reaches the kitchens of our consumers.</p>",
         "cta_label": "Explore all",
         "cta_link": "/collections/all",
         "image": "shopify://shop_images/ChatGPT_Image_Aug_21_2026_12_27_46_AM.png",
@@ -273,8 +273,8 @@
           "type": "reason",
           "settings": {
             "image": "shopify://shop_images/Pure_and_Natural.png",
-            "title": "65+ Years of Purity",
-            "description": "<p>Trading spices, dry fruits & tea since 1957 — the same trusted grade now packed for your kitchen.</p>"
+            "title": "65+ Years of Trust",
+            "description": "<p>Dealing in bulk Spices, Dry fruits & Tea products since 1957. The same Purity, Quality & Surety is now packed for your kitchen.</p>"
           }
         },
         "reason_9n6gfM": {
@@ -282,23 +282,23 @@
           "settings": {
             "image": "shopify://shop_images/loved_by_family.png",
             "title": "Sourced at Origin",
-            "description": "<p>Upper Assam tea estates, 13,000+ gardens, spices graded at source — never from middlemen.</p>"
+            "description": "<p>Sourcing from corners of India and the corners of world, Tea from estates of North East, Walnuts from mandi of Jammu Turmeric from Tamil Nadu & Andhra, Cashews from Karnataka, Cinnamon & star aniseed from Vietnam, Almonds from California, Raisins from Afghanistan, Pistachio from Iran, Coriander seeds from Rajasthan</p>"
           }
         },
         "reason_wxMJrE": {
           "type": "reason",
           "settings": {
             "image": "shopify://shop_images/no_compromise.png",
-            "title": "Nothing Added. Ever.",
-            "description": "<p>No colours, no fillers, no preservatives. The purity standard our wholesale buyers demand.</p>"
+            "title": "Nothing Added. Always Natural",
+            "description": "<p>No colours, no fillers, no preservatives. Purety of DV standard delivered to you.</p>"
           }
         },
         "reason_BKNHPj": {
           "type": "reason",
           "settings": {
             "image": "shopify://shop_images/source_care.png",
-            "title": "A Family, Not a Factory",
-            "description": "<p>Three generations of the Patel family still ensure quallitcheck of every tea blend before it ships.</p>"
+            "title": "A Family, not a Factory",
+            "description": "<p>Generations of the DV Family have always tirelessly ensured that the best quality is delivered across all the product categories of Spices, Dry-fruits, Tea & Farali</p>"
           }
         }
       },
@@ -322,7 +322,7 @@
       "settings": {
         "title": "The DV History",
         "image": "shopify://shop_images/DV_History.png",
-        "text": "<p>DV Group began in 1957, when three brothers — Dahyabhai, Vithaldas and Ranchhoddas Patel — set up a spice trading desk in Madhupura, Ahmedabad's legendary spice market. Their rule was simple: pure goods, honest weight, no exceptions. That rule travelled through six decades of kirana counters, weddings and festival kitchens, building a network of over 5,000 trade customers across Gujarat and beyond.</p><p>The next generation carried it further — into tea blending, sourcing leaves from Upper Assam's estates and 13,000+ gardens, launching DV Gold and DV Silver across Gujarat's towns. Today, the same family opens its warehouse doors directly to you. The packs are new. The purity isn't.</p>",
+        "text": "<p>Our roots stem from the renowned DV Group, a company began its journey more than 6 decades ago was founded by Shri Dahyabhai S. Patel, Shri Vithaldas H. Patel & Shri Ranchhoddas H. Patel in the thriving spices market of Madhupura in Ahmedabad – Gujarat. </p><p>The journey started as humble traders of spices and dry-fruits with a state wide customer network reaching the last mile small towns. </p><p>As a family driven company, with strong perseverance of its members, the group today ascended from being modest traders into becoming a leading exporter, wholesaler and manufacturer of superior quality spices, dry-fruits & tea. </p><p>With focus on food safety as its paradigm, the group has developed a reputation for exceptional quality and outstanding service. As a result, DV products are essential ingredients in flavouring some of the world’s popular food brands.</p>",
         "cta_text": "Know more",
         "cta_link": "",
         "gap": 28,
@@ -362,7 +362,7 @@
       ],
       "name": "Home Certifications",
       "settings": {
-        "heading": "Certifications & registrations",
+        "heading": "Certifications, Registration & Memberships",
         "description": "<p>Every batch passes the same checks our export and wholesale customers have demanded for 65+ years — from sourcing and grading to blending and packing. If it isn't pure enough for them, it doesn't reach your kitchen.</p>",
         "gap": 28,
         "padding-block-start": 48,
@@ -571,7 +571,7 @@
       "name": "Home B2B",
       "settings": {
         "heading": "Bulk inquiries",
-        "description": "For B2B & wholesale partnerships. Whether you're a retailer, distributor, or business partner, we're ready to bring your store premium quality product to grow together. Let's start the conversation.",
+        "description": "Since 1957, DV Group has been bringing quality spices, dry fruits, and tea to customers. We welcome retailers, distributors, institutional, horeca and wholesale partners to connect with us for reliable products, flexible solutions, and long-term partnerships. Share your requirements with us, and our team will be happy to assist you. Learn more at www.dvgoldfoods.com.",
         "button_text": "Chat on WhatsApp",
         "whatsapp_link": "https://wa.me/919429608099",
         "recipient_email": "global@dvgoldfoods.com",
