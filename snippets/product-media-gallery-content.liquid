@@ -1137,6 +1137,20 @@
         aspect-ratio: var(--gallery-aspect-ratio, var(--primary-media-aspect-ratio));
         min-width: 0;
       }
+
+      /* The container's ratio establishes the gallery height. Make the scrolling
+         track and its slides consume that height instead of relying on an
+         intrinsic image height, which can collapse while lazy images load. */
+      slideshow-slides,
+      slideshow-slide,
+      .product-media {
+        height: 100%;
+        min-height: 0;
+      }
+
+      .product-media {
+        width: 100%;
+      }
     }
   }
 
