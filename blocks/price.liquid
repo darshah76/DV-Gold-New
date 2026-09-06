@@ -57,7 +57,7 @@
     show_sale_price_first: block_settings.show_sale_price_first
   %}
 
-  {% if block_settings.show_tax_info %}
+  {% if block_settings.show_tax_info and section.type != 'product-information' %}
     <div class="tax-note">
       {%- if cart.duties_included and cart.taxes_included -%}
         {{ 'content.duties_and_taxes_included' | t }}
