@@ -135,8 +135,6 @@
     assign show_thumbnail_arrows = true
   endif
 
-  assign primary_media_aspect_ratio = sorted_media.first.preview_image.aspect_ratio | default: 1
-
   # Determine if we're in single column mode (carousel or grid with one column)
   assign is_single_column = false
   if media_presentation == 'carousel' or sorted_media.size == 1 or media_presentation == 'grid' and block_settings.media_columns == 'one'
@@ -372,7 +370,7 @@
         media-gallery--extend
       {% endif %}
     "
-    style="{% render 'spacing-style', settings: block_settings %} --thumbnail-width: {{ block_settings.thumbnail_width }}px; --visible-thumbnail-count: {{ visible_thumbnail_count }}; --media-radius: {{ block_settings.media_radius }}px; --primary-media-aspect-ratio: {{ primary_media_aspect_ratio }};{% if block_settings.icons_style contains 'large' %} --slideshow-icon-padding: 0px;{% endif %}--image-gap: {{ block_settings.image_gap }}px;{% unless block_settings.aspect_ratio == 'adapt' %} --gallery-aspect-ratio: {{ block_settings.aspect_ratio }};{% endunless %}"
+    style="{% render 'spacing-style', settings: block_settings %} --thumbnail-width: {{ block_settings.thumbnail_width }}px; --visible-thumbnail-count: {{ visible_thumbnail_count }}; --media-radius: {{ block_settings.media_radius }}px;{% if block_settings.icons_style contains 'large' %} --slideshow-icon-padding: 0px;{% endif %}--image-gap: {{ block_settings.image_gap }}px;{% unless block_settings.aspect_ratio == 'adapt' %} --gallery-aspect-ratio: {{ block_settings.aspect_ratio }};{% endunless %}"
     data-presentation="{{ media_presentation }}"
     {{ block_shopify_attributes }}
   >
@@ -1131,12 +1129,6 @@
         order: -1;
       }
 
-      /* A definite media ratio prevents the auto-sized grid row from collapsing
-         when vertical thumbnail controls sit beside adaptive media. */
-      slideshow-container {
-        aspect-ratio: var(--gallery-aspect-ratio, var(--primary-media-aspect-ratio));
-        min-width: 0;
-      }
     }
   }
 
