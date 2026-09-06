@@ -41,7 +41,7 @@
             "icons_style": "arrow",
             "slideshow_controls_style": "thumbnails",
             "slideshow_mobile_controls_style": "thumbnails",
-            "thumbnail_position": "bottom",
+            "thumbnail_position": "left",
             "thumbnail_width": 64,
             "thumbnail_radius": 0,
             "aspect_ratio": "adapt",
@@ -195,7 +195,7 @@
             "buy_buttons_eYQEYi": {
               "type": "buy-buttons",
               "settings": {
-                "stacking": true,
+                "stacking": false,
                 "text_color": "",
                 "show_pickup_availability": false,
                 "gift_card_form": false,
