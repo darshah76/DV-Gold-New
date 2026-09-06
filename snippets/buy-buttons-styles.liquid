@@ -22,7 +22,12 @@
 
   .product-information .add-to-cart-button,
   .product-information shopify-accelerated-checkout {
+    width: 100%;
     min-height: calc(var(--minimum-touch-target) + var(--padding-xl));
+  }
+
+  .product-information :is(add-to-cart-component, .accelerated-checkout-block) {
+    width: 100%;
   }
 
   .product-form-buttons {
