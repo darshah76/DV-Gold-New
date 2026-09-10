@@ -2,6 +2,11 @@
   if section.settings.background_color != blank
     render 'contrast-override', background_color: section.settings.background_color, section_id: section.id
   endif
+
+  assign footer_padding_block_start = section.settings.padding-block-start
+  unless template.name == 'index'
+    assign footer_padding_block_start = section.settings.padding-block-end
+  endunless
 %}
 
 <div class="section-background{% if section.settings.background_color != blank %} color-custom-{{ section.id }}{% endif %}"></div>
@@ -11,7 +16,12 @@
 >
   <div
     class="dv-footer__inner spacing-style"
-    style="{% render 'spacing-style', settings: section.settings %}"
+    style="
+      {% render 'spacing-style', settings: section.settings %}
+      {% unless request.page_type == 'index' %}
+        --padding-block-start: var(--padding-block-end);
+      {% endunless %}
+    "
   >
     <div class="dv-footer__grid">
       <div class="dv-footer__brand">

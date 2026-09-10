@@ -306,11 +306,36 @@
         "padding-block-start": 48,
         "padding-block-end": 48
       }
+    },
+    "178785980861f4e927": {
+      "type": "judgeme-reviews",
+      "settings": {
+        "accessibility_label": "Customer reviews",
+        "autoplay_seconds": "5",
+        "gap": 28,
+        "padding-block-start": 48,
+        "padding-block-end": 48
+      }
+    },
+    "recipes_fLzfM3": {
+      "type": "recipes",
+      "name": "Recipes",
+      "settings": {
+        "heading": "Recipes You’ll Love",
+        "view_all_label": "View all",
+        "view_all_link": "",
+        "max_articles": 6,
+        "gap": 28,
+        "padding-block-start": 48,
+        "padding-block-end": 48
+      }
     }
   },
   "order": [
     "main",
-    "how_to_prepare",
+    "product_features",
+    "how_to_prepare_LbKi8g",
+    "recipes_fLzfM3",
     "178785980861f4e927"
   ]
 }
