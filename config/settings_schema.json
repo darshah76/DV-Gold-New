@@ -92,50 +92,14 @@
         "content": "t:content.fonts"
       },
       {
-        "type": "checkbox",
-        "id": "type_body_google_sans",
-        "label": "Use Google Sans for body text",
-        "default": false,
-        "info": "Turn off to use the body font selected below."
-      },
-      {
-        "type": "font_picker",
-        "id": "type_body_font",
-        "default": "quicksand_n5",
-        "label": "t:options.body",
-        "visible_if": "{{ settings.type_body_google_sans == false }}"
-      },
-      {
-        "type": "font_picker",
-        "id": "type_subheading_font",
-        "default": "quicksand_n6",
-        "label": "t:options.subheading"
-      },
-      {
-        "type": "checkbox",
-        "id": "type_heading_chewy",
-        "label": "Use Chewy for headings and titles",
-        "default": true,
-        "info": "Turn off to use the heading font selected below."
+        "type": "paragraph",
+        "content": "Body and interface text use Montserrat, headings use Genty Sans, and DV Offerings card titles use Bugaki."
       },
       {
         "type": "color",
         "id": "heading_text_color",
         "label": "Heading and title color",
         "default": "#9B1B30"
-      },
-      {
-        "type": "font_picker",
-        "id": "type_heading_font",
-        "default": "quicksand_n4",
-        "label": "t:options.heading",
-        "visible_if": "{{ settings.type_heading_chewy == false }}"
-      },
-      {
-        "type": "font_picker",
-        "id": "type_accent_font",
-        "default": "quicksand_n4",
-        "label": "t:options.accent"
       },
       {
         "type": "header",
