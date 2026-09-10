@@ -188,7 +188,7 @@ This standard applies to primary supporting copy, not headings, buttons, form co
 | Palette key | Value | Purpose |
 | --- | --- | --- |
 | `background` | `#FCFBE4` | Primary canvas and light surface. |
-| `foreground` | `#000000` | Primary text, icons, and maximum contrast. |
+| `foreground` | `#363334` | Primary body text, icons, and maximum contrast. |
 | `color1` | `#333333` | Dark supporting neutral. |
 | `color2` | `#EEF1EA` | Soft pale neutral / sold-out supporting surface. |
 | `color3` | `#DFDFDF` | Borders and subtle separation. |

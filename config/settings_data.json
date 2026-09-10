@@ -99,7 +99,7 @@
     },
     "color_palette": {
       "background": "#FCFBE4",
-      "foreground": "#000000",
+      "foreground": "#363334",
       "color1": "#333333",
       "color2": "#EEF1EA",
       "color3": "#DFDFDF"
@@ -187,7 +187,7 @@
       "palette_selected_variant_border": "#9B1B30",
       "color_palette": {
         "background": "#FCFBE4",
-        "foreground": "#000000",
+        "foreground": "#363334",
         "color1": "#333333",
         "color2": "#EEF1EA",
         "color3": "#DFDFDF"
