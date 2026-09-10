@@ -37,7 +37,6 @@
         <p class="judgeme-reviews__count">Based on {{ rating_count }} Reviews</p>
       </div>
 
-      <div class="judgeme-reviews__write-action" data-judgeme-write-review-slot></div>
     </div>
 
     <div
@@ -59,6 +58,7 @@
   }
 
   .judgeme-reviews__inner {
+    position: relative;
     display: grid;
     width: 100%;
     min-width: 0;
@@ -109,15 +109,6 @@
     line-height: var(--font-paragraph--line-height);
   }
 
-  .judgeme-reviews__write-action {
-    display: flex;
-    flex: none;
-  }
-
-  .judgeme-reviews__write-action:empty {
-    display: none;
-  }
-
   .judgeme-reviews .jdgm-widget {
     color: var(--color-foreground);
     font-family: var(--font-body--family);
@@ -130,15 +121,22 @@
   }
 
   .judgeme-reviews .jdgm-rev-widg__header {
+    width: 100%;
+  }
+
+  .judgeme-reviews .jdgm-rev-widg__title,
+  .judgeme-reviews .jdgm-rev-widg__summary,
+  .judgeme-reviews .jdgm-histogram {
     display: none;
   }
 
-  .judgeme-reviews .jdgm-rev-widg__title {
-    color: var(--color-heading);
-    font: var(--font-heading--style) var(--font-heading--weight) var(--font-h2--size) / var(--font-h2--line-height)
-      var(--font-heading--family);
-    letter-spacing: var(--font-h2--letter-spacing);
-    text-wrap: balance;
+  .judgeme-reviews .jdgm-widget-actions-wrapper {
+    position: absolute;
+    z-index: 1;
+    inset-block-start: 0;
+    inset-inline-end: 0;
+    margin: 0;
+    text-align: end;
   }
 
   .judgeme-reviews .jdgm-rev-widg__summary-text,
@@ -184,12 +182,6 @@
   @media (max-width: 749px) {
     .judgeme-reviews__header {
       align-items: center;
-    }
-
-    .judgeme-reviews .jdgm-rev-widg__header,
-    .judgeme-reviews .jdgm-rev-widg__title,
-    .judgeme-reviews .jdgm-rev-widg__summary {
-      text-align: center;
     }
 
     .judgeme-reviews .jdgm-rev-widg__reviews {
