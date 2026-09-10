@@ -1,6 +1,7 @@
 {% liquid
-  assign preparation_steps = product.metafields.custom.how_to_prepare_content.value
-  assign preparation_icons = product.metafields.custom.how_to_prepare_icon.value
+  assign current_product = closest.product | default: product
+  assign preparation_steps = current_product.metafields.custom.how_to_prepare_content.value
+  assign preparation_icons = current_product.metafields.custom.how_to_prepare_icon.value
   assign desktop_columns = preparation_steps.size | at_most: 5
 %}
 
@@ -28,10 +29,7 @@
 
       <ol class="how-to-prepare__list">
         {% for step in preparation_steps %}
-          {% liquid
-            assign step_index = forloop.index0
-            assign step_icon = preparation_icons[step_index]
-          %}
+          {% assign step_icon = preparation_icons[forloop.index0] %}
           <li class="how-to-prepare__item">
             {% if step_icon != blank %}
               {% if step_icon.preview_image != blank %}
