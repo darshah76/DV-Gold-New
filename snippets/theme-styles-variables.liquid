@@ -1,128 +1,4 @@
 {% style %}
-  {%- liquid
-    assign rendered_fonts = ''
-
-    assign primary_font = settings.type_body_font
-    assign primary_font_bold = primary_font | font_modify: 'weight', 'bold'
-    assign primary_font_italic = primary_font | font_modify: 'style', 'italic'
-    assign primary_font_bold_italic = primary_font_bold | font_modify: 'style', 'italic'
-
-    assign primary_font_face_id = '[primary_font_family]-[primary_font_weight]-[primary_font_style]|' | replace: '[primary_font_family]', primary_font.family | replace: '[primary_font_weight]', primary_font.weight | replace: '[primary_font_style]', primary_font.style
-    assign primary_font_bold_face_id = '[primary_font_bold_family]-[primary_font_bold_weight]-[primary_font_bold_style]|' | replace: '[primary_font_bold_family]', primary_font_bold.family | replace: '[primary_font_bold_weight]', primary_font_bold.weight | replace: '[primary_font_bold_style]', primary_font_bold.style
-    assign primary_font_italic_face_id = '[primary_font_italic_family]-[primary_font_italic_weight]-[primary_font_italic_style]|' | replace: '[primary_font_italic_family]', primary_font_italic.family | replace: '[primary_font_italic_weight]', primary_font_italic.weight | replace: '[primary_font_italic_style]', primary_font_italic.style
-    assign primary_font_bold_italic_face_id = '[primary_font_bold_italic_family]-[primary_font_bold_italic_weight]-[primary_font_bold_italic_style]|' | replace: '[primary_font_bold_italic_family]', primary_font_bold_italic.family | replace: '[primary_font_bold_italic_weight]', primary_font_bold_italic.weight | replace: '[primary_font_bold_italic_style]', primary_font_bold_italic.style
-
-    assign secondary_font = settings.type_subheading_font
-    assign secondary_font_bold = secondary_font | font_modify: 'weight', 'bold'
-    assign secondary_font_italic = secondary_font | font_modify: 'style', 'italic'
-    assign secondary_font_bold_italic = secondary_font_bold | font_modify: 'style', 'italic'
-
-    assign secondary_font_face_id = '[secondary_font_family]-[secondary_font_weight]-[secondary_font_style]|' | replace: '[secondary_font_family]', secondary_font.family | replace: '[secondary_font_weight]', secondary_font.weight | replace: '[secondary_font_style]', secondary_font.style
-    assign secondary_font_bold_face_id = '[secondary_font_bold_family]-[secondary_font_bold_weight]-[secondary_font_bold_style]|' | replace: '[secondary_font_bold_family]', secondary_font_bold.family | replace: '[secondary_font_bold_weight]', secondary_font_bold.weight | replace: '[secondary_font_bold_style]', secondary_font_bold.style
-    assign secondary_font_italic_face_id = '[secondary_font_italic_family]-[secondary_font_italic_weight]-[secondary_font_italic_style]|' | replace: '[secondary_font_italic_family]', secondary_font_italic.family | replace: '[secondary_font_italic_weight]', secondary_font_italic.weight | replace: '[secondary_font_italic_style]', secondary_font_italic.style
-    assign secondary_font_bold_italic_face_id = '[secondary_font_bold_italic_family]-[secondary_font_bold_italic_weight]-[secondary_font_bold_italic_style]|' | replace: '[secondary_font_bold_italic_family]', secondary_font_bold_italic.family | replace: '[secondary_font_bold_italic_weight]', secondary_font_bold_italic.weight | replace: '[secondary_font_bold_italic_style]', secondary_font_bold_italic.style
-
-    assign tertiary_font = settings.type_heading_font
-    assign tertiary_font_bold = tertiary_font | font_modify: 'weight', 'bold'
-    assign tertiary_font_italic = tertiary_font | font_modify: 'style', 'italic'
-    assign tertiary_font_bold_italic = tertiary_font_bold | font_modify: 'style', 'italic'
-
-    assign tertiary_font_face_id = '[tertiary_font_family]-[tertiary_font_weight]-[tertiary_font_style]|' | replace: '[tertiary_font_family]', tertiary_font.family | replace: '[tertiary_font_weight]', tertiary_font.weight | replace: '[tertiary_font_style]', tertiary_font.style
-    assign tertiary_font_bold_face_id = '[tertiary_font_bold_family]-[tertiary_font_bold_weight]-[tertiary_font_bold_style]|' | replace: '[tertiary_font_bold_family]', tertiary_font_bold.family | replace: '[tertiary_font_bold_weight]', tertiary_font_bold.weight | replace: '[tertiary_font_bold_style]', tertiary_font_bold.style
-    assign tertiary_font_italic_face_id = '[tertiary_font_italic_family]-[tertiary_font_italic_weight]-[tertiary_font_italic_style]|' | replace: '[tertiary_font_italic_family]', tertiary_font_italic.family | replace: '[tertiary_font_italic_weight]', tertiary_font_italic.weight | replace: '[tertiary_font_italic_style]', tertiary_font_italic.style
-    assign tertiary_font_bold_italic_face_id = '[tertiary_font_bold_italic_family]-[tertiary_font_bold_italic_weight]-[tertiary_font_bold_italic_style]|' | replace: '[tertiary_font_bold_italic_family]', tertiary_font_bold_italic.family | replace: '[tertiary_font_bold_italic_weight]', tertiary_font_bold_italic.weight | replace: '[tertiary_font_bold_italic_style]', tertiary_font_bold_italic.style
-
-    assign accent_font = settings.type_accent_font
-    assign accent_font_bold = accent_font | font_modify: 'weight', 'bold'
-    assign accent_font_italic = accent_font | font_modify: 'style', 'italic'
-    assign accent_font_bold_italic = accent_font_bold | font_modify: 'style', 'italic'
-
-    assign accent_font_face_id = '[accent_font_family]-[accent_font_weight]-[accent_font_style]|' | replace: '[accent_font_family]', accent_font.family | replace: '[accent_font_weight]', accent_font.weight | replace: '[accent_font_style]', accent_font.style
-    assign accent_font_bold_face_id = '[accent_font_bold_family]-[accent_font_bold_weight]-[accent_font_bold_style]|' | replace: '[accent_font_bold_family]', accent_font_bold.family | replace: '[accent_font_bold_weight]', accent_font_bold.weight | replace: '[accent_font_bold_style]', accent_font_bold.style
-    assign accent_font_italic_face_id = '[accent_font_italic_family]-[accent_font_italic_weight]-[accent_font_italic_style]|' | replace: '[accent_font_italic_family]', accent_font_italic.family | replace: '[accent_font_italic_weight]', accent_font_italic.weight | replace: '[accent_font_italic_style]', accent_font_italic.style
-    assign accent_font_bold_italic_face_id = '[accent_font_bold_italic_family]-[accent_font_bold_italic_weight]-[accent_font_bold_italic_style]|' | replace: '[accent_font_bold_italic_family]', accent_font_bold_italic.family | replace: '[accent_font_bold_italic_weight]', accent_font_bold_italic.weight | replace: '[accent_font_bold_italic_style]', accent_font_bold_italic.style
-
-    unless rendered_fonts contains primary_font_face_id
-      echo primary_font | font_face: font_display: 'swap'
-      assign rendered_fonts = rendered_fonts | append: primary_font_face_id
-    endunless
-
-    unless rendered_fonts contains primary_font_bold_face_id
-      echo primary_font_bold | font_face: font_display: 'swap'
-      assign rendered_fonts = rendered_fonts | append: primary_font_bold_face_id
-    endunless
-
-    unless rendered_fonts contains primary_font_italic_face_id
-      echo primary_font_italic | font_face: font_display: 'swap'
-      assign rendered_fonts = rendered_fonts | append: primary_font_italic_face_id
-    endunless
-
-    unless rendered_fonts contains primary_font_bold_italic_face_id
-      echo primary_font_bold_italic | font_face: font_display: 'swap'
-      assign rendered_fonts = rendered_fonts | append: primary_font_bold_italic_face_id
-    endunless
-
-    unless rendered_fonts contains secondary_font_face_id
-      echo secondary_font | font_face: font_display: 'swap'
-      assign rendered_fonts = rendered_fonts | append: secondary_font_face_id
-    endunless
-
-    unless rendered_fonts contains secondary_font_bold_face_id
-      echo secondary_font_bold | font_face: font_display: 'swap'
-      assign rendered_fonts = rendered_fonts | append: secondary_font_bold_face_id
-    endunless
-
-    unless rendered_fonts contains secondary_font_italic_face_id
-      echo secondary_font_italic | font_face: font_display: 'swap'
-      assign rendered_fonts = rendered_fonts | append: secondary_font_italic_face_id
-    endunless
-
-    unless rendered_fonts contains secondary_font_bold_italic_face_id
-      echo secondary_font_bold_italic | font_face: font_display: 'swap'
-      assign rendered_fonts = rendered_fonts | append: secondary_font_bold_italic_face_id
-    endunless
-
-    unless rendered_fonts contains tertiary_font_face_id
-      echo tertiary_font | font_face: font_display: 'swap'
-      assign rendered_fonts = rendered_fonts | append: tertiary_font_face_id
-    endunless
-
-    unless rendered_fonts contains tertiary_font_bold_face_id
-      echo tertiary_font_bold | font_face: font_display: 'swap'
-      assign rendered_fonts = rendered_fonts | append: tertiary_font_bold_face_id
-    endunless
-
-    unless rendered_fonts contains tertiary_font_italic_face_id
-      echo tertiary_font_italic | font_face: font_display: 'swap'
-      assign rendered_fonts = rendered_fonts | append: tertiary_font_italic_face_id
-    endunless
-
-    unless rendered_fonts contains tertiary_font_bold_italic_face_id
-      echo tertiary_font_bold_italic | font_face: font_display: 'swap'
-      assign rendered_fonts = rendered_fonts | append: tertiary_font_bold_italic_face_id
-    endunless
-
-    unless rendered_fonts contains accent_font_face_id
-      echo accent_font | font_face: font_display: 'swap'
-      assign rendered_fonts = rendered_fonts | append: accent_font_face_id
-    endunless
-
-    unless rendered_fonts contains accent_font_bold_face_id
-      echo accent_font_bold | font_face: font_display: 'swap'
-      assign rendered_fonts = rendered_fonts | append: accent_font_bold_face_id
-    endunless
-
-    unless rendered_fonts contains accent_font_italic_face_id
-      echo accent_font_italic | font_face: font_display: 'swap'
-      assign rendered_fonts = rendered_fonts | append: accent_font_italic_face_id
-    endunless
-
-    unless rendered_fonts contains accent_font_bold_italic_face_id
-      echo accent_font_bold_italic | font_face: font_display: 'swap'
-      assign rendered_fonts = rendered_fonts | append: accent_font_bold_italic_face_id
-    endunless
-  %}
-
   :root {
     /* Page Layout */
     --sidebar-width: 25rem;
@@ -154,20 +30,21 @@
     --letter-spacing-sm: 0.06em;
 
     /* Font families */
-    --font-body--family: {% if settings.type_body_google_sans %}"Google Sans", Arial, sans-serif{% else %}{{ settings.type_body_font.family }}, {{ settings.type_body_font.fallback_families }}{% endif %};
-    --font-body--style: {{ settings.type_body_font.style }};
-    --font-body--weight: {{ settings.type_body_font.weight }};
-    --font-subheading--family: {{ settings.type_subheading_font.family }}, {{ settings.type_subheading_font.fallback_families }};
-    --font-subheading--style: {{ settings.type_subheading_font.style }};
-    --font-subheading--weight: {{ settings.type_subheading_font.weight }};
-    --font-heading--family: {% if settings.type_heading_chewy %}"Chewy", cursive{% else %}{{ settings.type_heading_font.family }}, {{ settings.type_heading_font.fallback_families }}{% endif %};
-    --font-heading--style: {% if settings.type_heading_chewy %}normal{% else %}{{ settings.type_heading_font.style }}{% endif %};
-    --font-heading--weight: {% if settings.type_heading_chewy %}400{% else %}{{ settings.type_heading_font.weight }}{% endif %};
+    --font-body--family: 'Montserrat', sans-serif;
+    --font-body--style: normal;
+    --font-body--weight: 500;
+    --font-subheading--family: 'Montserrat', sans-serif;
+    --font-subheading--style: normal;
+    --font-subheading--weight: 600;
+    --font-heading--family: 'Genty Sans', sans-serif;
+    --font-heading--style: normal;
+    --font-heading--weight: 400;
+    --font-offerings-card--family: 'Bugaki', sans-serif;
     --color-heading: {{ settings.heading_text_color }};
     --color-brand-gold: #f9c800;
-    --font-accent--family: {{ settings.type_accent_font.family }}, {{ settings.type_accent_font.fallback_families }};
-    --font-accent--style: {{ settings.type_accent_font.style }};
-    --font-accent--weight: {{ settings.type_accent_font.weight }};
+    --font-accent--family: 'Montserrat', sans-serif;
+    --font-accent--style: normal;
+    --font-accent--weight: 700;
 
     /* Margin sizes */
     --font-heading--spacing: 0.25em;

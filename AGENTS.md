@@ -129,16 +129,17 @@ Heading spacing rules:
 
 ### Families and weights
 
-The active body family is **Quicksand**, while headings and titles use **Chewy** by default. Merchants can switch Google Sans on or off for body text and Chewy on or off for headings with the Typography checkboxes; when a checkbox is off, its Shopify font picker controls that role.
+The brand typography uses exactly three families: **Montserrat** for body and interface copy, **Genty Sans** for site headings and titles, and **Bugaki** only for card titles in the home-page DV Offerings section. Genty Sans and Bugaki are served from theme assets; Montserrat is loaded centrally from Google Fonts with only the weights and styles used by the theme.
 
-| Role | Setting | CSS family token | Active face | Standard weight |
-| --- | --- | --- | --- | ---: |
-| Body / paragraph | `type_body_font` | `--font-body--family` | Quicksand medium | 500 |
-| Subheading / labels | `type_subheading_font` | `--font-subheading--family` | Quicksand semibold | 600 |
-| Heading | `type_heading_chewy` / `type_heading_font` | `--font-heading--family` | Chewy regular | 400 |
-| Accent | `type_accent_font` | `--font-accent--family` | Quicksand bold | 700 |
+| Role | CSS family token | Active face | Standard weight |
+| --- | --- | --- | ---: |
+| Body / paragraph | `--font-body--family` | Montserrat medium | 500 |
+| Subheading / labels | `--font-subheading--family` | Montserrat semibold | 600 |
+| Heading | `--font-heading--family` | Genty Sans regular | 400 |
+| Accent | `--font-accent--family` | Montserrat bold | 700 |
+| DV Offerings card title | `--font-offerings-card--family` | Bugaki regular | 400 |
 
-Use `--font-<role>--family`, `--font-<role>--style`, and `--font-<role>--weight`; never write `Quicksand`, `Google Sans`, or `Chewy` directly in component CSS. Quicksand is loaded centrally by `snippets/fonts.liquid`; Google Sans and Chewy are loaded there when their settings are enabled. Use Chewy only at its supplied 400 weight; use only loaded weights for the other brand faces (plus generated bold/italic faces where the design semantically requires them). Do not simulate bold or italic. Body copy uses 500, labels/subheadings use 600, Chewy headings use 400, and accent text uses 700.
+Use `--font-<role>--family`, `--font-<role>--style`, and `--font-<role>--weight`; never write a brand font family directly in component CSS. The sole component-specific exception consumes the semantic `--font-offerings-card--family` token. Do not add another font family or load an unused weight. Do not simulate bold or italic.
 
 ### Global hierarchy
 
@@ -208,7 +209,7 @@ Heading and title text uses the merchant-editable `heading_text_color` setting, 
 
 The service-specific `--color-whatsapp: #25D366` token is reserved for WhatsApp calls to action. Do not use it as a general accent color.
 
-The fixed `--color-brand-gold: #F9C800` token is the approved bright gold used for highlighted Chewy titles and the selection background when primary-color text is selected.
+The fixed `--color-brand-gold: #F9C800` token is the approved gold used for highlighted Genty Sans titles and the selection background when burgundy text is selected.
 
 ### How global recoloring works
 
