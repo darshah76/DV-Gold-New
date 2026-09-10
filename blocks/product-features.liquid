@@ -10,9 +10,15 @@
     <ul class="product-features__list" role="list">
       {%- for description in feature_descriptions -%}
         {%- liquid
-          assign feature_index = forloop.index0
-          if feature_icon_metafield.type contains 'list.'
-            assign feature_icon = feature_icons[feature_index]
+          assign feature_icon = blank
+          assign description_index = forloop.index
+          if feature_icon_metafield.list?
+            for icon in feature_icons
+              if forloop.index == description_index
+                assign feature_icon = icon
+                break
+              endif
+            endfor
           else
             assign feature_icon = feature_icons
           endif
