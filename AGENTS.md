@@ -199,7 +199,7 @@ This standard applies to primary supporting copy, not headings, buttons, form co
 | Semantic token | Value | Purpose |
 | --- | --- | --- |
 | `--color-background-secondary` | `#FFFDF8` | Secondary section and container background. |
-| `--color-background-tertiary` | `#FBF6EF` | Tertiary card and nested surface background. |
+| `--color-background-tertiary` | `#f4ce88` | Tertiary card and nested surface background. |
 
 Use these fixed supporting surface tokens when a composition calls for the approved warm off-white layers. Do not repeat their hex values in component CSS.
 
