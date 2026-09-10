@@ -1153,10 +1153,4 @@
     }
   }
 
-  /* Product slides must keep their layout boxes after the slideshow observer
-     updates aria-hidden. Otherwise content-visibility can collapse the
-     adaptive carousel immediately after initialization. */
-  media-gallery.media-gallery--carousel slideshow-slide.product-media-container {
-    content-visibility: visible;
-  }
 {% endstylesheet %}
