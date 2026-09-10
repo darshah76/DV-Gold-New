@@ -37,6 +37,9 @@
         <p class="judgeme-reviews__count">Based on {{ rating_count }} Reviews</p>
       </div>
 
+      <button class="button judgeme-reviews__write-button" type="button" data-judgeme-write-review>
+        Write a review
+      </button>
     </div>
 
     <div
@@ -109,6 +112,10 @@
     line-height: var(--font-paragraph--line-height);
   }
 
+  .judgeme-reviews__write-button {
+    flex: none;
+  }
+
   .judgeme-reviews .jdgm-widget {
     color: var(--color-foreground);
     font-family: var(--font-body--family);
@@ -131,12 +138,7 @@
   }
 
   .judgeme-reviews .jdgm-widget-actions-wrapper {
-    position: absolute;
-    z-index: 1;
-    inset-block-start: 0;
-    inset-inline-end: 0;
-    margin: 0;
-    text-align: end;
+    display: none;
   }
 
   .judgeme-reviews .jdgm-rev-widg__summary-text,
@@ -181,7 +183,13 @@
 
   @media (max-width: 749px) {
     .judgeme-reviews__header {
+      flex-direction: column;
       align-items: center;
+    }
+
+    .judgeme-reviews__summary {
+      justify-items: center;
+      text-align: center;
     }
 
     .judgeme-reviews .jdgm-rev-widg__reviews {
