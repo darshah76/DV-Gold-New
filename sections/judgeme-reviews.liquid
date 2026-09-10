@@ -1,0 +1,201 @@
+<div class="section-background"></div>
+
+<section
+  class="section section--page-width judgeme-reviews spacing-style"
+  style="{% render 'spacing-style', settings: section.settings %}"
+  aria-label="{{ section.settings.accessibility_label | escape }}"
+>
+  <judge-me-reviews
+    class="judgeme-reviews__inner"
+    data-autoplay-seconds="{{ section.settings.autoplay_seconds }}"
+  >
+    {% content_for 'blocks' %}
+  </judge-me-reviews>
+</section>
+
+<script src="{{ 'judgeme-reviews.js' | asset_url }}" type="module" fetchpriority="low"></script>
+
+{% stylesheet %}
+  .judgeme-reviews {
+    overflow: hidden;
+    background: var(--color-background);
+  }
+
+  .judgeme-reviews__inner {
+    display: block;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .judgeme-reviews .jdgm-widget {
+    color: var(--color-foreground);
+    font-family: var(--font-body--family);
+    font-weight: var(--font-body--weight);
+  }
+
+  .judgeme-reviews .jdgm-rev-widg {
+    padding: 0;
+    border: 0;
+  }
+
+  .judgeme-reviews .jdgm-rev-widg__title {
+    color: var(--color-heading);
+    font: var(--font-heading--style) var(--font-heading--weight) var(--font-h2--size) / var(--font-h2--line-height)
+      var(--font-heading--family);
+    letter-spacing: var(--font-h2--letter-spacing);
+    text-wrap: balance;
+  }
+
+  .judgeme-reviews .jdgm-rev-widg__summary-text,
+  .judgeme-reviews .jdgm-rev__body > p {
+    color: var(--color-foreground);
+    font-family: var(--font-body--family);
+    font-style: normal;
+    font-weight: var(--font-body--weight);
+    font-size: var(--font-size--lg);
+    line-height: var(--font-paragraph--line-height);
+    text-wrap: pretty;
+  }
+
+  .judgeme-reviews .jdgm-star,
+  .judgeme-reviews .jdgm-rev-widg__summary-stars {
+    color: var(--color-heading);
+  }
+
+  .judgeme-reviews .jdgm-write-rev-link {
+    min-height: var(--minimum-touch-target);
+  }
+
+  .judgeme-reviews .jdgm-rev {
+    min-width: 0;
+    padding: var(--padding-lg);
+    background: var(--color-white);
+    border: var(--style-border-width) solid var(--color-card-border-warm);
+    border-radius: var(--style-border-radius-cards);
+  }
+
+  .judgeme-reviews .jdgm-rev__author {
+    color: var(--color-foreground);
+    font-family: var(--font-subheading--family);
+    font-style: var(--font-subheading--style);
+    font-weight: var(--font-subheading--weight);
+  }
+
+  .judgeme-reviews .jdgm-paginate__page {
+    min-width: var(--minimum-touch-target);
+    min-height: var(--minimum-touch-target);
+  }
+
+  @media (max-width: 749px) {
+    .judgeme-reviews .jdgm-rev-widg__header,
+    .judgeme-reviews .jdgm-rev-widg__title,
+    .judgeme-reviews .jdgm-rev-widg__summary {
+      text-align: center;
+    }
+
+    .judgeme-reviews .jdgm-rev-widg__reviews {
+      display: flex;
+      gap: var(--gap-lg);
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      overscroll-behavior-inline: contain;
+    }
+
+    .judgeme-reviews .jdgm-rev-widg__reviews::-webkit-scrollbar {
+      display: none;
+    }
+
+    .judgeme-reviews .jdgm-rev {
+      flex: 0 0 calc(100% - var(--padding-3xl));
+      scroll-snap-align: center;
+      text-align: start;
+    }
+  }
+
+  @media (min-width: 750px) {
+    .judgeme-reviews .jdgm-rev-widg__reviews {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--gap-xl);
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .judgeme-reviews .jdgm-rev-widg__reviews {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .judgeme-reviews .jdgm-rev-widg__reviews {
+      scroll-behavior: auto;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Judge.me reviews",
+  "enabled_on": {
+    "templates": ["product"]
+  },
+  "blocks": [
+    {
+      "type": "@app"
+    }
+  ],
+  "max_blocks": 1,
+  "settings": [
+    {
+      "type": "text",
+      "id": "accessibility_label",
+      "label": "Accessibility label",
+      "default": "Customer reviews"
+    },
+    {
+      "type": "select",
+      "id": "autoplay_seconds",
+      "label": "Mobile auto-rotate interval",
+      "options": [
+        { "value": "5", "label": "5 seconds" },
+        { "value": "7", "label": "7 seconds" }
+      ],
+      "default": "5"
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Judge.me reviews",
+      "settings": {
+        "padding-block-start": 48,
+        "padding-block-end": 48
+      }
+    }
+  ]
+}
+{% endschema %}

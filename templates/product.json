@@ -300,7 +300,7 @@
       }
     },
     "178785980861f4e927": {
-      "type": "_blocks",
+      "type": "judgeme-reviews",
       "blocks": {
         "judge_me_reviews_review_widget_QyKbh4": {
           "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
@@ -316,32 +316,10 @@
         "judge_me_reviews_review_widget_QyKbh4"
       ],
       "settings": {
-        "content_direction": "column",
-        "vertical_on_mobile": true,
-        "horizontal_alignment": "flex-start",
-        "vertical_alignment": "center",
-        "align_baseline": false,
-        "horizontal_alignment_flex_direction_column": "flex-start",
-        "vertical_alignment_flex_direction_column": "center",
-        "gap": 12,
-        "section_width": "page-width",
-        "section_height": "",
-        "section_height_custom": 50,
-        "background_media": "none",
-        "background_color": "",
-        "video_position": "cover",
-        "background_image_position": "cover",
-        "toggle_overlay": false,
-        "overlay_color": "#00000026",
-        "overlay_style": "solid",
-        "gradient_direction": "to top",
-        "border": "none",
-        "border_width": 1,
-        "border_opacity": 100,
-        "border_color": "",
-        "border_radius": 0,
-        "padding-block-start": 0,
-        "padding-block-end": 0
+        "accessibility_label": "Customer reviews",
+        "autoplay_seconds": "5",
+        "padding-block-start": 48,
+        "padding-block-end": 48
       }
     },
     "how_to_prepare_LbKi8g": {
