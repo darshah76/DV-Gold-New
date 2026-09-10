@@ -278,8 +278,50 @@
         "padding-block-end": 0
       }
     },
-    "how_to_prepare": {
+    "product_features": {
+      "type": "_blocks",
+      "blocks": {
+        "product_features_block": {
+          "type": "product-features",
+          "settings": {},
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "product_features_block"
+      ],
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 28,
+        "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "background_media": "none",
+        "background_color": "",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_color": "",
+        "border_radius": 0,
+        "padding-block-start": 48,
+        "padding-block-end": 48
+      }
+    },
+    "how_to_prepare_LbKi8g": {
       "type": "how-to-prepare",
+      "name": "How to Prepare",
       "settings": {
         "heading": "How to Prepare",
         "gap": 28,
@@ -287,20 +329,8 @@
         "padding-block-end": 48
       }
     },
-    "recipes": {
-      "type": "recipes",
-      "settings": {
-        "heading": "Recipes You’ll Love",
-        "view_all_label": "View all",
-        "view_all_link": "",
-        "max_articles": 6,
-        "gap": 28,
-        "padding-block-start": 48,
-        "padding-block-end": 48
-      }
-    },
     "178785980861f4e927": {
-      "type": "judgeme-reviews",
+      "type": "_blocks",
       "blocks": {
         "judge_me_reviews_review_widget_QyKbh4": {
           "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
@@ -316,17 +346,42 @@
         "judge_me_reviews_review_widget_QyKbh4"
       ],
       "settings": {
-        "accessibility_label": "Customer reviews",
-        "autoplay_seconds": "5",
-        "padding-block-start": 48,
-        "padding-block-end": 48
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 12,
+        "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "background_media": "none",
+        "background_color": "",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_color": "",
+        "border_radius": 0,
+        "padding-block-start": 0,
+        "padding-block-end": 0
       }
     },
-    "how_to_prepare_LbKi8g": {
-      "type": "how-to-prepare",
-      "name": "How to Prepare",
+    "recipes_fLzfM3": {
+      "type": "recipes",
+      "name": "Recipes",
       "settings": {
-        "heading": "How to Prepare",
+        "heading": "Recipes You’ll Love",
+        "view_all_label": "View all",
+        "view_all_link": "",
+        "max_articles": 6,
         "gap": 28,
         "padding-block-start": 48,
         "padding-block-end": 48
@@ -335,8 +390,9 @@
   },
   "order": [
     "main",
-    "how_to_prepare",
-    "recipes",
+    "product_features",
+    "how_to_prepare_LbKi8g",
+    "recipes_fLzfM3",
     "178785980861f4e927"
   ]
 }
