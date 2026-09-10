@@ -204,11 +204,11 @@ Use these fixed supporting surface tokens when a composition calls for the appro
 
 Semantic status tokens are `--color-error: #8B0000`, `--color-success: #006400`, `--color-instock: #3ED660`, `--color-lowstock: #EE9441`, and `--color-outofstock: #C8C8C8`. Use them only for their named status. `--color-white` is a utility, not a replacement for the merchant-controlled background.
 
-Heading and title text uses the merchant-editable `heading_text_color` setting, exposed as `--color-heading` and set to the brand burgundy `#9B1B30` by default.
+Heading and title text uses the merchant-editable `heading_text_color` setting, exposed as `--color-heading` and set to the primary warm gold `#CFA564` by default.
 
 The service-specific `--color-whatsapp: #25D366` token is reserved for WhatsApp calls to action. Do not use it as a general accent color.
 
-The fixed `--color-brand-gold: #F9C800` token is the approved gold used for highlighted Chewy titles and the selection background when burgundy text is selected.
+The fixed `--color-brand-gold: #F9C800` token is the approved bright gold used for highlighted Chewy titles and the selection background when primary-color text is selected.
 
 ### How global recoloring works
 
@@ -255,7 +255,7 @@ Use the existing spacing scale rather than arbitrary values. Available `--paddin
 
 All storefront calls to action must reuse `.button`, `.button-secondary`, or `.button-custom`; accelerated checkout uses the matching shared declarations. The active primary button design is merchant-editable and uses the following defaults:
 
-- Background and border: brand burgundy `#9B1B30`, exposed through the primary button palette settings and semantic button color tokens.
+- Background and border: primary warm gold `#CFA564`, exposed through the primary button palette settings and semantic button color tokens.
 - Text: white `#FFFFFF`, exposed through the primary button text setting and `--color-primary-button-text`.
 - Border radius: 16px through `--style-border-radius-buttons-primary`; secondary buttons use their corresponding 16px setting.
 - Padding: 16px block and 50px inline through `--button-padding-block` and `--button-padding-inline`.
