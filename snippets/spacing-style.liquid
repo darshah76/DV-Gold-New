@@ -3,6 +3,7 @@
   Intended for blocks and sections that provide values for all the referenced settings.
 
   @param {object} settings - The block or section settings object containing spacing values
+  @param {number} [padding_block_start] - Optional top-padding override
 
   @example
   <div class="spacing-style" style="{% render 'spacing-style', settings: section.settings %}">
@@ -13,6 +14,10 @@
 
   for key in keys
     assign value = settings[key]
+
+    if key == 'padding-block-start' and padding_block_start != blank
+      assign value = padding_block_start
+    endif
 
     if value != blank
       echo '--'
