@@ -56,7 +56,7 @@
             "panel_heading_color": "#f9c800",
             "panel_description_color": "#ffffff",
             "button_text_color": "#ffffff",
-            "button_background_color": "#9b1b30"
+            "button_background_color": "#cfa564"
           }
         },
         "category_83R437": {
@@ -73,7 +73,7 @@
             "panel_heading_color": "#f9c800",
             "panel_description_color": "{{ settings.color_palette.foreground }}",
             "button_text_color": "#ffffff",
-            "button_background_color": "#9b1b30"
+            "button_background_color": "#cfa564"
           }
         },
         "category_PHPy9r": {
@@ -90,7 +90,7 @@
             "panel_heading_color": "#f9c800",
             "panel_description_color": "{{ settings.color_palette.foreground }}",
             "button_text_color": "#ffffff",
-            "button_background_color": "#9b1b30"
+            "button_background_color": "#cfa564"
           }
         },
         "category_zJV3eV": {
@@ -107,7 +107,7 @@
             "panel_heading_color": "#f9c800",
             "panel_description_color": "{{ settings.color_palette.foreground }}",
             "button_text_color": "#ffffff",
-            "button_background_color": "#9b1b30"
+            "button_background_color": "#cfa564"
           }
         }
       },

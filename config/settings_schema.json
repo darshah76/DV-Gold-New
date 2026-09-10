@@ -99,7 +99,7 @@
         "type": "color",
         "id": "heading_text_color",
         "label": "Heading and title color",
-        "default": "#9B1B30"
+        "default": "#CFA564"
       },
       {
         "type": "header",
@@ -1279,7 +1279,7 @@
         "type": "color",
         "id": "palette_primary_button_background",
         "label": "t:settings.background",
-        "default": "#9B1B30",
+        "default": "#CFA564",
         "alpha": true
       },
       {
@@ -1293,7 +1293,7 @@
         "type": "color",
         "id": "palette_primary_button_border",
         "label": "t:settings.borders",
-        "default": "#9B1B30",
+        "default": "#CFA564",
         "alpha": true
       },
       {
