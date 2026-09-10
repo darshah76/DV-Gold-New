@@ -287,6 +287,18 @@
         "padding-block-end": 48
       }
     },
+    "recipes": {
+      "type": "recipes",
+      "settings": {
+        "heading": "Recipes You’ll Love",
+        "view_all_label": "View all",
+        "view_all_link": "",
+        "max_articles": 6,
+        "gap": 28,
+        "padding-block-start": 48,
+        "padding-block-end": 48
+      }
+    },
     "178785980861f4e927": {
       "type": "_blocks",
       "blocks": {
@@ -346,6 +358,7 @@
   "order": [
     "main",
     "how_to_prepare",
+    "recipes",
     "178785980861f4e927"
   ]
 }
