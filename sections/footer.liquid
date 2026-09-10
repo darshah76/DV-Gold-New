@@ -1,6 +1,6 @@
 {% liquid
   if section.settings.background_color != blank
-    render 'contrast-override', background_color: section.settings.background_color, section_id: section.id
+    render 'contrast-override', background_color: section.settings.background_color, text_color: section.settings.text_color, section_id: section.id
   endif
 
   assign footer_padding_block_start = section.settings.padding-block-end
@@ -145,7 +145,7 @@
   .dv-footer__input-wrap input { flex: 1; min-width: 0; min-height: var(--minimum-touch-target); padding: var(--padding-lg); color: inherit; background: transparent; border: 0; font: inherit; }
   .dv-footer__input-wrap input::placeholder { color: rgb(var(--color-input-text-rgb) / var(--opacity-70)); }
   .dv-footer__input-wrap input:focus-visible { outline-offset: calc(var(--focus-outline-width) * -1); }
-  .dv-footer__input-wrap button { display: grid; place-items: center; flex: 0 0 var(--minimum-touch-target); align-self: stretch; padding: 0; color: var(--color-primary-button-background); background: transparent; border: 0; cursor: pointer; }
+  .dv-footer__input-wrap button { display: grid; place-items: center; flex: 0 0 var(--minimum-touch-target); align-self: stretch; padding: 0; color: var(--color-foreground); background: transparent; border: 0; cursor: pointer; }
   .dv-footer__input-wrap button svg { width: var(--icon-size-lg); height: var(--icon-size-lg); fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
   .dv-footer__message { margin-block: var(--margin-sm) 0; color: inherit; }
   .dv-footer__bottom { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--gap-md); margin-block-start: var(--margin-6xl); padding-block-start: var(--padding-xl); border-block-start: var(--style-border-width) solid var(--color-border); color: var(--color-foreground-subdued); text-align: start; }
@@ -185,7 +185,8 @@
     { "type": "url", "id": "twitter_url", "label": "X URL" },
     { "type": "url", "id": "youtube_url", "label": "YouTube URL" },
     { "type": "text", "id": "copyright_text", "label": "Copyright name", "default": "DV Gold Foods" },
-    { "type": "color", "id": "background_color", "label": "Background color", "default": "#cfa564" },
+    { "type": "color", "id": "background_color", "label": "Background color", "default": "#363334" },
+    { "type": "color", "id": "text_color", "label": "Text and icon color", "default": "#ffffff" },
     { "type": "header", "content": "Padding" },
     { "type": "range", "id": "home-padding-block-start", "label": "Homepage top", "min": 0, "max": 300, "step": 3, "unit": "px", "default": 264 },
     { "type": "range", "id": "padding-block-start", "label": "Top", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 32 },
@@ -194,7 +195,7 @@
   "presets": [{
     "name": "Main footer",
     "category": "Footer",
-    "settings": { "background_color": "#cfa564", "home-padding-block-start": 264, "padding-block-start": 32, "padding-block-end": 32 }
+    "settings": { "background_color": "#363334", "text_color": "#ffffff", "home-padding-block-start": 264, "padding-block-start": 32, "padding-block-end": 32 }
   }]
 }
 {% endschema %}
