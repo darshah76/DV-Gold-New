@@ -1,0 +1,120 @@
+<script src="{{ 'home-judgeme-reviews.js' | asset_url }}" type="module" fetchpriority="low"></script>
+
+{% liquid
+  assign judgeme = shop.metafields.judgeme
+  assign review_count = judgeme.all_reviews_count | default: 0
+  assign review_rating = judgeme.all_reviews_rating | default: 0
+  assign has_reviews = false
+  if judgeme.featured_carousel != blank
+    assign has_reviews = true
+  endif
+%}
+
+<div class="section-background"></div>
+<home-judgeme-reviews
+  class="section section--page-width home-judgeme spacing-style"
+  style="{% render 'spacing-style', settings: section.settings %}"
+  data-autoplay-seconds="{{ section.settings.autoplay_speed }}"
+  aria-label="Customer reviews"
+>
+  <div class="home-judgeme__inner{% if has_reviews %} gap-style{% endif %}"{% if has_reviews %} style="{% render 'gap-style', value: section.settings.gap %}"{% endif %}>
+    <header class="home-judgeme__header">
+      <div class="home-judgeme__summary">
+        <p class="home-judgeme__rating h3">{{ review_rating | round: 2 }}</p>
+        <div class="home-judgeme__stars" aria-label="{{ review_rating | round: 2 }} out of 5 stars">
+          {% for star in (1..5) %}
+            {% liquid
+              assign star_class = 'jdgm--off'
+              if review_rating >= star
+                assign star_class = 'jdgm--on'
+              else
+                assign previous_star = star | minus: 1
+                if review_rating > previous_star
+                  assign star_class = 'jdgm--half'
+                endif
+              endif
+            %}
+            <span class="jdgm-star {{ star_class }}" aria-hidden="true"></span>
+          {% endfor %}
+        </div>
+        <p class="home-judgeme__count">Based on {{ review_count }} reviews</p>
+      </div>
+      <button class="button button-secondary home-judgeme__write" type="button" data-judgeme-write>
+        {{ section.settings.button_label | escape }}
+      </button>
+    </header>
+
+    {% if has_reviews %}
+      <div class="home-judgeme__reviews" data-judgeme-reviews>
+        {{ judgeme.featured_carousel }}
+      </div>
+      <nav class="home-judgeme__pagination" data-judgeme-pagination aria-label="Review pages" hidden></nav>
+    {% elsif request.design_mode %}
+      <p class="home-judgeme__empty">Featured Judge.me reviews will appear here after the widget is configured.</p>
+    {% endif %}
+  </div>
+</home-judgeme-reviews>
+
+{% stylesheet %}
+  .home-judgeme__inner { display: grid; min-width: 0; }
+  .home-judgeme__inner.gap-style { gap: var(--gap); }
+  .home-judgeme__header { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--gap-lg); }
+  .home-judgeme__summary { display: grid; justify-items: center; gap: var(--gap-xs); text-align: center; }
+  .home-judgeme__rating,
+  .home-judgeme__count { margin: 0; }
+  .home-judgeme__rating { color: var(--color-foreground); }
+  .home-judgeme__count,
+  .home-judgeme__empty { color: var(--color-foreground); font-family: var(--font-body--family); font-style: normal; font-weight: var(--font-body--weight); font-size: var(--font-size--lg); line-height: var(--font-paragraph--line-height); text-wrap: pretty; }
+  .home-judgeme__stars { display: flex; color: var(--color-heading); font-size: var(--font-size--2xl); line-height: var(--font-h4--line-height); }
+  .home-judgeme__write { flex: 0 0 auto; }
+  .home-judgeme__reviews { min-width: 0; overflow: hidden; }
+  .home-judgeme__reviews :is(.jdgm-carousel-title, .jdgm-all-reviews-rating-wrapper, .jdgm-carousel-number-of-reviews, .jdgm-carousel__arrows, .jdgm-carousel__see-all-reviews) { display: none; }
+  .home-judgeme__reviews .jdgm-carousel-item__review { height: 100%; padding: var(--padding-lg); color: var(--color-foreground); background: var(--color-white); border: var(--style-border-width) solid var(--color-card-border-warm); border-radius: var(--style-border-radius-cards); box-shadow: var(--shadow-card-subtle); text-align: start; }
+  .home-judgeme__reviews :is(.jdgm-carousel-item__review-body, .jdgm-carousel-item__review-content) { color: var(--color-foreground); font-family: var(--font-body--family); font-style: normal; font-weight: var(--font-body--weight); font-size: var(--font-size--lg); line-height: var(--font-paragraph--line-height); text-wrap: pretty; }
+  .home-judgeme__reviews :is(.jdgm-carousel-item__review-title, .jdgm-carousel-item__reviewer-name) { color: var(--color-foreground); font-family: var(--font-subheading--family); font-style: var(--font-subheading--style); font-weight: var(--font-subheading--weight); }
+  .home-judgeme__reviews .jdgm-star { color: var(--color-heading); }
+  .home-judgeme__pagination { align-items: center; justify-content: center; flex-wrap: wrap; gap: var(--gap-xs); }
+  .home-judgeme__pagination:not([hidden]) { display: flex; }
+  .home-judgeme__page { display: grid; place-items: center; min-width: var(--minimum-touch-target); min-height: var(--minimum-touch-target); padding: 0; border: 0; border-radius: var(--style-border-radius-50); color: var(--color-foreground); background: transparent; cursor: pointer; font: inherit; }
+  .home-judgeme__page[aria-current='page'] { color: var(--color-primary-button-text); background: var(--color-primary-button-background); }
+  .home-judgeme__page:focus-visible { outline: var(--focus-outline-width) solid currentColor; outline-offset: var(--focus-outline-offset); }
+  .home-judgeme__empty { margin: 0; text-align: center; }
+
+  @media (max-width: 749px) {
+    .home-judgeme__header { align-items: center; }
+    .home-judgeme__reviews .jdgm-carousel-item__review { text-align: center; }
+  }
+
+  @media (min-width: 750px) {
+    .home-judgeme__summary { justify-items: start; text-align: start; }
+  }
+
+  @media (min-width: 990px) {
+    .home-judgeme__reviews :is(.jdgm-carousel, .jdgm-carousel__wrapper, .jdgm-carousel__item-wrapper) { width: 100%; max-width: none; transform: none; }
+    .home-judgeme__reviews .jdgm-carousel__item-wrapper { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: stretch; gap: var(--gap-lg); }
+    .home-judgeme__reviews .jdgm-carousel-item { display: block; width: auto; min-width: 0; margin: 0; }
+    .home-judgeme__reviews .jdgm-carousel-item[hidden] { display: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .home-judgeme__reviews * { scroll-behavior: auto; transition: none; animation: none; }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Judge.me reviews",
+  "disabled_on": { "groups": ["header", "footer"] },
+  "settings": [
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Write a review" },
+    { "type": "range", "id": "autoplay_speed", "label": "Mobile autoplay delay", "min": 3, "max": 10, "step": 1, "unit": "s", "default": 5 },
+    { "type": "range", "id": "gap", "label": "Summary to reviews gap", "min": 0, "max": 48, "step": 4, "unit": "px", "default": 28 },
+    { "type": "header", "content": "Section spacing" },
+    { "type": "range", "id": "padding-block-start", "label": "Top padding", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 48 },
+    { "type": "range", "id": "padding-block-end", "label": "Bottom padding", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 48 }
+  ],
+  "presets": [
+    { "name": "Judge.me reviews", "category": "Reviews", "settings": { "gap": 28, "padding-block-start": 48, "padding-block-end": 48 } }
+  ]
+}
+{% endschema %}

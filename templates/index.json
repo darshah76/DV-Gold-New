@@ -530,6 +530,17 @@
         "padding-block-end": 48
       }
     },
+    "home_judgeme_reviews": {
+      "type": "home-judgeme-reviews",
+      "name": "Judge.me reviews",
+      "settings": {
+        "button_label": "Write a review",
+        "autoplay_speed": 5,
+        "gap": 28,
+        "padding-block-start": 48,
+        "padding-block-end": 48
+      }
+    },
     "home_b2b_pMYc9w": {
       "type": "home-b2b",
       "blocks": {
@@ -593,6 +604,7 @@
     "home_certifications_PLJPpt",
     "home_store_features_CRTxAY",
     "home_ugc_Wr9aXj",
+    "home_judgeme_reviews",
     "home_faq_DaJ4YY",
     "home_b2b_pMYc9w"
   ]
