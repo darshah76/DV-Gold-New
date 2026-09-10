@@ -1,0 +1,216 @@
+{% liquid
+  assign preparation_steps = product.metafields.custom.how_to_prepare_content.value
+  assign preparation_icons = product.metafields.custom.how_to_prepare_icon.value
+  assign desktop_columns = preparation_steps.size | at_most: 5
+%}
+
+{% if preparation_steps != blank %}
+  <div class="section-background"></div>
+
+  <section
+    class="section section--page-width how-to-prepare spacing-style"
+    style="{% render 'spacing-style', settings: section.settings %}"
+    {% if section.settings.heading != blank %}
+      aria-labelledby="HowToPrepareHeading-{{ section.id }}"
+    {% else %}
+      aria-label="How to prepare"
+    {% endif %}
+  >
+    <div
+      class="how-to-prepare__container{% if section.settings.heading != blank %} gap-style{% endif %}"
+      style="--how-to-prepare-column-count: {{ desktop_columns }};{% if section.settings.heading != blank %} {% render 'gap-style', value: section.settings.gap %}{% endif %}"
+    >
+      {% if section.settings.heading != blank %}
+        <h2 class="how-to-prepare__heading h2" id="HowToPrepareHeading-{{ section.id }}">
+          {{ section.settings.heading | escape }}
+        </h2>
+      {% endif %}
+
+      <ol class="how-to-prepare__list">
+        {% for step in preparation_steps %}
+          {% liquid
+            assign step_index = forloop.index0
+            assign step_icon = preparation_icons[step_index]
+          %}
+          <li class="how-to-prepare__item">
+            {% if step_icon != blank %}
+              <div class="how-to-prepare__icon-wrapper">
+                {{
+                  step_icon
+                  | image_url: width: 240
+                  | image_tag:
+                    class: 'how-to-prepare__icon',
+                    widths: '80, 120, 160, 240',
+                    sizes: '(min-width: 750px) 120px, 96px',
+                    loading: 'lazy',
+                    alt: ''
+                }}
+              </div>
+            {% endif %}
+
+            <span class="how-to-prepare__number" aria-hidden="true">{{ forloop.index }}</span>
+            <p class="how-to-prepare__text">{{ step | escape | newline_to_br }}</p>
+          </li>
+        {% endfor %}
+      </ol>
+    </div>
+  </section>
+{% endif %}
+
+{% stylesheet %}
+  .how-to-prepare__container {
+    display: grid;
+    width: 100%;
+  }
+
+  .how-to-prepare__container.gap-style {
+    gap: var(--gap);
+  }
+
+  .how-to-prepare__heading {
+    max-width: var(--max-width--heading-normal);
+    margin: 0 auto;
+    color: var(--color-heading);
+    text-align: center;
+    text-wrap: balance;
+  }
+
+  .how-to-prepare__list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--gap-lg);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .how-to-prepare__item {
+    display: grid;
+    min-width: 0;
+    align-content: start;
+    justify-items: center;
+    gap: var(--gap-lg);
+    padding: var(--padding-2xl);
+    color: var(--color-foreground);
+    text-align: center;
+    background: var(--color-background-tertiary);
+    border: var(--style-border-width) solid var(--color-card-border-warm);
+    border-radius: var(--style-border-radius-lg);
+  }
+
+  .how-to-prepare__icon-wrapper {
+    display: grid;
+    width: 100%;
+    height: calc(var(--padding-6xl) + var(--padding-2xl));
+    place-items: center;
+  }
+
+  .how-to-prepare__icon {
+    display: block;
+    width: auto;
+    max-width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .how-to-prepare__number {
+    display: grid;
+    width: var(--minimum-touch-target);
+    height: var(--minimum-touch-target);
+    place-items: center;
+    color: var(--color-primary-button-text);
+    font-family: var(--font-subheading--family);
+    font-style: var(--font-subheading--style);
+    font-weight: var(--font-subheading--weight);
+    font-size: var(--font-size--md);
+    line-height: 1;
+    background: var(--color-primary-button-background);
+    border-radius: var(--style-border-radius-50);
+  }
+
+  .how-to-prepare__text {
+    margin: 0;
+    color: var(--color-foreground);
+    font-family: var(--font-body--family);
+    font-style: normal;
+    font-weight: var(--font-body--weight);
+    font-size: var(--font-size--lg);
+    line-height: var(--font-paragraph--line-height);
+    text-wrap: pretty;
+  }
+
+  @media (min-width: 750px) {
+    .how-to-prepare__list {
+      grid-template-columns: repeat(auto-fit, minmax(var(--sidebar-width), 1fr));
+      gap: var(--gap-2xl);
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .how-to-prepare__list {
+      grid-template-columns: repeat(var(--how-to-prepare-column-count), minmax(0, 1fr));
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "How to Prepare",
+  "enabled_on": {
+    "templates": ["product"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "How to Prepare"
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "label": "Heading to steps gap",
+      "min": 0,
+      "max": 48,
+      "step": 4,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "How to Prepare",
+      "settings": {
+        "heading": "How to Prepare",
+        "gap": 28,
+        "padding-block-start": 48,
+        "padding-block-end": 48
+      }
+    }
+  ]
+}
+{% endschema %}
