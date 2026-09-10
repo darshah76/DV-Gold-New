@@ -1,19 +1,41 @@
 {%- liquid
   assign product = closest.product
   assign feature_descriptions = product.metafields.custom.product_feature_description.value
-  assign feature_icons = product.metafields.custom.product_feature_icon.value
+  assign feature_icon_metafield = product.metafields.custom.product_feature_icon
+  assign feature_icons = feature_icon_metafield.value
 -%}
 
 {%- if feature_descriptions != blank -%}
   <div class="product-features" {{ block.shopify_attributes }}>
     <ul class="product-features__list" role="list">
       {%- for description in feature_descriptions -%}
-        {%- assign feature_icon = feature_icons[forloop.index0] -%}
+        {%- liquid
+          assign feature_icon = blank
+          assign description_index = forloop.index
+          if feature_icon_metafield.list?
+            for icon in feature_icons
+              if forloop.index == description_index
+                assign feature_icon = icon
+                break
+              endif
+            endfor
+          else
+            assign feature_icon = feature_icons
+          endif
+          assign feature_icon_image = feature_icon.preview_image | default: feature_icon.image
+          if feature_icon_image == blank and feature_icon.width != blank
+            assign feature_icon_image = feature_icon
+          endif
+          assign feature_icon_url = feature_icon.url | default: feature_icon.src
+          if feature_icon_url == blank and feature_icon contains 'http'
+            assign feature_icon_url = feature_icon
+          endif
+        -%}
         <li class="product-features__item">
           {%- if feature_icon != blank -%}
-            {%- if feature_icon.preview_image != blank -%}
+            {%- if feature_icon_image != blank -%}
               {{
-                feature_icon.preview_image
+                feature_icon_image
                 | image_url: width: 192
                 | image_tag:
                   class: 'product-features__icon',
@@ -22,10 +44,10 @@
                   loading: 'lazy',
                   alt: ''
               }}
-            {%- elsif feature_icon.url != blank -%}
+            {%- elsif feature_icon_url != blank -%}
               <img
                 class="product-features__icon"
-                src="{{ feature_icon.url | escape }}"
+                src="{{ feature_icon_url | escape }}"
                 alt=""
                 width="48"
                 height="48"
