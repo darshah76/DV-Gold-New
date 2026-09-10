@@ -90,7 +90,12 @@
     }
   }
 
-  slideshow-slide.product-media-container--tallest {
+  /* Keep every product-media slide laid out when the slideshow updates
+     aria-hidden. Collapsing an inactive adaptive slide can reduce the
+     scroller to zero size and make the active image disappear as the
+     gallery initializes. This also covers grid galleries rendered as a
+     carousel on mobile. */
+  media-gallery slideshow-slide.product-media-container {
     content-visibility: visible;
   }
 
