@@ -1,3 +1,19 @@
+{% liquid
+  assign current_product = closest.product | default: product
+  assign judge_me_badge = current_product.metafields.judgeme.badge.value | default: current_product.metafields.judgeme.badge
+  assign judge_me_widget = current_product.metafields.judgeme.widget.value | default: current_product.metafields.judgeme.widget
+  assign rating = 0
+  assign rating_count = 0
+
+  if judge_me_badge contains "data-average-rating='"
+    assign rating = judge_me_badge | split: "data-average-rating='" | last | split: "'" | first
+    assign rating_count = judge_me_badge | split: "data-number-of-reviews='" | last | split: "'" | first
+  elsif judge_me_badge contains 'data-average-rating="'
+    assign rating = judge_me_badge | split: 'data-average-rating="' | last | split: '"' | first
+    assign rating_count = judge_me_badge | split: 'data-number-of-reviews="' | last | split: '"' | first
+  endif
+%}
+
 <div class="section-background"></div>
 
 <section
@@ -6,10 +22,33 @@
   aria-label="{{ section.settings.accessibility_label | escape }}"
 >
   <judge-me-reviews
-    class="judgeme-reviews__inner"
+    class="judgeme-reviews__inner gap-style"
     data-autoplay-seconds="{{ section.settings.autoplay_seconds }}"
+    style="{% render 'gap-style', value: section.settings.gap %}"
   >
-    {% content_for 'blocks' %}
+    <div class="judgeme-reviews__header">
+      <div class="judgeme-reviews__summary" aria-label="{{ rating }} out of 5 stars from {{ rating_count }} reviews">
+        <p class="judgeme-reviews__rating">{{ rating }}</p>
+        <div class="judgeme-reviews__stars" aria-hidden="true">
+          {% for index in (1..5) %}
+            <span class="judgeme-reviews__star{% if rating < index %} judgeme-reviews__star--empty{% endif %}">★</span>
+          {% endfor %}
+        </div>
+        <p class="judgeme-reviews__count">Based on {{ rating_count }} Reviews</p>
+      </div>
+
+      <button class="button judgeme-reviews__write-button" type="button" data-judgeme-write-review>
+        Write a Review
+      </button>
+    </div>
+
+    <div
+      id="judgeme_product_reviews"
+      class="jdgm-widget jdgm-review-widget"
+      data-id="{{ current_product.id }}"
+    >
+      {{ judge_me_widget }}
+    </div>
   </judge-me-reviews>
 </section>
 
@@ -22,9 +61,58 @@
   }
 
   .judgeme-reviews__inner {
-    display: block;
+    display: grid;
     width: 100%;
     min-width: 0;
+    gap: var(--gap);
+  }
+
+  .judgeme-reviews__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--gap-xl);
+  }
+
+  .judgeme-reviews__summary {
+    display: grid;
+    justify-items: start;
+    gap: var(--gap-xs);
+  }
+
+  .judgeme-reviews__rating {
+    margin: 0;
+    color: var(--color-foreground);
+    font-family: var(--font-accent--family);
+    font-style: var(--font-accent--style);
+    font-weight: var(--font-accent--weight);
+    font-size: var(--font-size--4xl);
+    line-height: 1;
+  }
+
+  .judgeme-reviews__stars {
+    display: flex;
+    color: var(--color-heading);
+    font-size: var(--font-size--2xl);
+    line-height: 1;
+  }
+
+  .judgeme-reviews__star--empty {
+    color: var(--color-border);
+  }
+
+  .judgeme-reviews__count {
+    margin: 0;
+    color: var(--color-foreground);
+    font-family: var(--font-body--family);
+    font-style: normal;
+    font-weight: var(--font-body--weight);
+    font-size: var(--font-size--lg);
+    line-height: var(--font-paragraph--line-height);
+  }
+
+  .judgeme-reviews__write-button {
+    flex: none;
   }
 
   .judgeme-reviews .jdgm-widget {
@@ -36,6 +124,10 @@
   .judgeme-reviews .jdgm-rev-widg {
     padding: 0;
     border: 0;
+  }
+
+  .judgeme-reviews .jdgm-rev-widg__header {
+    display: none;
   }
 
   .judgeme-reviews .jdgm-rev-widg__title {
@@ -87,6 +179,10 @@
   }
 
   @media (max-width: 749px) {
+    .judgeme-reviews__header {
+      align-items: center;
+    }
+
     .judgeme-reviews .jdgm-rev-widg__header,
     .judgeme-reviews .jdgm-rev-widg__title,
     .judgeme-reviews .jdgm-rev-widg__summary {
@@ -140,12 +236,6 @@
   "enabled_on": {
     "templates": ["product"]
   },
-  "blocks": [
-    {
-      "type": "@app"
-    }
-  ],
-  "max_blocks": 1,
   "settings": [
     {
       "type": "text",
@@ -162,6 +252,16 @@
         { "value": "7", "label": "7 seconds" }
       ],
       "default": "5"
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "label": "Summary to reviews gap",
+      "min": 0,
+      "max": 48,
+      "step": 4,
+      "unit": "px",
+      "default": 28
     },
     {
       "type": "header",
@@ -192,6 +292,7 @@
     {
       "name": "Judge.me reviews",
       "settings": {
+        "gap": 28,
         "padding-block-start": 48,
         "padding-block-end": 48
       }
