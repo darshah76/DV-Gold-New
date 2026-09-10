@@ -3,10 +3,10 @@
     render 'contrast-override', background_color: section.settings.background_color, section_id: section.id
   endif
 
-  assign footer_padding_block_start = section.settings.padding-block-start
-  unless template.name == 'index'
-    assign footer_padding_block_start = section.settings.padding-block-end
-  endunless
+  assign footer_padding_block_start = section.settings.padding-block-end
+  if template.name == 'index'
+    assign footer_padding_block_start = section.settings['home-padding-block-start']
+  endif
 %}
 
 <div class="section-background{% if section.settings.background_color != blank %} color-custom-{{ section.id }}{% endif %}"></div>
@@ -16,12 +16,7 @@
 >
   <div
     class="dv-footer__inner spacing-style"
-    style="
-      {% render 'spacing-style', settings: section.settings %}
-      {% if request.page_type == 'index' %}
-        --padding-block-start: max(20px, calc(var(--spacing-scale) * {{ section.settings['home-padding-block-start'] }}px));
-      {% endif %}
-    "
+    style="{% render 'spacing-style', settings: section.settings, padding_block_start: footer_padding_block_start %}"
   >
     <div class="dv-footer__grid">
       <div class="dv-footer__brand">
@@ -190,7 +185,7 @@
     { "type": "url", "id": "twitter_url", "label": "X URL" },
     { "type": "url", "id": "youtube_url", "label": "YouTube URL" },
     { "type": "text", "id": "copyright_text", "label": "Copyright name", "default": "DV Gold Foods" },
-    { "type": "color", "id": "background_color", "label": "Background color", "default": "{{ settings.palette_primary_button_background }}" },
+    { "type": "color", "id": "background_color", "label": "Background color", "default": "#cfa564" },
     { "type": "header", "content": "Padding" },
     { "type": "range", "id": "home-padding-block-start", "label": "Homepage top", "min": 0, "max": 300, "step": 3, "unit": "px", "default": 264 },
     { "type": "range", "id": "padding-block-start", "label": "Top", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 32 },
@@ -199,7 +194,7 @@
   "presets": [{
     "name": "Main footer",
     "category": "Footer",
-    "settings": { "background_color": "{{ settings.palette_primary_button_background }}", "home-padding-block-start": 264, "padding-block-start": 32, "padding-block-end": 32 }
+    "settings": { "background_color": "#cfa564", "home-padding-block-start": 264, "padding-block-start": 32, "padding-block-end": 32 }
   }]
 }
 {% endschema %}
