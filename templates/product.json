@@ -278,43 +278,21 @@
         "padding-block-end": 0
       }
     },
-    "product_features": {
-      "type": "_blocks",
-      "blocks": {
-        "product_features_block": {
-          "type": "product-features",
-          "settings": {},
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "product_features_block"
-      ],
+    "how_to_prepare": {
+      "type": "how-to-prepare",
       "settings": {
-        "content_direction": "column",
-        "vertical_on_mobile": true,
-        "horizontal_alignment": "flex-start",
-        "vertical_alignment": "center",
-        "align_baseline": false,
-        "horizontal_alignment_flex_direction_column": "flex-start",
-        "vertical_alignment_flex_direction_column": "center",
+        "heading": "How to Prepare",
         "gap": 28,
-        "section_width": "page-width",
-        "section_height": "",
-        "section_height_custom": 50,
-        "background_media": "none",
-        "background_color": "",
-        "video_position": "cover",
-        "background_image_position": "cover",
-        "toggle_overlay": false,
-        "overlay_color": "#00000026",
-        "overlay_style": "solid",
-        "gradient_direction": "to top",
-        "border": "none",
-        "border_width": 1,
-        "border_opacity": 100,
-        "border_color": "",
-        "border_radius": 0,
+        "padding-block-start": 48,
+        "padding-block-end": 48
+      }
+    },
+    "178785980861f4e927": {
+      "type": "judgeme-reviews",
+      "settings": {
+        "accessibility_label": "Customer reviews",
+        "autoplay_seconds": "5",
+        "gap": 28,
         "padding-block-start": 48,
         "padding-block-end": 48
       }

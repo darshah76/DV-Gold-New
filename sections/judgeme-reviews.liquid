@@ -37,9 +37,7 @@
         <p class="judgeme-reviews__count">Based on {{ rating_count }} Reviews</p>
       </div>
 
-      <button class="button judgeme-reviews__write-button" type="button" data-judgeme-write-review>
-        Write a Review
-      </button>
+      <div class="judgeme-reviews__write-action" data-judgeme-write-review-slot></div>
     </div>
 
     <div
@@ -111,8 +109,13 @@
     line-height: var(--font-paragraph--line-height);
   }
 
-  .judgeme-reviews__write-button {
+  .judgeme-reviews__write-action {
+    display: flex;
     flex: none;
+  }
+
+  .judgeme-reviews__write-action:empty {
+    display: none;
   }
 
   .judgeme-reviews .jdgm-widget {
