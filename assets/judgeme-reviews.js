@@ -46,7 +46,13 @@ class JudgeMeReviews extends HTMLElement {
 
   enhanceWidget() {
     const writeReview = this.querySelector(".jdgm-write-rev-link");
-    writeReview?.classList.add("button");
+    const actionSlot = this.querySelector("[data-judgeme-write-review-slot]");
+    if (!writeReview || !actionSlot) return;
+
+    writeReview.classList.add("button");
+    if (writeReview.parentElement !== actionSlot) {
+      actionSlot.append(writeReview);
+    }
   }
 
   handleViewportChange() {
