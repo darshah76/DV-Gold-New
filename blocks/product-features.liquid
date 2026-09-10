@@ -1,7 +1,8 @@
 {%- liquid
   assign product = closest.product
   assign feature_descriptions = product.metafields.custom.product_feature_description.value
-  assign feature_icons = product.metafields.custom.product_feature_icon.value
+  assign feature_icon_metafield = product.metafields.custom.product_feature_icon
+  assign feature_icons = feature_icon_metafield.value
 -%}
 
 {%- if feature_descriptions != blank -%}
@@ -10,7 +11,11 @@
       {%- for description in feature_descriptions -%}
         {%- liquid
           assign feature_index = forloop.index0
-          assign feature_icon = feature_icons[feature_index]
+          if feature_icon_metafield.type contains 'list.'
+            assign feature_icon = feature_icons[feature_index]
+          else
+            assign feature_icon = feature_icons
+          endif
           assign feature_icon_image = feature_icon.preview_image | default: feature_icon.image
           if feature_icon_image == blank and feature_icon.width != blank
             assign feature_icon_image = feature_icon
