@@ -47,6 +47,19 @@
                       alt: ''
                   }}
                 </div>
+              {% elsif step_icon.width != blank %}
+                <div class="how-to-prepare__icon-wrapper">
+                  {{
+                    step_icon
+                    | image_url: width: 240
+                    | image_tag:
+                      class: 'how-to-prepare__icon',
+                      widths: '80, 120, 160, 240',
+                      sizes: '(min-width: 750px) 120px, 96px',
+                      loading: 'lazy',
+                      alt: ''
+                  }}
+                </div>
               {% elsif step_icon.url != blank %}
                 <div class="how-to-prepare__icon-wrapper">
                   {% # theme-check-disable RemoteAsset %}
