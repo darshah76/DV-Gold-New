@@ -1,7 +1,8 @@
 {% liquid
   assign current_product = closest.product | default: product
   assign preparation_steps = current_product.metafields.custom.how_to_prepare_content.value
-  assign preparation_icons = current_product.metafields.custom.how_to_prepare_icon.value
+  assign preparation_icon_metafield = current_product.metafields.custom.how_to_prepare_icon
+  assign preparation_icons = preparation_icon_metafield.value
   assign desktop_columns = preparation_steps.size | at_most: 5
 %}
 
@@ -29,13 +30,36 @@
 
       <ol class="how-to-prepare__list">
         {% for step in preparation_steps %}
-          {% assign step_icon = preparation_icons[forloop.index0] %}
+          {% liquid
+            assign step_icon = blank
+            assign step_index = forloop.index
+
+            if preparation_icon_metafield.list?
+              for preparation_icon in preparation_icons
+                if forloop.index == step_index
+                  assign step_icon = preparation_icon
+                  break
+                endif
+              endfor
+            else
+              assign step_icon = preparation_icons
+            endif
+
+            assign step_icon_image = step_icon.preview_image
+            if step_icon_image == blank
+              assign step_icon_image = step_icon.image.value | default: step_icon.image
+            endif
+            if step_icon_image == blank and step_icon.width != blank
+              assign step_icon_image = step_icon
+            endif
+            assign step_icon_url = step_icon.url | default: step_icon.src
+          %}
           <li class="how-to-prepare__item">
             {% if step_icon != blank %}
-              {% if step_icon.preview_image != blank %}
+              {% if step_icon_image != blank %}
                 <div class="how-to-prepare__icon-wrapper">
                   {{
-                    step_icon.preview_image
+                    step_icon_image
                     | image_url: width: 240
                     | image_tag:
                       class: 'how-to-prepare__icon',
@@ -45,25 +69,12 @@
                       alt: ''
                   }}
                 </div>
-              {% elsif step_icon.width != blank %}
-                <div class="how-to-prepare__icon-wrapper">
-                  {{
-                    step_icon
-                    | image_url: width: 240
-                    | image_tag:
-                      class: 'how-to-prepare__icon',
-                      widths: '80, 120, 160, 240',
-                      sizes: '(min-width: 750px) 120px, 96px',
-                      loading: 'lazy',
-                      alt: ''
-                  }}
-                </div>
-              {% elsif step_icon.url != blank %}
+              {% elsif step_icon_url != blank %}
                 <div class="how-to-prepare__icon-wrapper">
                   {% # theme-check-disable RemoteAsset %}
                   <img
                     class="how-to-prepare__icon"
-                    src="{{ step_icon.url | escape }}"
+                    src="{{ step_icon_url | escape }}"
                     alt=""
                     width="120"
                     height="120"
