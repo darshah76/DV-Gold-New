@@ -7,6 +7,7 @@ class JudgeMeReviews extends HTMLElement {
     this.resume = this.resume.bind(this);
     this.pause = this.pause.bind(this);
     this.handleViewportChange = this.handleViewportChange.bind(this);
+    this.openReviewForm = this.openReviewForm.bind(this);
 
     this.observer = new MutationObserver(() => {
       this.enhanceWidget();
@@ -22,6 +23,10 @@ class JudgeMeReviews extends HTMLElement {
     this.addEventListener("pointerleave", this.resume);
     this.addEventListener("focusin", this.pause);
     this.addEventListener("focusout", this.resume);
+    this.querySelector("[data-judgeme-write-review]")?.addEventListener(
+      "click",
+      this.openReviewForm,
+    );
     this.enhanceWidget();
     this.handleViewportChange();
   }
@@ -46,7 +51,22 @@ class JudgeMeReviews extends HTMLElement {
 
   enhanceWidget() {
     const writeReview = this.querySelector(".jdgm-write-rev-link");
-    writeReview?.classList.add("button");
+    writeReview?.setAttribute("data-native-judgeme-write-review", "");
+  }
+
+  openReviewForm() {
+    const nativeWriteReview = this.querySelector(
+      "[data-native-judgeme-write-review]",
+    );
+    if (!nativeWriteReview) return;
+
+    nativeWriteReview.click();
+    window.requestAnimationFrame(() => {
+      this.querySelector(".jdgm-form-wrapper")?.scrollIntoView({
+        behavior: this.reducedMotionQuery.matches ? "auto" : "smooth",
+        block: "center",
+      });
+    });
   }
 
   handleViewportChange() {
