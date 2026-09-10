@@ -30,7 +30,8 @@
         "youtube_url": "https://youtube.com",
         "copyright_text": "DV Gold Foods. Made with ♡ in India",
         "background_color": "{{ settings.palette_primary_button_background }}",
-        "padding-block-start": 264,
+        "home-padding-block-start": 264,
+        "padding-block-start": 32,
         "padding-block-end": 32
       }
     }

@@ -18,9 +18,9 @@
     class="dv-footer__inner spacing-style"
     style="
       {% render 'spacing-style', settings: section.settings %}
-      {% unless request.page_type == 'index' %}
-        --padding-block-start: var(--padding-block-end);
-      {% endunless %}
+      {% if request.page_type == 'index' %}
+        --padding-block-start: max(20px, calc(var(--spacing-scale) * {{ section.settings['home-padding-block-start'] }}px));
+      {% endif %}
     "
   >
     <div class="dv-footer__grid">
@@ -192,13 +192,14 @@
     { "type": "text", "id": "copyright_text", "label": "Copyright name", "default": "DV Gold Foods" },
     { "type": "color", "id": "background_color", "label": "Background color", "default": "{{ settings.palette_primary_button_background }}" },
     { "type": "header", "content": "Padding" },
-    { "type": "range", "id": "padding-block-start", "label": "Top", "min": 0, "max": 300, "step": 3, "unit": "px", "default": 264 },
+    { "type": "range", "id": "home-padding-block-start", "label": "Homepage top", "min": 0, "max": 300, "step": 3, "unit": "px", "default": 264 },
+    { "type": "range", "id": "padding-block-start", "label": "Top", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 32 },
     { "type": "range", "id": "padding-block-end", "label": "Bottom", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 32 }
   ],
   "presets": [{
     "name": "Main footer",
     "category": "Footer",
-    "settings": { "background_color": "{{ settings.palette_primary_button_background }}", "padding-block-start": 264, "padding-block-end": 32 }
+    "settings": { "background_color": "{{ settings.palette_primary_button_background }}", "home-padding-block-start": 264, "padding-block-start": 32, "padding-block-end": 32 }
   }]
 }
 {% endschema %}
