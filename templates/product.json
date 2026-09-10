@@ -278,6 +278,11 @@
         "padding-block-end": 0
       }
     },
+    "how_to_prepare": {
+      "type": "how-to-prepare",
+      "settings": {
+        "heading": "How to Prepare",
+        "gap": 28,
     "product_features": {
       "type": "_blocks",
       "blocks": {
@@ -367,6 +372,7 @@
   },
   "order": [
     "main",
+    "how_to_prepare",
     "product_features",
     "178785980861f4e927"
   ]
