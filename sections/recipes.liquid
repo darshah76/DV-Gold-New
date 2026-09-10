@@ -1,0 +1,388 @@
+{% liquid
+  assign current_product = closest.product | default: product
+  assign recipes = current_product.metafields.custom.recipes.value
+  assign has_view_all = false
+  if section.settings.view_all_link != blank and section.settings.view_all_label != blank
+    assign has_view_all = true
+  endif
+%}
+
+{% if recipes != blank %}
+  <div class="section-background"></div>
+
+  <section
+    class="section section--page-width recipes spacing-style"
+    style="{% render 'spacing-style', settings: section.settings %}"
+    {% if section.settings.heading != blank %}
+      aria-labelledby="RecipesHeading-{{ section.id }}"
+    {% else %}
+      aria-label="Recipes"
+    {% endif %}
+  >
+    <div
+      class="recipes__inner{% if section.settings.heading != blank or has_view_all %} gap-style{% endif %}"
+      {% if section.settings.heading != blank or has_view_all %}
+        style="{% render 'gap-style', value: section.settings.gap %}"
+      {% endif %}
+    >
+      {% if section.settings.heading != blank or has_view_all %}
+        <header class="recipes__header">
+          {% if section.settings.heading != blank %}
+            <h2 class="recipes__heading h2" id="RecipesHeading-{{ section.id }}">
+              {{ section.settings.heading | escape }}
+            </h2>
+          {% endif %}
+
+          {% if has_view_all %}
+            <a class="recipes__view-all" href="{{ section.settings.view_all_link }}">
+              <span>{{ section.settings.view_all_label | escape }}</span>
+              <svg class="recipes__view-all-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none">
+                <path d="m9.5 5 7 7-7 7" />
+              </svg>
+            </a>
+          {% endif %}
+        </header>
+      {% endif %}
+
+      <ul class="recipes__list" role="list">
+        {% for article in recipes limit: section.settings.max_articles %}
+          {% liquid
+            assign recipe_image_alt = article.image.alt
+            if recipe_image_alt == blank
+              assign recipe_image_alt = article.title
+            endif
+          %}
+          <li class="recipes__item">
+            <article class="recipes__card">
+              <a class="recipes__card-link" href="{{ article.url }}" aria-label="{{ article.title | escape }}"></a>
+
+              <div class="recipes__media">
+                {% if article.image != blank %}
+                  {{
+                    article.image
+                    | image_url: width: 900
+                    | image_tag:
+                      class: 'recipes__image',
+                      widths: '240, 360, 480, 640, 750, 900',
+                      sizes: '(min-width: 1200px) 320px, (min-width: 750px) 40vw, 72vw',
+                      loading: 'lazy',
+                      alt: recipe_image_alt
+                  }}
+                {% else %}
+                  {{ 'lifestyle-1' | placeholder_svg_tag: 'recipes__image recipes__image--placeholder' }}
+                {% endif %}
+              </div>
+
+              <div class="recipes__content">
+                <h3 class="recipes__title h4">{{ article.title | escape }}</h3>
+
+                {% if article.excerpt != blank %}
+                  <p class="recipes__description">{{ article.excerpt | strip_html | truncatewords: 18 }}</p>
+                {% endif %}
+
+                <span class="recipes__arrow" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <path d="M5 12h14M13 6l6 6-6 6" />
+                  </svg>
+                </span>
+              </div>
+            </article>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </section>
+{% endif %}
+
+{% stylesheet %}
+  .recipes__inner {
+    display: grid;
+    width: 100%;
+    gap: var(--gap);
+  }
+
+  .recipes__header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--gap-lg);
+    text-align: center;
+  }
+
+  .recipes__heading {
+    margin: 0;
+    color: var(--color-heading);
+    text-align: center;
+    text-wrap: balance;
+  }
+
+  .recipes__view-all {
+    display: inline-flex;
+    min-height: var(--minimum-touch-target);
+    align-items: center;
+    gap: var(--gap-2xs);
+    color: var(--color-foreground);
+    font-family: var(--font-body--family);
+    font-style: var(--font-body--style);
+    font-weight: var(--font-body--weight);
+    font-size: var(--font-size--sm);
+    line-height: var(--font-paragraph--line-height);
+    text-decoration: none;
+  }
+
+  .recipes__view-all-icon {
+    width: var(--icon-size-sm);
+    height: var(--icon-size-sm);
+  }
+
+  .recipes__view-all-icon path,
+  .recipes__arrow path {
+    stroke: currentColor;
+    stroke-width: var(--icon-stroke-width);
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .recipes__list {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: min(78vw, var(--sidebar-width));
+    gap: var(--gap-lg);
+    margin: 0;
+    padding: 0 0 var(--padding-2xs);
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scroll-snap-type: inline mandatory;
+    scrollbar-width: none;
+    list-style: none;
+  }
+
+  .recipes__list::-webkit-scrollbar {
+    display: none;
+  }
+
+  .recipes__item {
+    min-width: 0;
+    scroll-snap-align: start;
+  }
+
+  .recipes__card {
+    position: relative;
+    display: flex;
+    height: 100%;
+    min-width: 0;
+    flex-direction: column;
+    overflow: hidden;
+    background: var(--color-white);
+    border: var(--style-border-width) solid var(--color-card-border-warm);
+    border-radius: var(--style-border-radius-cards);
+    box-shadow: var(--shadow-card-subtle);
+  }
+
+  .recipes__card-link {
+    position: absolute;
+    inset: 0;
+    z-index: var(--layer-flat);
+    border-radius: inherit;
+  }
+
+  .recipes__card-link:focus-visible {
+    outline: var(--focus-outline-width) solid var(--color-foreground);
+    outline-offset: calc(-1 * var(--focus-outline-offset));
+  }
+
+  .recipes__media {
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background: var(--color-background-tertiary);
+  }
+
+  .recipes__image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .recipes__content {
+    display: flex;
+    min-height: 0;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--gap-sm);
+    padding: var(--padding-lg);
+    text-align: center;
+  }
+
+  .recipes__title {
+    margin: 0;
+    color: var(--color-heading);
+    text-wrap: balance;
+  }
+
+  .recipes__description {
+    margin: 0;
+    color: var(--color-foreground);
+    font-family: var(--font-body--family);
+    font-style: normal;
+    font-weight: var(--font-body--weight);
+    font-size: var(--font-size--lg);
+    line-height: var(--font-paragraph--line-height);
+    text-wrap: pretty;
+  }
+
+  .recipes__arrow {
+    display: grid;
+    width: var(--minimum-touch-target);
+    height: var(--minimum-touch-target);
+    flex: none;
+    place-items: center;
+    margin-block-start: auto;
+    color: var(--color-primary-button-background);
+    border: var(--style-border-width) solid currentColor;
+    border-radius: var(--style-border-radius-50);
+  }
+
+  .recipes__arrow svg {
+    width: var(--icon-size-md);
+    height: var(--icon-size-md);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .recipes__card-link:hover ~ .recipes__content .recipes__arrow,
+    .recipes__card-link:focus-visible ~ .recipes__content .recipes__arrow {
+      color: var(--color-primary-button-text);
+      background: var(--color-primary-button-background);
+    }
+
+    .recipes__view-all:hover {
+      color: var(--color-heading);
+    }
+  }
+
+  @media (min-width: 750px) {
+    .recipes__header {
+      flex-direction: row;
+      justify-content: space-between;
+      text-align: start;
+    }
+
+    .recipes__heading {
+      text-align: start;
+    }
+
+    .recipes__list {
+      grid-auto-flow: initial;
+      grid-auto-columns: initial;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      overflow: visible;
+    }
+
+    .recipes__content {
+      align-items: flex-start;
+      text-align: start;
+    }
+
+    .recipes__arrow {
+      align-self: flex-end;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .recipes__list {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--gap-2xl);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .recipes__list {
+      scroll-behavior: auto;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Recipes",
+  "enabled_on": {
+    "templates": ["product"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Recipes You’ll Love"
+    },
+    {
+      "type": "text",
+      "id": "view_all_label",
+      "label": "View all label",
+      "default": "View all"
+    },
+    {
+      "type": "url",
+      "id": "view_all_link",
+      "label": "View all link"
+    },
+    {
+      "type": "range",
+      "id": "max_articles",
+      "label": "Maximum recipes",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "label": "Heading to recipes gap",
+      "min": 0,
+      "max": 48,
+      "step": 4,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "presets": [
+    {
+      "name": "Recipes",
+      "settings": {
+        "heading": "Recipes You’ll Love",
+        "view_all_label": "View all",
+        "max_articles": 6,
+        "gap": 28,
+        "padding-block-start": 48,
+        "padding-block-end": 48
+      }
+    }
+  ]
+}
+{% endschema %}
