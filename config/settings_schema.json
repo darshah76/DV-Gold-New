@@ -99,7 +99,20 @@
         "type": "color",
         "id": "heading_text_color",
         "label": "Heading and title color",
-        "default": "#CFA564"
+        "default": "#cfa564"
+      },
+      {
+        "type": "font_picker",
+        "id": "type_heading_font",
+        "default": "quicksand_n4",
+        "label": "t:options.heading",
+        "visible_if": "{{ settings.type_heading_chewy == false }}"
+      },
+      {
+        "type": "font_picker",
+        "id": "type_accent_font",
+        "default": "quicksand_n4",
+        "label": "t:options.accent"
       },
       {
         "type": "header",
@@ -1279,7 +1292,7 @@
         "type": "color",
         "id": "palette_primary_button_background",
         "label": "t:settings.background",
-        "default": "#CFA564",
+        "default": "#cfa564",
         "alpha": true
       },
       {
@@ -1293,7 +1306,7 @@
         "type": "color",
         "id": "palette_primary_button_border",
         "label": "t:settings.borders",
-        "default": "#CFA564",
+        "default": "#cfa564",
         "alpha": true
       },
       {
