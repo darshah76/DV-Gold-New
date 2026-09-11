@@ -995,6 +995,19 @@
     }
   }
 
+  /* Desktop side-column thumbnails pinned to 100x100.
+     Base rule is width: clamp(44px, 7vw, var(--thumbnail-width)) which
+     resolves to ~90px on a 1280px viewport; override both dimensions
+     explicitly at min-width 750px. Mobile keeps theme-editor sizing. */
+  @media screen and (min-width: 750px) {
+    media-gallery slideshow-controls[thumbnails] .slideshow-controls__thumbnails .slideshow-control {
+      width: 100px;
+      height: 100px;
+      flex: 0 0 100px;
+      aspect-ratio: 1 / 1;
+    }
+  }
+
   .dialog-zoomed-gallery .product-media-container--zoomable.product-media-container--image {
     cursor: zoom-out;
   }
