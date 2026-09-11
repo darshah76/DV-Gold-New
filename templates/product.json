@@ -346,6 +346,11 @@
       "type": "judgeme-reviews",
       "settings": {
         "accessibility_label": "Customer reviews",
+        "heading": "Loved by tea lovers",
+        "write_review_label": "Write a review",
+        "review_count_prefix": "Based on",
+        "review_count_suffix": "reviews",
+        "featured_label": "Most loved",
         "autoplay_seconds": "5",
         "gap": 28,
         "padding-block-start": 48,
