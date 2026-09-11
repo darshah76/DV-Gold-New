@@ -60,7 +60,7 @@
           "type": "category",
           "settings": {
             "name": "Tea",
-            "image": "shopify://shop_images/category-tea.png",
+            "image": "shopify://shop_images/Poster2.png",
             "link": "shopify://collections/tea",
             "panel_heading": "Variety of Tea",
             "panel_description": "<p>This is a demo description</p>",
@@ -77,7 +77,7 @@
           "type": "category",
           "settings": {
             "name": "Spices",
-            "image": "shopify://shop_images/dhana_powder.png",
+            "image": "shopify://shop_images/Poster3.png",
             "link": "",
             "panel_heading": "",
             "panel_description": "",
@@ -94,7 +94,7 @@
           "type": "category",
           "settings": {
             "name": "Dry fruits",
-            "image": "shopify://shop_images/dry-fruit.png",
+            "image": "shopify://shop_images/Poster4.png",
             "link": "",
             "panel_heading": "",
             "panel_description": "",
@@ -111,7 +111,7 @@
           "type": "category",
           "settings": {
             "name": "Farali Items",
-            "image": "shopify://shop_images/farali.png",
+            "image": "shopify://shop_images/Poster1.png",
             "link": "",
             "panel_heading": "",
             "panel_description": "",
