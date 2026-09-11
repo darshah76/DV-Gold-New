@@ -1,0 +1,53 @@
+{% liquid
+  assign current_product = closest.product | default: product
+  assign preparation_steps = current_product.metafields.custom.how_to_prepare_content.value
+%}
+
+{% if preparation_steps != blank %}
+  <section
+    class="how-to-prepare how-to-prepare--product-details"
+    {% if block.settings.heading != blank %}
+      aria-labelledby="HowToPrepareHeading-{{ block.id }}"
+    {% else %}
+      aria-label="How to prepare"
+    {% endif %}
+    {{ block.shopify_attributes }}
+  >
+    {% render 'how-to-prepare-content',
+      product: current_product,
+      heading: block.settings.heading,
+      gap: block.settings.gap,
+      id: block.id
+    %}
+  </section>
+{% endif %}
+
+{% schema %}
+{
+  "name": "How to Prepare",
+  "tag": null,
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "How to Prepare"
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "label": "Heading to steps gap",
+      "min": 0,
+      "max": 48,
+      "step": 4,
+      "unit": "px",
+      "default": 28
+    }
+  ],
+  "presets": [
+    {
+      "name": "How to Prepare"
+    }
+  ]
+}
+{% endschema %}
