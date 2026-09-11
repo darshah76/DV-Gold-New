@@ -70,7 +70,7 @@
             "height": "fit",
             "details_position": "flex-start",
             "gap": 28,
-            "sticky_details_desktop": true,
+            "sticky_details_desktop": false,
             "background_media": "none",
             "background_color": "",
             "video_position": "cover",
@@ -252,6 +252,19 @@
                 }
               },
               "block_order": []
+            },
+            "product_features_desktop": {
+              "type": "product-features",
+              "settings": {},
+              "blocks": {}
+            },
+            "how_to_prepare_desktop": {
+              "type": "how-to-prepare",
+              "settings": {
+                "heading": "How to Prepare",
+                "gap": 28
+              },
+              "blocks": {}
             }
           },
           "block_order": [
@@ -259,7 +272,9 @@
             "group_icgrde",
             "variant_picker_R3rGDr",
             "product_shipment_timing",
-            "buy_buttons_eYQEYi"
+            "buy_buttons_eYQEYi",
+            "product_features_desktop",
+            "how_to_prepare_desktop"
           ]
         }
       },
