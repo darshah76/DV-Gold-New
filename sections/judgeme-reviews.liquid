@@ -24,22 +24,30 @@
   <judge-me-reviews
     class="judgeme-reviews__inner gap-style"
     data-autoplay-seconds="{{ section.settings.autoplay_seconds }}"
+    data-featured-label="{{ section.settings.featured_label | escape }}"
     style="{% render 'gap-style', value: section.settings.gap %}"
   >
-    <div class="judgeme-reviews__header">
-      <div class="judgeme-reviews__summary" aria-label="{{ rating }} out of 5 stars from {{ rating_count }} reviews">
-        <p class="judgeme-reviews__rating">{{ rating }}</p>
-        <div class="judgeme-reviews__stars" aria-hidden="true">
-          {% for index in (1..5) %}
-            <span class="judgeme-reviews__star{% if rating < index %} judgeme-reviews__star--empty{% endif %}">★</span>
-          {% endfor %}
-        </div>
-        <p class="judgeme-reviews__count">Based on {{ rating_count }} Reviews</p>
-      </div>
+    <div class="judgeme-reviews__header-region">
+      {% if section.settings.heading != blank %}
+        <h2 class="judgeme-reviews__heading">{{ section.settings.heading | escape }}</h2>
+      {% endif %}
 
-      <button class="button judgeme-reviews__write-button" type="button" data-judgeme-write-review>
-        Write a review
-      </button>
+      <div class="judgeme-reviews__header">
+        <div class="judgeme-reviews__summary" aria-label="{{ rating }} out of 5 stars from {{ rating_count }} reviews">
+          <p class="judgeme-reviews__rating">{{ rating }}</p>
+          <div class="judgeme-reviews__stars" aria-hidden="true" style="--rating-percent: {{ rating | times: 20 }}%;">
+            <span class="judgeme-reviews__stars-base">★★★★★</span>
+            <span class="judgeme-reviews__stars-fill">★★★★★</span>
+          </div>
+          <p class="judgeme-reviews__count">
+            {{ section.settings.review_count_prefix | escape }} {{ rating_count }} {{ section.settings.review_count_suffix | escape }}
+          </p>
+        </div>
+
+        <button class="button judgeme-reviews__write-button" type="button" data-judgeme-write-review>
+          {{ section.settings.write_review_label | escape }}
+        </button>
+      </div>
     </div>
 
     <div
@@ -75,6 +83,25 @@
     gap: var(--gap-xl);
   }
 
+  .judgeme-reviews__header-region {
+    display: grid;
+    gap: var(--gap-2xl);
+  }
+
+  .judgeme-reviews__heading {
+    max-width: var(--max-width--heading-narrow);
+    margin: 0 auto;
+    color: var(--color-heading);
+    font-family: var(--font-h2--family);
+    font-style: var(--font-h2--style);
+    font-weight: var(--font-h2--weight);
+    font-size: var(--font-h2--size);
+    line-height: var(--font-h2--line-height);
+    letter-spacing: var(--font-h2--letter-spacing);
+    text-align: center;
+    text-wrap: balance;
+  }
+
   .judgeme-reviews__summary {
     display: grid;
     justify-items: start;
@@ -92,14 +119,23 @@
   }
 
   .judgeme-reviews__stars {
-    display: flex;
-    color: var(--color-heading);
+    position: relative;
+    width: max-content;
     font-size: var(--font-size--2xl);
     line-height: 1;
   }
 
-  .judgeme-reviews__star--empty {
+  .judgeme-reviews__stars-base {
     color: var(--color-border);
+  }
+
+  .judgeme-reviews__stars-fill {
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: var(--rating-percent);
+    overflow: hidden;
+    color: var(--color-heading);
+    white-space: nowrap;
   }
 
   .judgeme-reviews__count {
@@ -162,11 +198,72 @@
   }
 
   .judgeme-reviews .jdgm-rev {
+    position: relative;
     min-width: 0;
     padding: var(--padding-lg);
     background: var(--color-white);
     border: var(--style-border-width) solid var(--color-card-border-warm);
     border-radius: var(--style-border-radius-cards);
+  }
+
+  .judgeme-reviews .jdgm-rev.judgeme-reviews__review--featured {
+    border-color: var(--color-heading);
+  }
+
+  .judgeme-reviews__featured-label {
+    position: absolute;
+    z-index: 1;
+    inset-block-start: 0;
+    inset-inline-start: 50%;
+    max-width: calc(100% - var(--padding-xl) * 2);
+    padding: var(--padding-2xs) var(--padding-lg);
+    overflow: hidden;
+    color: var(--color-primary-button-text);
+    background: var(--color-primary-button-background);
+    border-radius: var(--style-border-radius-pills);
+    font-family: var(--font-subheading--family);
+    font-style: var(--font-subheading--style);
+    font-weight: var(--font-subheading--weight);
+    font-size: var(--font-size--sm);
+    line-height: var(--font-paragraph--line-height);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    transform: translate(-50%, -50%);
+  }
+
+  .judgeme-reviews__pagination {
+    display: flex;
+    justify-content: center;
+    gap: var(--gap-xs);
+  }
+
+  .judgeme-reviews__pagination-button {
+    width: var(--minimum-touch-target);
+    height: var(--minimum-touch-target);
+    padding: 0;
+    color: var(--color-border);
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+  }
+
+  .judgeme-reviews__pagination-button::before {
+    display: block;
+    width: var(--padding-sm);
+    height: var(--padding-sm);
+    margin: auto;
+    background: currentColor;
+    border-radius: var(--style-border-radius-50);
+    content: "";
+  }
+
+  .judgeme-reviews__pagination-button[aria-current="true"] {
+    color: var(--color-heading);
+  }
+
+  .judgeme-reviews__pagination-button:focus-visible {
+    outline: var(--focus-outline-width) solid currentColor;
+    outline-offset: var(--focus-outline-offset);
   }
 
   .judgeme-reviews .jdgm-rev__author {
@@ -185,6 +282,10 @@
     .judgeme-reviews__header {
       flex-direction: column;
       align-items: center;
+    }
+
+    .judgeme-reviews__header-region {
+      justify-items: center;
     }
 
     .judgeme-reviews__summary {
@@ -213,6 +314,10 @@
   }
 
   @media (min-width: 750px) {
+    .judgeme-reviews__pagination {
+      display: none;
+    }
+
     .judgeme-reviews .jdgm-rev-widg__reviews {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -220,9 +325,13 @@
     }
   }
 
-  @media (min-width: 1200px) {
+  @media (min-width: 990px) {
     .judgeme-reviews .jdgm-rev-widg__reviews {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .judgeme-reviews .jdgm-rev:nth-child(n + 5) {
+      display: none;
     }
   }
 
@@ -245,6 +354,36 @@
       "id": "accessibility_label",
       "label": "Accessibility label",
       "default": "Customer reviews"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Loved by tea lovers"
+    },
+    {
+      "type": "text",
+      "id": "write_review_label",
+      "label": "Write review button",
+      "default": "Write a review"
+    },
+    {
+      "type": "text",
+      "id": "review_count_prefix",
+      "label": "Review count prefix",
+      "default": "Based on"
+    },
+    {
+      "type": "text",
+      "id": "review_count_suffix",
+      "label": "Review count suffix",
+      "default": "reviews"
+    },
+    {
+      "type": "text",
+      "id": "featured_label",
+      "label": "Featured review label",
+      "default": "Most loved"
     },
     {
       "type": "select",
