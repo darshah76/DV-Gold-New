@@ -13,10 +13,6 @@
     "logo_height": 85,
     "logo_height_mobile": 75,
     "favicon": "shopify://shop_images/favicon.png",
-    "type_body_google_sans": false,
-    "type_body_font": "quicksand_n5",
-    "type_subheading_font": "quicksand_n6",
-    "type_heading_chewy": true,
     "heading_text_color": "#cfa564",
     "type_heading_font": "quicksand_n7",
     "type_accent_font": "quicksand_n7",
@@ -89,12 +85,23 @@
     "variant_button_border_width": 1,
     "variant_button_radius": 14,
     "variant_button_width": "equal-width-buttons",
+    "type_body_google_sans": false,
+    "type_body_font": "quicksand_n5",
+    "type_subheading_font": "quicksand_n6",
+    "type_heading_chewy": true,
     "content_for_index": [],
     "blocks": {
       "14060646107696862457": {
         "type": "shopify://apps/judge-me-reviews/blocks/judgeme_core/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
         "disabled": false,
         "settings": {}
+      },
+      "13047258039897440615": {
+        "type": "shopify://apps/judge-me-reviews/blocks/cart_drawer_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+        "disabled": false,
+        "settings": {
+          "widget_type": "review-widget"
+        }
       }
     },
     "color_palette": {
