@@ -981,12 +981,18 @@
     margin-inline: 0;
   }
 
-  media-gallery slideshow-controls[thumbnails] .slideshow-controls__thumbnail {
-    flex: 0 0
-      calc(
-        (100% - (var(--visible-thumbnail-count) - 1) * var(--gap-xs)) / var(--visible-thumbnail-count)
-      );
-    width: auto;
+  /* Wide thumbnails are only wanted on the mobile horizontal strip.
+     On desktop, thumbnails live in a side column: a percentage flex-basis
+     there inflates each thumbnail to gallery width, which starves the main
+     slides to 0px and hides the gallery. Scope to mobile. */
+  @media screen and (max-width: 749px) {
+    media-gallery slideshow-controls[thumbnails] .slideshow-controls__thumbnail {
+      flex: 0 0
+        calc(
+          (100% - (var(--visible-thumbnail-count) - 1) * var(--gap-xs)) / var(--visible-thumbnail-count)
+        );
+      width: auto;
+    }
   }
 
   .dialog-zoomed-gallery .product-media-container--zoomable.product-media-container--image {
