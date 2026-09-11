@@ -15,19 +15,33 @@
         "slide_hero": {
           "type": "slide",
           "settings": {
-            "desktop_image": "shopify://shop_images/b1.jpg"
+            "desktop_image": "shopify://shop_images/PC_Banner_4.jpg"
           }
         },
         "slide_VNWBBM": {
           "type": "slide",
           "settings": {
-            "desktop_image": "shopify://shop_images/b2.jpg"
+            "desktop_image": "shopify://shop_images/PC_Banner_2.jpg"
+          }
+        },
+        "slide_BxKLXK": {
+          "type": "slide",
+          "settings": {
+            "desktop_image": "shopify://shop_images/PC_Banner_3.jpg"
+          }
+        },
+        "slide_KPyDKH": {
+          "type": "slide",
+          "settings": {
+            "desktop_image": "shopify://shop_images/PC_Banner_1.jpg"
           }
         }
       },
       "block_order": [
         "slide_hero",
-        "slide_VNWBBM"
+        "slide_VNWBBM",
+        "slide_BxKLXK",
+        "slide_KPyDKH"
       ],
       "name": "Image-only hero slider",
       "settings": {
