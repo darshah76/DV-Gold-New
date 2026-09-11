@@ -15,6 +15,13 @@ class JudgeMeReviews extends HTMLElement {
       this.handleViewportChange();
     });
     this.observer.observe(this, { childList: true, subtree: true });
+    this.appWidgetObserver = new MutationObserver(() => {
+      if (this.adoptAppWidget()) this.enhanceWidget();
+    });
+    this.appWidgetObserver.observe(document.body, {
+      childList: true,
+      subtree: true,
+    });
     this.mobileQuery.addEventListener("change", this.handleViewportChange);
     this.reducedMotionQuery.addEventListener(
       "change",
@@ -29,12 +36,14 @@ class JudgeMeReviews extends HTMLElement {
       this.openReviewForm,
     );
     this.enhanceWidget();
+    if (this.adoptAppWidget()) this.enhanceWidget();
     this.handleViewportChange();
   }
 
   disconnectedCallback() {
     this.pause();
     this.observer?.disconnect();
+    this.appWidgetObserver?.disconnect();
     this.mobileQuery?.removeEventListener("change", this.handleViewportChange);
     this.reducedMotionQuery?.removeEventListener(
       "change",
@@ -55,6 +64,23 @@ class JudgeMeReviews extends HTMLElement {
     writeReview?.setAttribute("data-native-judgeme-write-review", "");
     this.featureRandomFiveStarReview();
     this.buildPagination();
+  }
+
+  adoptAppWidget() {
+    if (this.appWidgetAdopted) return true;
+
+    const localWidget = this.querySelector(".jdgm-review-widget");
+    const appWidget = [...document.querySelectorAll(".jdgm-review-widget")].find(
+      (widget) => !this.contains(widget),
+    );
+    if (!localWidget || !appWidget) return false;
+
+    const appSection = appWidget.closest(".shopify-section");
+    localWidget.replaceWith(appWidget);
+    appSection?.setAttribute("hidden", "");
+    this.appWidgetAdopted = true;
+    this.appWidgetObserver?.disconnect();
+    return true;
   }
 
   featureRandomFiveStarReview() {
