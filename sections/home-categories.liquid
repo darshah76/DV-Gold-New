@@ -58,7 +58,7 @@
               </div>
 
               {% if block.settings.name != blank %}
-                <h3 class="home-categories__name h4">{{ block.settings.name | escape }}</h3>
+                <h3 class="home-categories__name h4" style="color: var(--home-categories-title-color, var(--color-foreground));">{{ block.settings.name | escape }}</h3>
               {% endif %}
 
               {% if block.settings.link != blank %}
@@ -71,7 +71,7 @@
 
               <div class="home-categories__panel-content">
                 {% if panel_heading != blank %}
-                  <h3 class="home-categories__panel-heading h3">{{ panel_heading | escape }}</h3>
+                  <h3 class="home-categories__panel-heading h3" style="color: var(--home-categories-panel-heading);">{{ panel_heading | escape }}</h3>
                 {% endif %}
 
                 {% if block.settings.panel_description != blank %}
@@ -169,6 +169,8 @@
     background: var(--color-background);
   }
 
+  .home-categories__card .home-categories__name.h4,
+  .home-categories__name.h4,
   .home-categories__name {
     position: absolute;
     inset-inline: 0;
@@ -274,6 +276,8 @@
       margin: 0;
     }
 
+    .home-categories__panel-content .home-categories__panel-heading.h3,
+    .home-categories__panel-heading.h3,
     .home-categories__panel-heading {
       color: var(--home-categories-panel-heading);
       font-family: var(--font-offerings-card--family);

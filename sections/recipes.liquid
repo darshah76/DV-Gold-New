@@ -1,13 +1,25 @@
 {% liquid
   assign current_product = closest.product | default: product
   assign recipes = current_product.metafields.custom.recipes.value
+
+  assign recipe_count = 0
+  for article in recipes
+    assign recipe_count = recipe_count | plus: 1
+  endfor
+
+  assign show_sample = false
+  if recipe_count == 0 and section.settings.show_sample_preview
+    assign show_sample = true
+  endif
+
   assign has_view_all = false
-  if section.settings.view_all_link != blank and section.settings.view_all_label != blank
+  if section.settings.view_all_label != blank
     assign has_view_all = true
+    assign view_all_url = section.settings.view_all_link | default: '/blogs/recipes'
   endif
 %}
 
-{% if recipes != blank %}
+{% if recipe_count > 0 or show_sample %}
   <div class="section-background"></div>
 
   <section
@@ -28,16 +40,16 @@
       {% if section.settings.heading != blank or has_view_all %}
         <header class="recipes__header">
           {% if section.settings.heading != blank %}
-            <h2 class="recipes__heading h2" id="RecipesHeading-{{ section.id }}">
+            <h2 class="recipes__heading" id="RecipesHeading-{{ section.id }}">
               {{ section.settings.heading | escape }}
             </h2>
           {% endif %}
 
           {% if has_view_all %}
-            <a class="recipes__view-all" href="{{ section.settings.view_all_link }}">
+            <a class="recipes__view-all" href="{{ view_all_url }}">
               <span>{{ section.settings.view_all_label | escape }}</span>
               <svg class="recipes__view-all-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none">
-                <path d="m9.5 5 7 7-7 7" />
+                <path d="m9.5 5 7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </a>
           {% endif %}
@@ -45,144 +57,251 @@
       {% endif %}
 
       <ul class="recipes__list" role="list">
-        {% for article in recipes limit: section.settings.max_articles %}
-          {% liquid
-            assign recipe_image_alt = article.image.alt
-            if recipe_image_alt == blank
-              assign recipe_image_alt = article.title
-            endif
-          %}
+        {% if recipe_count > 0 %}
+          {% for article in recipes limit: 4 %}
+            {% liquid
+              assign recipe_image_alt = article.image.alt | default: article.title
+              assign recipe_excerpt = article.excerpt | default: article.content | strip_html | truncatewords: 10
+            %}
+            <li class="recipes__item">
+              <article class="recipes__card">
+                <a class="recipes__card-link" href="{{ article.url }}" aria-label="{{ article.title | escape }}"></a>
+
+                <div class="recipes__media">
+                  {% if article.image != blank %}
+                    {{
+                      article.image
+                      | image_url: width: 700
+                      | image_tag:
+                        class: 'recipes__image',
+                        widths: '240, 360, 480, 600, 700',
+                        sizes: '(min-width: 1200px) 300px, (min-width: 750px) 25vw, 45vw',
+                        loading: 'lazy',
+                        alt: recipe_image_alt
+                    }}
+                  {% else %}
+                    {{ 'lifestyle-1' | placeholder_svg_tag: 'recipes__image recipes__image--placeholder' }}
+                  {% endif %}
+                </div>
+
+                <div class="recipes__content">
+                  <h3 class="recipes__title">{{ article.title | escape }}</h3>
+
+                  {% if recipe_excerpt != blank %}
+                    <p class="recipes__description">{{ recipe_excerpt }}</p>
+                  {% endif %}
+
+                  <span class="recipes__arrow" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M5 12h14"/>
+                      <path d="m12 5 7 7-7 7"/>
+                    </svg>
+                  </span>
+                </div>
+              </article>
+            </li>
+          {% endfor %}
+        {% else %}
+          {% comment %} Sample cards for theme editor preview matching dv-recipe.png {% endcomment %}
           <li class="recipes__item">
             <article class="recipes__card">
-              <a class="recipes__card-link" href="{{ article.url }}" aria-label="{{ article.title | escape }}"></a>
-
+              <a class="recipes__card-link" href="{{ section.settings.view_all_link | default: '#' }}" aria-label="Masala Chai"></a>
               <div class="recipes__media">
-                {% if article.image != blank %}
-                  {{
-                    article.image
-                    | image_url: width: 900
-                    | image_tag:
-                      class: 'recipes__image',
-                      widths: '240, 360, 480, 640, 750, 900',
-                      sizes: '(min-width: 1200px) 320px, (min-width: 750px) 40vw, 72vw',
-                      loading: 'lazy',
-                      alt: recipe_image_alt
-                  }}
-                {% else %}
-                  {{ 'lifestyle-1' | placeholder_svg_tag: 'recipes__image recipes__image--placeholder' }}
-                {% endif %}
+                <img src="{{ 'recipe-masala-chai.jpg' | asset_url }}" alt="Masala Chai" class="recipes__image" loading="lazy" width="450" height="560">
               </div>
-
               <div class="recipes__content">
-                <h3 class="recipes__title h4">{{ article.title | escape }}</h3>
-
-                {% if article.excerpt != blank %}
-                  <p class="recipes__description">{{ article.excerpt | strip_html | truncatewords: 18 }}</p>
-                {% endif %}
-
+                <h3 class="recipes__title">Masala Chai</h3>
+                <p class="recipes__description">A classic blend of spices & strong tea.</p>
                 <span class="recipes__arrow" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" fill="none">
-                    <path d="M5 12h14M13 6l6 6-6 6" />
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12h14"/>
+                    <path d="m12 5 7 7-7 7"/>
                   </svg>
                 </span>
               </div>
             </article>
           </li>
-        {% endfor %}
+          <li class="recipes__item">
+            <article class="recipes__card">
+              <a class="recipes__card-link" href="{{ section.settings.view_all_link | default: '#' }}" aria-label="Iced Tea"></a>
+              <div class="recipes__media">
+                <img src="{{ 'recipe-iced-tea.jpg' | asset_url }}" alt="Iced Tea" class="recipes__image" loading="lazy" width="450" height="560">
+              </div>
+              <div class="recipes__content">
+                <h3 class="recipes__title">Iced Tea</h3>
+                <p class="recipes__description">Refreshing cooler for anytime</p>
+                <span class="recipes__arrow" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12h14"/>
+                    <path d="m12 5 7 7-7 7"/>
+                  </svg>
+                </span>
+              </div>
+            </article>
+          </li>
+          <li class="recipes__item">
+            <article class="recipes__card">
+              <a class="recipes__card-link" href="{{ section.settings.view_all_link | default: '#' }}" aria-label="Karak Chai"></a>
+              <div class="recipes__media">
+                <img src="{{ 'recipe-masala-chai.jpg' | asset_url }}" alt="Karak Chai" class="recipes__image" loading="lazy" width="450" height="560">
+              </div>
+              <div class="recipes__content">
+                <h3 class="recipes__title">Karak Chai</h3>
+                <p class="recipes__description">Rich, creamy tea slow-brewed to perfection.</p>
+                <span class="recipes__arrow" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12h14"/>
+                    <path d="m12 5 7 7-7 7"/>
+                  </svg>
+                </span>
+              </div>
+            </article>
+          </li>
+          <li class="recipes__item">
+            <article class="recipes__card">
+              <a class="recipes__card-link" href="{{ section.settings.view_all_link | default: '#' }}" aria-label="Lemon Ginger Cooler"></a>
+              <div class="recipes__media">
+                <img src="{{ 'recipe-iced-tea.jpg' | asset_url }}" alt="Lemon Ginger Cooler" class="recipes__image" loading="lazy" width="450" height="560">
+              </div>
+              <div class="recipes__content">
+                <h3 class="recipes__title">Lemon Ginger Cooler</h3>
+                <p class="recipes__description">Zesty, soothing warmth for any time of day.</p>
+                <span class="recipes__arrow" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12h14"/>
+                    <path d="m12 5 7 7-7 7"/>
+                  </svg>
+                </span>
+              </div>
+            </article>
+          </li>
+        {% endif %}
       </ul>
+
+      {% if has_view_all %}
+        <div class="recipes__mobile-view-all">
+          <a class="recipes__mobile-btn" href="{{ view_all_url }}">
+            {{ section.settings.view_all_label | escape }}
+          </a>
+        </div>
+      {% endif %}
     </div>
   </section>
 {% endif %}
 
 {% stylesheet %}
   .recipes__inner {
-    display: grid;
+    display: flex;
+    flex-direction: column;
     width: 100%;
     gap: var(--gap);
   }
 
   .recipes__header {
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
     align-items: center;
-    gap: var(--gap-lg);
-    text-align: center;
+    width: 100%;
+    gap: var(--gap-md);
   }
 
   .recipes__heading {
     margin: 0;
     color: var(--color-heading);
-    text-align: center;
+    font-family: var(--font-heading--family);
+    font-weight: 400;
+    font-size: clamp(24px, 4vw, 36px);
+    line-height: 1.15;
     text-wrap: balance;
   }
 
   .recipes__view-all {
     display: inline-flex;
-    min-height: var(--minimum-touch-target);
     align-items: center;
-    gap: var(--gap-2xs);
+    gap: 6px;
     color: var(--color-foreground);
     font-family: var(--font-body--family);
-    font-style: var(--font-body--style);
-    font-weight: var(--font-body--weight);
+    font-style: normal;
+    font-weight: 500;
     font-size: var(--font-size--sm);
-    line-height: var(--font-paragraph--line-height);
+    line-height: 1;
     text-decoration: none;
+    flex-shrink: 0;
+    transition: color var(--animation-speed-hover, 0.25s) ease;
+  }
+
+  .recipes__view-all:hover {
+    color: var(--color-heading);
   }
 
   .recipes__view-all-icon {
-    width: var(--icon-size-sm);
-    height: var(--icon-size-sm);
-  }
-
-  .recipes__view-all-icon path,
-  .recipes__arrow path {
-    stroke: currentColor;
-    stroke-width: var(--icon-stroke-width);
-    stroke-linecap: round;
-    stroke-linejoin: round;
+    width: 14px;
+    height: 14px;
+    display: inline-block;
   }
 
   .recipes__list {
     display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: min(78vw, var(--sidebar-width));
-    gap: var(--gap-lg);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
     margin: 0;
-    padding: 0 0 var(--padding-2xs);
-    overflow-x: auto;
-    overscroll-behavior-inline: contain;
-    scroll-snap-type: inline mandatory;
-    scrollbar-width: none;
+    padding: 0;
     list-style: none;
-  }
-
-  .recipes__list::-webkit-scrollbar {
-    display: none;
+    width: 100%;
   }
 
   .recipes__item {
     min-width: 0;
-    scroll-snap-align: start;
+    display: flex;
+  }
+
+  /* Mobile: exactly 2 cards displayed */
+  @media (max-width: 749px) {
+    .recipes__item:nth-child(n+3) {
+      display: none;
+    }
+  }
+
+  /* Desktop: 4 cards per row */
+  @media (min-width: 750px) {
+    .recipes__list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px;
+    }
+  }
+
+  @media (min-width: 990px) {
+    .recipes__list {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 24px;
+    }
   }
 
   .recipes__card {
     position: relative;
     display: flex;
-    height: 100%;
-    min-width: 0;
     flex-direction: column;
-    overflow: hidden;
+    width: 100%;
+    height: 100%;
     background: var(--color-white);
     border: var(--style-border-width) solid var(--color-card-border-warm);
-    border-radius: var(--style-border-radius-cards);
-    box-shadow: var(--shadow-card-subtle);
+    border-radius: 24px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+    padding: 14px;
+    box-sizing: border-box;
+    transition: transform var(--animation-speed-hover, 0.25s) ease, box-shadow var(--animation-speed-hover, 0.25s) ease;
+  }
+
+  @media (min-width: 750px) {
+    .recipes__card {
+      padding: 18px;
+    }
   }
 
   .recipes__card-link {
     position: absolute;
     inset: 0;
-    z-index: var(--layer-flat);
+    z-index: 2;
     border-radius: inherit;
   }
 
@@ -192,9 +311,18 @@
   }
 
   .recipes__media {
-    aspect-ratio: 4 / 3;
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    border-radius: 18px;
     overflow: hidden;
-    background: var(--color-background-tertiary);
+    background: var(--color-background-secondary);
+    position: relative;
+  }
+
+  @media (max-width: 749px) {
+    .recipes__media {
+      border-radius: 14px;
+    }
   }
 
   .recipes__image {
@@ -202,103 +330,152 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .recipes__content {
     display: flex;
-    min-height: 0;
-    flex: 1;
     flex-direction: column;
-    align-items: center;
-    gap: var(--gap-sm);
-    padding: var(--padding-lg);
-    text-align: center;
+    flex: 1;
+    min-height: 0;
+    padding-top: 14px;
+    text-align: start;
+    align-items: flex-start;
+  }
+
+  @media (max-width: 749px) {
+    .recipes__content {
+      padding-top: 10px;
+    }
   }
 
   .recipes__title {
-    margin: 0;
+    margin: 0 0 6px 0;
     color: var(--color-heading);
+    font-family: var(--font-body--family);
+    font-weight: 700;
+    font-size: clamp(16px, 1.8vw, 20px);
+    line-height: 1.25;
     text-wrap: balance;
   }
 
   .recipes__description {
-    margin: 0;
+    margin: 0 0 12px 0;
     color: var(--color-foreground);
     font-family: var(--font-body--family);
     font-style: normal;
-    font-weight: var(--font-body--weight);
-    font-size: var(--font-size--lg);
-    line-height: var(--font-paragraph--line-height);
+    font-weight: var(--font-body--weight, 500);
+    font-size: clamp(12px, 1.4vw, 14px);
+    line-height: 1.45;
     text-wrap: pretty;
   }
 
   .recipes__arrow {
-    display: grid;
-    width: var(--minimum-touch-target);
-    height: var(--minimum-touch-target);
-    flex: none;
-    place-items: center;
-    margin-block-start: auto;
-    color: var(--color-primary-button-background);
-    border: var(--style-border-width) solid currentColor;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
     border-radius: var(--style-border-radius-50);
+    border: 1.5px solid var(--color-heading);
+    color: var(--color-heading);
+    align-self: flex-end;
+    margin-top: auto;
+    flex-shrink: 0;
+    transition: background var(--animation-speed-hover, 0.25s) ease,
+                color var(--animation-speed-hover, 0.25s) ease,
+                border-color var(--animation-speed-hover, 0.25s) ease,
+                transform var(--animation-speed-hover, 0.25s) ease;
+  }
+
+  @media (max-width: 749px) {
+    .recipes__arrow {
+      width: 32px;
+      height: 32px;
+    }
   }
 
   .recipes__arrow svg {
-    width: var(--icon-size-md);
-    height: var(--icon-size-md);
+    width: 16px;
+    height: 16px;
+  }
+
+  @media (max-width: 749px) {
+    .recipes__arrow svg {
+      width: 14px;
+      height: 14px;
+    }
   }
 
   @media (hover: hover) and (pointer: fine) {
-    .recipes__card-link:hover ~ .recipes__content .recipes__arrow,
-    .recipes__card-link:focus-visible ~ .recipes__content .recipes__arrow {
-      color: var(--color-primary-button-text);
-      background: var(--color-primary-button-background);
+    .recipes__card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.07);
     }
 
-    .recipes__view-all:hover {
-      color: var(--color-heading);
+    .recipes__card:hover .recipes__image {
+      transform: scale(1.03);
     }
+
+    .recipes__card:hover .recipes__arrow {
+      background: var(--color-heading);
+      color: var(--color-white);
+      border-color: var(--color-heading);
+      transform: translateX(2px);
+    }
+  }
+
+  .recipes__card-link:focus-visible ~ .recipes__content .recipes__arrow {
+    background: var(--color-heading);
+    color: var(--color-white);
+    border-color: var(--color-heading);
+  }
+
+  /* Mobile "View All" Button */
+  .recipes__mobile-view-all {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 12px;
+  }
+
+  .recipes__mobile-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px 50px;
+    border-radius: 16px;
+    background: var(--color-primary-button-background);
+    color: var(--color-primary-button-text);
+    font-size: var(--font-size--base);
+    font-family: var(--font-body--family);
+    font-weight: var(--font-button--weight, 600);
+    text-decoration: none;
+    line-height: 1;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(207, 165, 100, 0.25);
+    transition: background var(--animation-speed-hover, 0.25s) ease, transform 0.2s ease;
+  }
+
+  .recipes__mobile-btn:hover {
+    background: var(--color-primary-button-background-hover, #b88f4e);
+    transform: translateY(-1px);
   }
 
   @media (min-width: 750px) {
-    .recipes__header {
-      flex-direction: row;
-      justify-content: space-between;
-      text-align: start;
-    }
-
-    .recipes__heading {
-      text-align: start;
-    }
-
-    .recipes__list {
-      grid-auto-flow: initial;
-      grid-auto-columns: initial;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      overflow: visible;
-    }
-
-    .recipes__content {
-      align-items: flex-start;
-      text-align: start;
-    }
-
-    .recipes__arrow {
-      align-self: flex-end;
-    }
-  }
-
-  @media (min-width: 1200px) {
-    .recipes__list {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: var(--gap-2xl);
+    .recipes__mobile-view-all {
+      display: none;
     }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .recipes__list {
-      scroll-behavior: auto;
+    .recipes__card,
+    .recipes__image,
+    .recipes__arrow,
+    .recipes__mobile-btn {
+      transition: none;
+      transform: none !important;
     }
   }
 {% endstylesheet %}
@@ -328,13 +505,11 @@
       "label": "View all link"
     },
     {
-      "type": "range",
-      "id": "max_articles",
-      "label": "Maximum recipes",
-      "min": 2,
-      "max": 12,
-      "step": 1,
-      "default": 6
+      "type": "checkbox",
+      "id": "show_sample_preview",
+      "label": "Show sample recipes when empty",
+      "default": true,
+      "info": "Displays preview recipe cards when product has no metafield assigned. Uncheck to hide completely when empty."
     },
     {
       "type": "range",
@@ -377,7 +552,7 @@
       "settings": {
         "heading": "Recipes You’ll Love",
         "view_all_label": "View all",
-        "max_articles": 6,
+        "show_sample_preview": true,
         "gap": 28,
         "padding-block-start": 48,
         "padding-block-end": 48
