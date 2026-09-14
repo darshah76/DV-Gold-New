@@ -60,68 +60,68 @@
           "type": "category",
           "settings": {
             "name": "Tea",
-            "image": "shopify://shop_images/Poster2.png",
+            "image": "shopify://shop_images/DV_Poster_1.png",
             "link": "shopify://collections/tea",
             "panel_heading": "Variety of Tea",
-            "panel_description": "<p>This is a demo description</p>",
+            "panel_description": "<p>Discover the perfect tea for every mood and moment. Choose from a wide variety of tastes, strengths and grades—from refreshing dust teas to premium leaf teas—along with delightful flavours such as cardamom and more.</p>",
             "cta_text": "Shop tea",
             "cta_link": "shopify://collections/tea",
-            "panel_background": "#F4CE88",
-            "panel_heading_color": "#EB3337",
+            "panel_background": "#f4ce88",
+            "panel_heading_color": "#eb3337",
             "panel_description_color": "{{ settings.color_palette.foreground }}",
             "button_text_color": "{{ settings.color_palette.foreground }}",
-            "button_background_color": "#EB3337"
+            "button_background_color": "#eb3337"
           }
         },
         "category_83R437": {
           "type": "category",
           "settings": {
             "name": "Spices",
-            "image": "shopify://shop_images/Poster3.png",
+            "image": "shopify://shop_images/DV_Poster_3.png",
             "link": "",
-            "panel_heading": "",
-            "panel_description": "",
-            "cta_text": "Shop category",
-            "cta_link": "",
-            "panel_background": "#F4CE88",
-            "panel_heading_color": "#EB3337",
+            "panel_heading": "Authentic Spices",
+            "panel_description": "<p>Bring authentic Indian flavour to your kitchen with our carefully selected range of whole, powdered, blended and speciality spices. Enjoy dependable quality, rich aroma and the taste of traditional Indian cuisine.</p>",
+            "cta_text": "Shop spices",
+            "cta_link": "shopify://collections/spices",
+            "panel_background": "#f4ce88",
+            "panel_heading_color": "#eb3337",
             "panel_description_color": "{{ settings.color_palette.foreground }}",
             "button_text_color": "{{ settings.color_palette.foreground }}",
-            "button_background_color": "#EB3337"
+            "button_background_color": "#eb3337"
           }
         },
         "category_PHPy9r": {
           "type": "category",
           "settings": {
             "name": "Dry fruits",
-            "image": "shopify://shop_images/Poster4.png",
+            "image": "shopify://shop_images/DV_Poster_4.png",
             "link": "",
-            "panel_heading": "",
-            "panel_description": "",
-            "cta_text": "Shop category",
-            "cta_link": "",
-            "panel_background": "#F4CE88",
-            "panel_heading_color": "#EB3337",
+            "panel_heading": "Premium Quality Dry Fruits",
+            "panel_description": "<p>Snack better with nature’s goodness. Our range of premium dry fruits, nuts, seeds and berries makes it easy to enjoy nutritious, wholesome and delicious snacks every day.</p>",
+            "cta_text": "Shop dry fruits",
+            "cta_link": "shopify://collections/dry-fruits",
+            "panel_background": "#f4ce88",
+            "panel_heading_color": "#eb3337",
             "panel_description_color": "{{ settings.color_palette.foreground }}",
             "button_text_color": "{{ settings.color_palette.foreground }}",
-            "button_background_color": "#EB3337"
+            "button_background_color": "#eb3337"
           }
         },
         "category_zJV3eV": {
           "type": "category",
           "settings": {
             "name": "Farali Items",
-            "image": "shopify://shop_images/Poster1.png",
+            "image": "shopify://shop_images/DV_Poster_2.png",
             "link": "",
-            "panel_heading": "",
-            "panel_description": "",
-            "cta_text": "Shop category",
-            "cta_link": "",
-            "panel_background": "#F4CE88",
-            "panel_heading_color": "#EB3337",
+            "panel_heading": "Farali",
+            "panel_description": "<p>Make your fasting days healthier and more enjoyable with our trusted range of farali essentials. Choose from quality Rajgira Flour, Sabudana and Shingoda Flour—perfect for nourishing meals during your fasting festivities.</p>",
+            "cta_text": "Shop farali",
+            "cta_link": "shopify://collections/farali-items",
+            "panel_background": "#f4ce88",
+            "panel_heading_color": "#eb3337",
             "panel_description_color": "{{ settings.color_palette.foreground }}",
             "button_text_color": "{{ settings.color_palette.foreground }}",
-            "button_background_color": "#EB3337"
+            "button_background_color": "#eb3337"
           }
         }
       },
@@ -136,7 +136,7 @@
         "title": "DV Offerings",
         "heading_color": "#f9c800",
         "gap": 28,
-        "card_title_color": "{{ settings.color_palette.foreground }}",
+        "card_title_color": "#eb3337",
         "padding-block-start": 48,
         "padding-block-end": 48
       }
@@ -146,7 +146,7 @@
       "name": "Homepicked Masala",
       "settings": {
         "heading": "From the heart of Gujarat to your kitchen",
-        "description": "<p>The Madhupura market has been the heart of Gujarat for surcing Spices, tea, dry-fruits & groceries since more than 150 years. </p><p>All our products are hand-picked and sourced from the origin to ensure that the finest quality reaches the kitchens of our consumers.</p>",
+        "description": "<p>The Madhupura market has been the heart of Gujarat for sourcing Spices, tea, dry-fruits & groceries since more than 150 years. </p><p>All our products are hand-picked and sourced from the origin to ensure that the finest quality reaches the kitchens of our consumers.</p>",
         "cta_label": "Explore all",
         "cta_link": "/collections/all",
         "image": "shopify://shop_images/ChatGPT_Image_Aug_21_2026_12_27_46_AM.png",
@@ -296,7 +296,7 @@
           "settings": {
             "image": "shopify://shop_images/loved_by_family.png",
             "title": "Sourced at Origin",
-            "description": "<p>Sourcing from corners of India and the corners of world, Tea from estates of North East, Walnuts from mandi of Jammu Turmeric from Tamil Nadu & Andhra, Cashews from Karnataka, Cinnamon & star aniseed from Vietnam, Almonds from California, Raisins from Afghanistan, Pistachio from Iran, Coriander seeds from Rajasthan</p>"
+            "description": "<p>Quality tea, spices and dry fruits sourced from trusted origins across India and the corners of the world—from Indian tea estates and spice producing markets to California's Almonds, Afghan figs & raisins, Iranian pistachios and Vietnamese cinnamon and star anise.</p>"
           }
         },
         "reason_wxMJrE": {
