@@ -1,0 +1,1104 @@
+{% doc %}
+  Main Recipe Blog section for DV Foods storefront.
+  Renders /blogs/recipes/ with editorial hero, interactive category filters,
+  real-time recipe search, recipe cards matching individual recipe UI with
+  metadata badges (prep time, cook time, servings, difficulty, diet), and branded pagination.
+{% enddoc %}
+
+{% liquid
+  assign current_blog = blog
+  assign pagination_limit = section.settings.articles_per_page | default: 24
+  assign active_tag = current_tags.first | downcase
+%}
+
+<div class="section-background"></div>
+
+<section
+  class="section section--page-width recipe-blog spacing-style"
+  style="{% render 'spacing-style', settings: section.settings %}"
+  id="RecipeBlog-{{ section.id }}"
+  data-testid="recipe-blog"
+>
+  <div class="recipe-blog__container">
+    {% # Hero & Header Region %}
+    <header class="recipe-blog__header">
+      {% if section.settings.eyebrow != blank %}
+        <span class="recipe-blog__eyebrow">{{ section.settings.eyebrow | escape }}</span>
+      {% endif %}
+
+      <h1 class="recipe-blog__title">
+        {% if current_tags != blank %}
+          {{ current_tags.first | capitalize }} Recipes
+        {% else %}
+          {{ section.settings.title | default: current_blog.title | escape }}
+        {% endif %}
+      </h1>
+
+      {% if section.settings.description != blank %}
+        <p class="recipe-blog__description">{{ section.settings.description | escape }}</p>
+      {% endif %}
+
+      {% # Search & Filter Controls %}
+      <div class="recipe-blog__controls">
+        {% if section.settings.show_search %}
+          <div class="recipe-blog__search-wrapper">
+            <svg class="recipe-blog__search-icon" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <path d="M9 17A8 8 0 1 0 9 1a8 8 0 0 0 0 16zM19 19l-4.35-4.35" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <input
+              type="search"
+              id="RecipeSearchInput"
+              class="recipe-blog__search-input"
+              placeholder="{{ section.settings.search_placeholder | default: 'Search recipes on this page by name, ingredient, or keyword...' }}"
+              aria-label="Search recipes"
+              autocomplete="off"
+            >
+            <button type="button" id="RecipeSearchClear" class="recipe-blog__search-clear" aria-label="Clear search" style="display: none;">
+              <svg viewBox="0 0 20 20" fill="none" width="16" height="16">
+                <path d="M15 5L5 15M5 5l10 10" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+        {% endif %}
+
+        {% if section.settings.show_filter_tabs %}
+          <nav class="recipe-blog__filter-nav" aria-label="Filter recipes by category">
+            <div class="recipe-blog__filter-tabs">
+              <a
+                href="{{ current_blog.url }}"
+                class="recipe-blog__filter-tab{% if current_tags == blank %} is-active{% endif %}"
+              >
+                <span>All Recipes</span>
+                <span class="recipe-blog__filter-count">{{ current_blog.articles_count }}</span>
+              </a>
+              <a
+                href="{{ current_blog.url }}/tagged/tea"
+                class="recipe-blog__filter-tab{% if active_tag == 'tea' %} is-active{% endif %}"
+              >
+                <span>Tea & Chai</span>
+              </a>
+              <a
+                href="{{ current_blog.url }}/tagged/fasting"
+                class="recipe-blog__filter-tab{% if active_tag == 'fasting' or active_tag == 'vrat' or active_tag == 'farali' %} is-active{% endif %}"
+              >
+                <span>Fasting & Vrat</span>
+              </a>
+              <a
+                href="{{ current_blog.url }}/tagged/gujarati"
+                class="recipe-blog__filter-tab{% if active_tag == 'gujarati' or active_tag == 'curry' or active_tag == 'dal' %} is-active{% endif %}"
+              >
+                <span>Everyday Kitchen</span>
+              </a>
+              <a
+                href="{{ current_blog.url }}/tagged/dessert"
+                class="recipe-blog__filter-tab{% if active_tag == 'dessert' or active_tag == 'festive' %} is-active{% endif %}"
+              >
+                <span>Sweets & Desserts</span>
+              </a>
+              <a
+                href="{{ current_blog.url }}/tagged/snack"
+                class="recipe-blog__filter-tab{% if active_tag == 'snack' or active_tag == 'cashews' or active_tag == 'walnuts' %} is-active{% endif %}"
+              >
+                <span>Dry Fruits & Snacks</span>
+              </a>
+              <a
+                href="{{ current_blog.url }}/tagged/ayurvedic"
+                class="recipe-blog__filter-tab{% if active_tag == 'ayurvedic' or active_tag == 'immunity' or active_tag == 'wellness' %} is-active{% endif %}"
+              >
+                <span>Immunity & Wellness</span>
+              </a>
+            </div>
+          </nav>
+        {% endif %}
+      </div>
+    </header>
+
+    {% paginate current_blog.articles by pagination_limit %}
+      {% # Results Counter & Status %}
+      <div class="recipe-blog__status-bar">
+        <span class="recipe-blog__results-count" id="RecipeResultsText">
+          Showing {{ paginate.page_size | at_most: paginate.items }} of {{ paginate.items }} {% if current_tags != blank %}{{ current_tags.first }} {% endif %}recipes
+        </span>
+
+        {% if current_tags != blank %}
+          <a href="{{ current_blog.url }}" class="recipe-blog__clear-tag">
+            <span>Clear Tag ({{ current_tags.first }}) ✕</span>
+          </a>
+        {% endif %}
+      </div>
+
+      {% # Recipe Grid %}
+      <div class="recipe-blog__grid" id="RecipeBlogGrid">
+        {% for recipe in current_blog.articles %}
+          {% liquid
+            assign prep_time = recipe.metafields.custom.prep_time.value | default: recipe.metafields.custom.prep_time
+            assign cook_time = recipe.metafields.custom.cook_time.value | default: recipe.metafields.custom.cook_time
+            assign total_time = recipe.metafields.custom.total_time.value | default: recipe.metafields.custom.total_time
+            assign servings = recipe.metafields.custom.servings.value | default: recipe.metafields.custom.servings
+            assign difficulty = recipe.metafields.custom.difficulty.value | default: recipe.metafields.custom.difficulty
+            assign course = recipe.metafields.custom.course.value | default: recipe.metafields.custom.course
+            assign diet = recipe.metafields.custom.diet.value | default: recipe.metafields.custom.diet
+
+            assign search_haystack = recipe.title | append: ' ' | append: recipe.excerpt | append: ' ' | append: course | append: ' ' | append: diet
+            for tag in recipe.tags
+              assign search_haystack = search_haystack | append: ' ' | append: tag
+            endfor
+            assign search_haystack = search_haystack | downcase
+          %}
+
+          <article
+            class="recipe-card"
+            data-search-content="{{ search_haystack | escape }}"
+            data-tags="{{ recipe.tags | join: ',' | downcase }}"
+            data-course="{{ course | downcase }}"
+            data-diet="{{ diet | downcase }}"
+          >
+            <a class="recipe-card__overlay-link" href="{{ recipe.url }}" aria-label="{{ recipe.title | escape }}"></a>
+
+            {% # Card Header: Media or Decorative Culinary Badge %}
+            <div class="recipe-card__media">
+              {% if recipe.image != blank %}
+                {{
+                  recipe.image
+                  | image_url: width: 720
+                  | image_tag:
+                    class: 'recipe-card__image',
+                    widths: '360, 540, 720',
+                    sizes: '(min-width: 1200px) 30vw, (min-width: 750px) 45vw, 90vw',
+                    loading: 'lazy',
+                    alt: recipe.title
+                }}
+              {% else %}
+                <div class="recipe-card__placeholder">
+                  <div class="recipe-card__placeholder-crest">
+                    <svg class="recipe-card__placeholder-icon" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+                      <circle cx="32" cy="32" r="30" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 3"/>
+                      <path d="M20 40c0 4.418 5.373 8 12 8s12-3.582 12-8V32H20v8z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      <path d="M18 32h28a2 2 0 0 0 2-2v-2a6 6 0 0 0-6-6H22a6 6 0 0 0-6 6v2a2 2 0 0 0 2 2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      <path d="M32 16v6M26 19l2 3M38 19l-2 3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                  </div>
+                  <span class="recipe-card__placeholder-brand">DV GOLD RECIPE</span>
+                </div>
+              {% endif %}
+
+              {% # Badges Overlay on Media Top %}
+              <div class="recipe-card__badges">
+                {% if course != blank %}
+                  <span class="recipe-card__badge recipe-card__badge--course">{{ course | escape }}</span>
+                {% elsif recipe.tags.first != blank %}
+                  <span class="recipe-card__badge recipe-card__badge--course">{{ recipe.tags.first | escape }}</span>
+                {% endif %}
+
+                {% if diet != blank %}
+                  <span class="recipe-card__badge recipe-card__badge--diet">{{ diet | escape }}</span>
+                {% endif %}
+              </div>
+            </div>
+
+            {% # Card Body %}
+            <div class="recipe-card__content">
+              <h2 class="recipe-card__title">
+                <a href="{{ recipe.url }}" class="recipe-card__title-link">{{ recipe.title | escape }}</a>
+              </h2>
+
+              {% if recipe.excerpt != blank %}
+                <p class="recipe-card__excerpt">
+                  {{ recipe.excerpt | strip_html | truncatewords: 20 }}
+                </p>
+              {% endif %}
+
+              {% # Recipe Metadata Badges Row %}
+              {% if section.settings.show_metrics %}
+                <div class="recipe-card__meta-row">
+                  {% if prep_time != blank or total_time != blank %}
+                    <div class="recipe-card__meta-item" title="Time: {% if total_time != blank %}{{ total_time }}{% else %}{{ prep_time }}{% endif %}">
+                      <svg class="recipe-card__meta-icon" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                        <circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5"/>
+                        <path d="M8 4v4l2.5 2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                      <span>{% if total_time != blank %}{{ total_time }}{% else %}{{ prep_time }}{% endif %}</span>
+                    </div>
+                  {% endif %}
+
+                  {% if servings != blank %}
+                    <div class="recipe-card__meta-item" title="Servings: {{ servings }}">
+                      <svg class="recipe-card__meta-icon" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                        <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM2 14a6 6 0 0 1 12 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                      <span>{{ servings }}</span>
+                    </div>
+                  {% endif %}
+
+                  {% if difficulty != blank %}
+                    <div class="recipe-card__meta-item" title="Difficulty: {{ difficulty }}">
+                      <svg class="recipe-card__meta-icon" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                        <path d="M8 1.5l1.8 3.8 4.2.6-3 3 .7 4.1L8 11.2l-3.7 1.8.7-4.1-3-3 4.2-.6L8 1.5z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                      </svg>
+                      <span>{{ difficulty }}</span>
+                    </div>
+                  {% endif %}
+                </div>
+              {% endif %}
+
+              {% # Card Footer Action %}
+              <div class="recipe-card__footer">
+                <span class="recipe-card__action">
+                  <span>View Recipe</span>
+                  <svg class="recipe-card__action-icon" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                    <path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+
+      {% # Empty State for search / filtering %}
+      <div class="recipe-blog__empty" id="RecipeBlogEmpty" style="display: none;">
+        <div class="recipe-blog__empty-inner">
+          <svg class="recipe-blog__empty-icon" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+            <circle cx="24" cy="24" r="22" stroke="currentColor" stroke-width="2" stroke-dasharray="4 4"/>
+            <path d="M16 28s3-4 8-4 8 4 8 4M19 18h.02M29 18h.02" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+          <h3 class="recipe-blog__empty-title">No Recipes Found</h3>
+          <p class="recipe-blog__empty-desc">We couldn't find any recipes matching your search on this page. Try different keywords or reset search.</p>
+          <button type="button" class="button button-secondary" id="RecipeResetBtn">
+            Reset Search
+          </button>
+        </div>
+      </div>
+
+      {% # Pagination %}
+      {% if paginate.pages > 1 %}
+        <nav class="recipe-blog__pagination" aria-label="Recipe pagination" id="RecipePaginationNav">
+          {% if paginate.previous %}
+            <a href="{{ paginate.previous.url }}" class="recipe-blog__pagination-btn recipe-blog__pagination-prev" aria-label="Previous Page">
+              <svg viewBox="0 0 20 20" fill="none" width="16" height="16" aria-hidden="true">
+                <path d="M13 15l-5-5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span>Previous</span>
+            </a>
+          {% endif %}
+
+          <div class="recipe-blog__pagination-pages">
+            {% for part in paginate.parts %}
+              {% if part.is_link %}
+                <a href="{{ part.url }}" class="recipe-blog__page-num">{{ part.title }}</a>
+              {% elsif part.title == paginate.current_page %}
+                <span class="recipe-blog__page-num is-active" aria-current="page">{{ part.title }}</span>
+              {% else %}
+                <span class="recipe-blog__page-num is-deco">{{ part.title }}</span>
+              {% endif %}
+            {% endfor %}
+          </div>
+
+          {% if paginate.next %}
+            <a href="{{ paginate.next.url }}" class="recipe-blog__pagination-btn recipe-blog__pagination-next" aria-label="Next Page">
+              <span>Next</span>
+              <svg viewBox="0 0 20 20" fill="none" width="16" height="16" aria-hidden="true">
+                <path d="M7 5l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          {% endif %}
+        </nav>
+      {% endif %}
+    {% endpaginate %}
+  </div>
+</section>
+
+{% stylesheet %}
+  /* ==========================================================================
+     Recipe Blog Page Styles - Conforming to brand-system.md
+     ========================================================================== */
+
+  .recipe-blog {
+    width: 100%;
+    color: var(--color-foreground);
+    background-color: var(--color-background);
+  }
+
+  .recipe-blog__container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: var(--narrow-page-width);
+    margin: 0 auto;
+    gap: 28px;
+  }
+
+  /* --------------------------------------------------------------------------
+     Header & Hero Region
+     -------------------------------------------------------------------------- */
+  .recipe-blog__header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 16px;
+    max-width: 54rem;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .recipe-blog__eyebrow {
+    font-family: var(--font-body--family);
+    font-weight: 700;
+    font-size: var(--font-size--xs);
+    color: var(--color-heading);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  .recipe-blog__title {
+    margin: 0;
+    font-family: var(--font-heading--family);
+    font-weight: 400;
+    font-size: clamp(2.25rem, 5vw, 3.5rem);
+    line-height: 1.1;
+    color: var(--color-heading);
+    text-wrap: balance;
+  }
+
+  .recipe-blog__description {
+    margin: 0;
+    color: var(--color-foreground);
+    font-family: var(--font-body--family);
+    font-style: normal;
+    font-weight: var(--font-body--weight);
+    font-size: var(--font-size--lg);
+    line-height: var(--font-paragraph--line-height);
+    text-wrap: pretty;
+    max-width: 44rem;
+  }
+
+  /* --------------------------------------------------------------------------
+     Controls: Search & Filter Tabs
+     -------------------------------------------------------------------------- */
+  .recipe-blog__controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    margin-top: 8px;
+  }
+
+  .recipe-blog__search-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 32rem;
+  }
+
+  .recipe-blog__search-icon {
+    position: absolute;
+    left: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    color: var(--color-heading);
+    pointer-events: none;
+  }
+
+  .recipe-blog__search-input {
+    width: 100%;
+    height: 52px;
+    padding: 0 46px 0 50px;
+    font-family: var(--font-body--family);
+    font-size: var(--font-size--base);
+    color: var(--color-foreground);
+    background: var(--color-white);
+    border: var(--style-border-width) solid var(--color-card-border-warm);
+    border-radius: var(--style-border-radius-buttons-primary, 16px);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+    outline: none;
+    transition: border-color var(--animation-speed-hover, 0.25s) ease, box-shadow var(--animation-speed-hover, 0.25s) ease;
+    box-sizing: border-box;
+  }
+
+  .recipe-blog__search-input:focus {
+    border-color: var(--color-heading);
+    box-shadow: 0 0 0 3px rgba(207, 165, 100, 0.2);
+  }
+
+  .recipe-blog__search-clear {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    color: var(--color-foreground);
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s ease;
+  }
+
+  .recipe-blog__search-clear:hover {
+    color: var(--color-heading);
+  }
+
+  /* Filter Tabs Bar */
+  .recipe-blog__filter-nav {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: 4px 0;
+  }
+
+  .recipe-blog__filter-nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .recipe-blog__filter-tabs {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    width: 100%;
+    padding: 2px;
+  }
+
+  @media (max-width: 749px) {
+    .recipe-blog__filter-tabs {
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      padding-inline: 4px;
+    }
+  }
+
+  .recipe-blog__filter-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    font-family: var(--font-body--family);
+    font-weight: 600;
+    font-size: var(--font-size--sm);
+    color: var(--color-foreground);
+    background: var(--color-white);
+    border: var(--style-border-width) solid var(--color-card-border-warm);
+    border-radius: 40px;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: all var(--animation-speed-hover, 0.25s) ease;
+  }
+
+  .recipe-blog__filter-tab:hover {
+    border-color: var(--color-heading);
+    color: var(--color-heading);
+    transform: translateY(-1px);
+  }
+
+  .recipe-blog__filter-tab.is-active {
+    background: var(--color-heading);
+    color: var(--color-white);
+    border-color: var(--color-heading);
+    box-shadow: 0 4px 12px rgba(207, 165, 100, 0.3);
+  }
+
+  .recipe-blog__filter-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px 8px;
+    font-size: var(--font-size--xs);
+    border-radius: 20px;
+    background: rgba(207, 165, 100, 0.15);
+    color: var(--color-foreground);
+  }
+
+  .recipe-blog__filter-tab.is-active .recipe-blog__filter-count {
+    background: rgba(255, 255, 255, 0.25);
+    color: var(--color-white);
+  }
+
+  /* Status Bar */
+  .recipe-blog__status-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0 4px;
+    gap: 12px;
+  }
+
+  .recipe-blog__results-count {
+    font-family: var(--font-body--family);
+    font-size: var(--font-size--sm);
+    color: rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text));
+    font-weight: 500;
+  }
+
+  .recipe-blog__clear-tag {
+    font-family: var(--font-body--family);
+    font-size: var(--font-size--xs);
+    font-weight: 600;
+    color: var(--color-heading);
+    text-decoration: none;
+    padding: 4px 10px;
+    background: rgba(207, 165, 100, 0.1);
+    border-radius: 20px;
+    transition: background 0.2s ease;
+  }
+
+  .recipe-blog__clear-tag:hover {
+    background: rgba(207, 165, 100, 0.2);
+  }
+
+  /* --------------------------------------------------------------------------
+     Recipe Cards Grid
+     -------------------------------------------------------------------------- */
+  .recipe-blog__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+    width: 100%;
+  }
+
+  @media (min-width: 750px) {
+    .recipe-blog__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 28px;
+    }
+  }
+
+  @media (min-width: 990px) {
+    .recipe-blog__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 28px;
+    }
+  }
+
+  /* --------------------------------------------------------------------------
+     Recipe Card Component
+     -------------------------------------------------------------------------- */
+  .recipe-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background: var(--color-white);
+    border: var(--style-border-width) solid var(--color-card-border-warm);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: transform var(--animation-speed-hover, 0.25s) ease, border-color var(--animation-speed-hover, 0.25s) ease;
+    height: 100%;
+    box-sizing: border-box;
+  }
+
+  .recipe-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(207, 165, 100, 0.4);
+  }
+
+  .recipe-card__overlay-link {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    border-radius: inherit;
+  }
+
+  .recipe-card__overlay-link:focus-visible {
+    outline: var(--focus-outline-width) solid var(--color-heading);
+    outline-offset: -2px;
+  }
+
+  /* Media & Placeholder */
+  .recipe-card__media {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: linear-gradient(135deg, var(--color-background-secondary) 0%, rgba(207, 165, 100, 0.12) 100%);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .recipe-card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .recipe-card:hover .recipe-card__image {
+    transform: scale(1.04);
+  }
+
+  .recipe-card__placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: var(--color-heading);
+    padding: 20px;
+    text-align: center;
+  }
+
+  .recipe-card__placeholder-crest {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(207, 165, 100, 0.25);
+  }
+
+  .recipe-card__placeholder-icon {
+    width: 32px;
+    height: 32px;
+    opacity: 0.9;
+    transition: transform 0.3s ease;
+  }
+
+  .recipe-card:hover .recipe-card__placeholder-icon {
+    transform: scale(1.08) rotate(3deg);
+  }
+
+  .recipe-card__placeholder-brand {
+    font-family: var(--font-body--family);
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--color-heading);
+    text-transform: uppercase;
+  }
+
+  /* Badges Overlay */
+  .recipe-card__badges {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    right: 14px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    z-index: 3;
+    pointer-events: none;
+  }
+
+  .recipe-card__badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 12px;
+    font-family: var(--font-body--family);
+    font-weight: 600;
+    font-size: 11px;
+    border-radius: 30px;
+    letter-spacing: 0.02em;
+  }
+
+  .recipe-card__badge--course {
+    color: var(--color-foreground);
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(4px);
+    border: 1px solid var(--color-card-border-warm);
+  }
+
+  .recipe-card__badge--diet {
+    color: #1b5e20;
+    background: #e8f5e9;
+    border: 1px solid rgba(27, 94, 32, 0.2);
+  }
+
+  /* Content Region */
+  .recipe-card__content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 22px;
+    gap: 12px;
+  }
+
+  .recipe-card__title {
+    margin: 0;
+    font-family: var(--font-heading--family);
+    font-weight: 400;
+    font-size: var(--font-h4--size, 1.35rem);
+    line-height: 1.25;
+    color: var(--color-foreground);
+    text-wrap: balance;
+    transition: color var(--animation-speed-hover, 0.25s) ease;
+  }
+
+  .recipe-card:hover .recipe-card__title {
+    color: var(--color-heading);
+  }
+
+  .recipe-card__title-link {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .recipe-card__excerpt {
+    margin: 0;
+    font-family: var(--font-body--family);
+    font-size: var(--font-size--sm);
+    line-height: 1.55;
+    color: rgb(var(--color-foreground-rgb) / 0.8);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* Meta Row */
+  .recipe-card__meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+    margin-top: auto;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  }
+
+  .recipe-card__meta-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: var(--font-body--family);
+    font-size: var(--font-size--xs);
+    font-weight: 600;
+    color: var(--color-foreground);
+  }
+
+  .recipe-card__meta-icon {
+    width: 14px;
+    height: 14px;
+    color: var(--color-heading);
+    flex-shrink: 0;
+  }
+
+  /* Card Footer */
+  .recipe-card__footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-top: 4px;
+  }
+
+  .recipe-card__action {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-body--family);
+    font-weight: 600;
+    font-size: var(--font-size--sm);
+    color: var(--color-heading);
+    transition: transform var(--animation-speed-hover, 0.25s) ease, gap var(--animation-speed-hover, 0.25s) ease;
+  }
+
+  .recipe-card:hover .recipe-card__action {
+    gap: 9px;
+  }
+
+  .recipe-card__action-icon {
+    width: 16px;
+    height: 16px;
+    transition: transform var(--animation-speed-hover, 0.25s) ease;
+  }
+
+  .recipe-card:hover .recipe-card__action-icon {
+    transform: translateX(3px);
+  }
+
+  /* --------------------------------------------------------------------------
+     Empty State
+     -------------------------------------------------------------------------- */
+  .recipe-blog__empty {
+    width: 100%;
+    padding: 60px 20px;
+    text-align: center;
+  }
+
+  .recipe-blog__empty-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    max-width: 28rem;
+    margin: 0 auto;
+  }
+
+  .recipe-blog__empty-icon {
+    width: 64px;
+    height: 64px;
+    color: var(--color-heading);
+    opacity: 0.6;
+  }
+
+  .recipe-blog__empty-title {
+    margin: 0;
+    font-family: var(--font-heading--family);
+    font-size: 1.75rem;
+    color: var(--color-foreground);
+  }
+
+  .recipe-blog__empty-desc {
+    margin: 0;
+    font-family: var(--font-body--family);
+    font-size: var(--font-size--base);
+    color: rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text));
+    line-height: 1.5;
+  }
+
+  /* --------------------------------------------------------------------------
+     Pagination
+     -------------------------------------------------------------------------- */
+  .recipe-blog__pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+  }
+
+  .recipe-blog__pagination-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 18px;
+    font-family: var(--font-body--family);
+    font-weight: 600;
+    font-size: var(--font-size--sm);
+    color: var(--color-foreground);
+    background: var(--color-white);
+    border: var(--style-border-width) solid var(--color-card-border-warm);
+    border-radius: var(--style-border-radius-buttons-primary, 16px);
+    text-decoration: none;
+    transition: all var(--animation-speed-hover, 0.25s) ease;
+  }
+
+  .recipe-blog__pagination-btn:hover {
+    color: var(--color-heading);
+    border-color: var(--color-heading);
+    transform: translateY(-1px);
+  }
+
+  .recipe-blog__pagination-pages {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .recipe-blog__page-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    height: 40px;
+    padding: 0 8px;
+    font-family: var(--font-body--family);
+    font-weight: 600;
+    font-size: var(--font-size--sm);
+    color: var(--color-foreground);
+    background: var(--color-white);
+    border: var(--style-border-width) solid var(--color-card-border-warm);
+    border-radius: 50%;
+    text-decoration: none;
+    transition: all var(--animation-speed-hover, 0.25s) ease;
+  }
+
+  .recipe-blog__page-num:hover {
+    color: var(--color-heading);
+    border-color: var(--color-heading);
+  }
+
+  .recipe-blog__page-num.is-active {
+    background: var(--color-heading);
+    color: var(--color-white);
+    border-color: var(--color-heading);
+    box-shadow: 0 2px 8px rgba(207, 165, 100, 0.3);
+  }
+
+  .recipe-blog__page-num.is-deco {
+    background: transparent;
+    border: none;
+    color: rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text));
+  }
+{% endstylesheet %}
+
+<script>
+  (function() {
+    function initRecipeSearch() {
+      const root = document.getElementById('RecipeBlog-{{ section.id }}');
+      if (!root) return;
+
+      const searchInput = root.querySelector('#RecipeSearchInput');
+      const searchClear = root.querySelector('#RecipeSearchClear');
+      const cards = root.querySelectorAll('.recipe-card');
+      const emptyState = root.querySelector('#RecipeBlogEmpty');
+      const resultsText = root.querySelector('#RecipeResultsText');
+      const resetBtn = root.querySelector('#RecipeResetBtn');
+      const paginationNav = root.querySelector('#RecipePaginationNav');
+
+      let currentQuery = '';
+
+      function applySearch() {
+        let visibleCount = 0;
+        const query = currentQuery.trim().toLowerCase();
+
+        cards.forEach(card => {
+          const content = card.getAttribute('data-search-content') || '';
+          const matchesQuery = query === '' || content.includes(query);
+
+          if (matchesQuery) {
+            card.style.display = 'flex';
+            visibleCount++;
+          } else {
+            card.style.display = 'none';
+          }
+        });
+
+        // Update status text
+        if (resultsText) {
+          if (query) {
+            resultsText.textContent = `Showing ${visibleCount} matching recipe${visibleCount === 1 ? '' : 's'} on this page`;
+            if (paginationNav) paginationNav.style.display = 'none';
+          } else {
+            resultsText.textContent = `Showing ${cards.length} recipes`;
+            if (paginationNav) paginationNav.style.display = 'flex';
+          }
+        }
+
+        // Toggle Empty State
+        if (emptyState) {
+          emptyState.style.display = visibleCount === 0 ? 'block' : 'none';
+        }
+      }
+
+      // Search input listener
+      if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+          currentQuery = e.target.value;
+          if (searchClear) {
+            searchClear.style.display = currentQuery.length > 0 ? 'flex' : 'none';
+          }
+          applySearch();
+        });
+      }
+
+      // Search clear button
+      if (searchClear) {
+        searchClear.addEventListener('click', () => {
+          if (searchInput) {
+            searchInput.value = '';
+            searchInput.focus();
+          }
+          currentQuery = '';
+          searchClear.style.display = 'none';
+          applySearch();
+        });
+      }
+
+      // Reset button in empty state
+      if (resetBtn) {
+        resetBtn.addEventListener('click', () => {
+          if (searchInput) searchInput.value = '';
+          if (searchClear) searchClear.style.display = 'none';
+          currentQuery = '';
+          applySearch();
+        });
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initRecipeSearch);
+    } else {
+      initRecipeSearch();
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Recipe Blog Collection",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "DV Gold Culinary Collection"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Heritage Recipes & Kitchen Inspirations"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Explore authentic Gujarati traditions, festive delicacies, and wholesome everyday creations crafted with pure, unadulterated DV Gold ingredients."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_search",
+      "label": "Show recipe search bar",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_filter_tabs",
+      "label": "Show category filter tabs",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_metrics",
+      "label": "Show recipe timing & servings badges",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "articles_per_page",
+      "label": "Recipes per page",
+      "min": 12,
+      "max": 48,
+      "step": 6,
+      "default": 24
+    },
+    {
+      "type": "header",
+      "content": "Section Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 48
+    }
+  ]
+}
+{% endschema %}
