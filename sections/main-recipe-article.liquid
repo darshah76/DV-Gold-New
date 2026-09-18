@@ -1,0 +1,1621 @@
+{% doc %}
+  Main Recipe Article section for DV Foods storefront.
+  Provides a recipe layout with banner image, cooked dish gallery,
+  interactive ingredients checklist, numbered step-by-step instructions,
+  recipe metadata badges, click-to-print functionality, and featured products.
+{% enddoc %}
+
+{% liquid
+  assign recipe = article
+  assign current_blog = blog | default: article.blog
+
+  # Default data lookup by handle
+  assign handle_prep_time = ''
+  assign handle_cook_time = ''
+  assign handle_total_time = ''
+  assign handle_servings = ''
+  assign handle_difficulty = ''
+  assign handle_course = ''
+  assign handle_diet = ''
+  assign handle_chef_notes = ''
+  assign handle_featured_product_handles = ''
+  assign handle_ingredients = ''
+  assign handle_instructions = ''
+
+  assign raw_handle = recipe.handle | default: ''
+  assign clean_handle = raw_handle | split: '/' | last
+
+  case clean_handle
+    when 'chai-recipes', 'recipes/chai-recipes'
+      assign handle_prep_time = '5 mins'
+      assign handle_cook_time = '10 mins'
+      assign handle_total_time = '15 mins'
+      assign handle_servings = '4 cups'
+      assign handle_difficulty = 'Easy'
+      assign handle_course = 'Hot Beverage'
+      assign handle_diet = 'Vegetarian'
+      assign handle_chef_notes = 'Always add tea leaves to rolling boiling water, never to cold water. For black-tea blends, never boil tea leaves directly in milk — add milk only after the tea essence has fully infused in water.'
+      assign handle_featured_product_handles = 'dv-gold-tea,dv-silver-tea,dv-klassik-tea'
+      assign handle_ingredients = '[For the Kadak Brew]||2 cups fresh filtered water||1.5 tbsp DV Gold Premium CTC Tea||1 cup whole fresh milk||2 tsp raw sugar (or to taste)||[Aromatics & Spices]||½ tsp fresh grated ginger (adrak)||2 green cardamom pods (crushed)||1 small pinch DV Chai Masala (optional)'
+      assign handle_instructions = 'Kadak Masala Chai: Bring 2 cups of fresh water to a rolling boil in a saucepan. Add 1.5 tbsp DV Gold Tea and crushed spices (ginger, cardamom, or chai masala). Simmer on medium flame for 3 minutes until rich and fragrant.||Add Milk & Re-Boil: Pour in 1 cup whole milk and sugar to taste. Bring the brew to a full foaming boil, then reduce heat and let it bubble twice so the milk enriches the brisk Assam-Bengal CTC tea.||Adrak Chai Variation: For an immunity-boosting ginger brew, simmer 1 tsp freshly grated ginger with DV Gold or Silver Tea before adding milk.||Elaichi Chai Variation: Crush 2 cardamom pods into boiling water before adding tea leaves — gentler, floral, and ideal with DV Klassik.||Doodh Patti (Milk-First): Simmer tea leaves directly in 2 cups of milk on low heat — DV Klassik’s rich character shines best here.||Black Chai (No Milk): Brew DV Gold or Silver briskly in boiling water for 3 minutes, strain into cups, and finish with a squeeze of fresh lemon.'
+    when 'shinghoda-flour-recipes', 'recipes/shinghoda-flour-recipes'
+      assign handle_prep_time = '15 mins'
+      assign handle_cook_time = '20 mins'
+      assign handle_total_time = '35 mins'
+      assign handle_servings = '4 servings'
+      assign handle_difficulty = 'Easy'
+      assign handle_course = 'Fasting / Vrat Food'
+      assign handle_diet = 'Satvik / Gluten-Free'
+      assign handle_chef_notes = 'Singhara (water chestnut) flour is completely gluten-free and brittle; dough will crack if made without potato. Always bind with boiled mashed potato and warm water for smooth, pliable puris.'
+      assign handle_featured_product_handles = 'shinghoda-flour'
+      assign handle_ingredients = '[For Puris & Halwa]||1.5 cups DV Gold Shinghoda (Water Chestnut) Flour||2 medium boiled potatoes (mashed smooth)||2 tbsp pure desi ghee||1 tsp sendha namak (rock salt)||1 green chilli (finely minced)||½ tsp roasted cumin powder||Warm water as needed for kneading||Desi ghee or groundnut oil for frying'
+      assign handle_instructions = 'Singhare ki Puri: In a mixing bowl, combine 1.5 cups DV Gold Shinghoda Flour with smooth mashed potatoes, sendha namak, and 1 tsp ghee. Knead into a pliable, firm dough using warm water. Roll gently between greased sheets and deep-fry in hot ghee until puffed and golden for your Navratri thali.||Singhara Halwa: Melt 3 tbsp desi ghee in a heavy pan. Add 1 cup shinghoda flour and roast on medium-low flame until fragrant and golden-brown. Slowly stir in 1 cup warm milk/water and ½ cup jaggery or sugar syrup, stirring continuously until smooth, glossy, and leaves the sides of the pan.||Singhara Cheela: Whisk shinghoda flour with water, sendha namak, minced green chillies, and fresh coriander into a smooth batter. Pour a ladle onto a hot greased tawa, drizzle ghee around edges, and cook both sides until golden-crisp.||Farali Pakora Batter: Mix shinghoda flour with a spoonful of rajagro flour, rock salt, and spices to coat raw potato slices or paneer cubes before crisp-frying.'
+    when 'sabudana-recipes', 'recipes/sabudana-recipes'
+      assign handle_prep_time = '15 mins (+4 hrs soak)'
+      assign handle_cook_time = '15 mins'
+      assign handle_total_time = '30 mins'
+      assign handle_servings = '4 servings'
+      assign handle_difficulty = 'Easy'
+      assign handle_course = 'Fasting / Breakfast'
+      assign handle_diet = 'Vegetarian / Gluten-Free'
+      assign handle_chef_notes = 'Always rinse soaked sabudana under running cold water before cooking — this washes away excess surface starch so every pearl stays separate and never clumps or turns mushy.'
+      assign handle_featured_product_handles = 'sabudana'
+      assign handle_ingredients = '[Main Ingredients]||1 cup DV Gold Premium Sabudana (Tapioca Pearls)||½ cup roasted peanuts (coarsely crushed)||2 medium boiled potatoes (diced)||2 tbsp pure cow ghee or groundnut oil||1 tsp cumin seeds (jeera)||2 green chillies (slit)||8-10 fresh curry leaves||1 tsp sendha namak (rock salt)||1 tbsp fresh lemon juice||2 tbsp fresh coriander leaves'
+      assign handle_instructions = 'Soaking Perfection: Rinse DV Gold Sabudana gently in cold water until water runs clear. Soak in just enough water to submerge pearls (water level ~½ inch above pearls) for 4–6 hours until soft and easily mashed between fingers.||Sabudana Khichdi: Heat ghee in a kadai. Splutter cumin seeds, curry leaves, and green chillies. Add diced boiled potatoes and saute for 2 minutes. Stir in the drained sabudana, roasted crushed peanuts, and sendha namak. Toss gently on low heat until pearls turn translucent. Finish with fresh lemon juice and coriander.||Sabudana Vada: Mix soaked sabudana with mashed boiled potatoes, coarse peanut powder, sendha namak, and green chillies. Shape into round patties and deep-fry in medium-hot peanut oil until crispy golden-brown.||Sabudana Kheer: Simmer soaked sabudana in 4 cups of full-cream milk with cardamom and sugar until glassy pearls float to the top. Garnish with slivered nuts.||Sabudana Thalipeeth: Combine soaked pearls with rajagro flour, mashed potato, and cumin. Flatten gently between parchment paper and pan-fry on a tawa with ghee until crisp on both sides.||Sabudana Papad: Steam seasoned sabudana batter with green chilli paste and sun-dry for homemade crispy farali papads.'
+    when 'rajagaro-flour-recipes', 'recipes/rajagaro-flour-recipes'
+      assign handle_prep_time = '10 mins'
+      assign handle_cook_time = '20 mins'
+      assign handle_total_time = '30 mins'
+      assign handle_servings = '4 servings'
+      assign handle_difficulty = 'Intermediate'
+      assign handle_course = 'Fasting / Traditional Meal'
+      assign handle_diet = 'Satvik / Gluten-Free'
+      assign handle_chef_notes = 'Use Jhino (fine grind) for delicate khichdi, halwa, and lapshi; use Kakro (coarse grind) for rotlis, parathas, and farali thalipeeth to give superior texture and pleasant bite.'
+      assign handle_featured_product_handles = 'rajagaro-jhino,rajagaro-kakro'
+      assign handle_ingredients = '[Flour & Base]||1.5 cups DV Gold Rajagaro (Amaranth) Flour (Jhino or Kakro)||2 boiled potatoes (mashed smooth)||3 tbsp pure desi cow ghee||½ cup soaked sabudana (for khichdi)||1 tsp sendha namak (rock salt)||1 tsp cumin seeds (jeera)||1 tbsp roasted peanut crush||Warm water or milk as needed'
+      assign handle_instructions = 'Rajagro ni Khichdi: Cook coarse (kakro) rajagro flour in ghee with cumin seeds, green chillies, soaked sabudana, and warm water. Simmer on low heat until cooked into a moist, wholesome farali khichdi.||Rajagro Rotli (Puri): Combine fine (jhino) rajagro flour with mashed potato, sendha namak, and a splash of warm water. Gently roll out rotlis on a tawa using ghee, or deep-fry for puffed golden farali puris.||Rajagro ni Lapshi: Heat 3 tbsp ghee in a pan, add coarse rajagro flour and roast until nutty and aromatic. Add boiling water or warm milk and jaggery, cooking until thick, glossy, and fragrant.||Farali Thalipeeth: Mix fine rajagro flour with mashed potato, coarsely crushed peanuts, sendha namak, and chopped coriander. Pat onto a greased pan and roast both sides with ghee until golden-crisp.||Rajagro Halwa: Roast fine rajagro flour in ghee on low heat. Add warm milk, cardamom powder, and sugar, stirring until smooth and prasad-style velvety.'
+    when 'gum-powder-recipes', 'recipes/gum-powder-recipes'
+      assign handle_prep_time = '20 mins'
+      assign handle_cook_time = '25 mins'
+      assign handle_total_time = '45 mins'
+      assign handle_servings = '12-15 pieces'
+      assign handle_difficulty = 'Intermediate'
+      assign handle_course = 'Winter Superfood / Snack'
+      assign handle_diet = 'Vegetarian / Ayurvedic'
+      assign handle_chef_notes = 'Fry gond crystals on low-to-medium heat only! If ghee is too hot, the outside browns while the inside stays unpuffed and unpleasantly sticky. Low-heat frying expands gond crystals 3–4x into light, crispy puffs.'
+      assign handle_featured_product_handles = 'gum-powder'
+      assign handle_ingredients = '[For Gond Laddoos & Tonics]||½ cup DV Gold Edible Gum (Gond / Gum Powder)||½ cup pure desi cow ghee (for frying)||1 cup whole wheat flour or multi-grain atta||¾ cup organic jaggery (gud) or powdered sugar||¼ cup chopped mixed dry fruits (cashews, almonds, pistachios)||1 tsp DV Gold Dry Ginger Powder (sunth)||1 tsp green cardamom powder'
+      assign handle_instructions = 'Puffing the Gond: Heat pure ghee in a heavy-bottomed kadai on medium-low flame. Add gond in small batches. Fry gently until each crystal puffs up completely into a crisp, popcorn-like sphere. Remove and drain; crush lightly once cool.||Gond Ke Laddoo: In the remaining ghee, roast wheat flour on low heat until golden and nutty. Mix in crushed puffed gond, roasted nuts, dry ginger powder, and melted warm jaggery. While still warm, roll into rich nourishing winter laddoos.||Gond Doodh: Stir 1-2 tsp of puffed crushed gond into warm milk flavored with cardamom and jaggery for a restorative, bone-strengthening nighttime beverage.||Gond Porridge: Stir puffed gond into warm dalia, rolled oats, or rice porridge with nuts and ghee for a comforting winter breakfast.||Gond Katira Cooler: Soak gond katira overnight in cold water until it expands into a translucent jelly. Stir into rose water, nimbu pani, or chilled milk for a natural body-cooling summer beverage.'
+    when 'ganthoda-powder-recipes', 'recipes/ganthoda-powder-recipes'
+      assign handle_prep_time = '5 mins'
+      assign handle_cook_time = '10 mins'
+      assign handle_total_time = '15 mins'
+      assign handle_servings = '2 servings'
+      assign handle_difficulty = 'Easy'
+      assign handle_course = 'Ayurvedic / Winter Tonic'
+      assign handle_diet = 'Vegetarian / Health'
+      assign handle_chef_notes = 'Ganthoda (Pipramul root) has an intense peppery bite. Always start with ¼ tsp per cup and gradually increase to taste. Never boil raw honey — stir in only after turning off the stove.'
+      assign handle_featured_product_handles = 'ganthoda-powder'
+      assign handle_ingredients = '[Ingredients]||1 tsp DV Gold Ganthoda (Pipramul) Powder||2 cups whole dairy or almond milk||1 tbsp organic jaggery (gud) or pure raw honey||¼ tsp cardamom powder||½ tsp pure desi cow ghee||Pinch of DV Gold Dry Ginger Powder'
+      assign handle_instructions = 'Ganthoda Doodh (Night Elixir): Bring 2 cups of milk to a gentle simmer in a saucepan. Whisk in 1 tsp DV Gold Ganthoda Powder, cardamom, and a dollop of pure ghee. Simmer on low for 3 minutes. Turn off the heat, stir in jaggery, and serve warm before bedtime for restorative winter warmth.||Ganthoda-Elaichi Kadha: Warm water or milk with equal parts ganthoda powder and crushed cardamom pods for a gentle, fragrant digestive brew.||Winter Tri-Spice Tonic: Combine ¼ tsp ganthoda powder, ¼ tsp DV Gold ginger powder, and ¼ tsp turmeric in warm water or milk with honey to bolster seasonal immunity.||Ganthoda Ghee Shot: Mix ½ tsp ganthoda powder into 1 tbsp melted warm desi ghee with grated jaggery for a fast, time-honored Gujarati winter health spoonful.'
+    when 'methi-powder-recipes', 'recipes/methi-powder-recipes'
+      assign handle_prep_time = '15 mins'
+      assign handle_cook_time = '30 mins'
+      assign handle_total_time = '45 mins'
+      assign handle_servings = '10-12 pieces'
+      assign handle_difficulty = 'Intermediate'
+      assign handle_course = 'Traditional Wellness / Snack'
+      assign handle_diet = 'Vegetarian / Ayurvedic'
+      assign handle_chef_notes = 'Always lightly roast methi powder in desi ghee before using in sweet recipes like laddoos — gentle heating transforms the bitterness into a warm, nutty, aromatic flavor.'
+      assign handle_featured_product_handles = 'methi-powder'
+      assign handle_ingredients = '[Ingredients]||2 tbsp DV Gold Pure Methi (Fenugreek) Powder||1 cup whole wheat flour (atta)||½ cup pure desi cow ghee||¾ cup organic jaggery (powdered)||2 tbsp puffed gond (edible gum)||1 tsp DV Gold Ginger Powder (sunth)||¼ cup chopped dry fruits (cashews, walnuts)'
+      assign handle_instructions = 'Methi Ke Laddoo: Warm 2 tbsp ghee and briefly roast DV Gold Methi Powder on low flame to mellow its bitterness. In a separate kadai, roast wheat flour in ghee until golden. Combine roasted flour, toasted methi, puffed gond, dry ginger, dry fruits, and warm melted jaggery. Roll into tight nutrient-dense winter laddoos.||Methi Thepla: Add 1 tsp methi powder to whole wheat flour with curd, turmeric, sesame seeds, and chilli powder. Knead softly and roll thin for travel-ready Gujarati theplas.||Methi Paratha: Knead a pinch of methi powder with ajwain and ghee into your paratha dough for a crisp, digestive breakfast bread.||Methi Muthia: Steam savory dumplings made from gram flour (besan), methi powder, ginger-chilli paste, and spices; temper with mustard seeds and sesame.||Methi Dal Tadka: Bloom ½ tsp methi powder with cumin and garlic in hot ghee, then pour over simmering toor or moong dal for an aromatic bitter-sweet balance.'
+    when 'ginger-powder-recipes', 'recipes/ginger-powder-recipes'
+      assign handle_prep_time = '5 mins'
+      assign handle_cook_time = '10 mins'
+      assign handle_total_time = '15 mins'
+      assign handle_servings = '2-4 servings'
+      assign handle_difficulty = 'Easy'
+      assign handle_course = 'Beverage / Home Remedy'
+      assign handle_diet = 'Vegetarian'
+      assign handle_chef_notes = 'Pure dry ginger powder (sunth) is three times more concentrated than fresh ginger root. Start with just ¼ teaspoon per recipe to ensure perfectly balanced warmth.'
+      assign handle_featured_product_handles = 'ginger-powder'
+      assign handle_ingredients = '[Ingredients]||½ tsp DV Gold Sunth (Pure Ginger Powder)||2 cups fresh water or full cream milk||1 tbsp raw honey or jaggery||4-5 fresh tulsi leaves||2 whole black peppercorns (crushed)||1 whole clove (laung)'
+      assign handle_instructions = 'Instant Adrak Chai: Boil water with DV Gold tea and stir in ¼ tsp DV Gold Ginger Powder per cup — gives authentic fresh adrak zest with zero grating or peeling required.||Homemade Kadha: Simmer ginger powder with tulsi leaves, crushed peppercorns, clove, and cinnamon in 2 cups of water until reduced by half. Strain and mix with raw honey for soothing cold relief.||Ginger Spice Cookies: Cream butter and jaggery with ½ tsp ginger powder, cinnamon, and wheat flour. Bake at 180°C for 12 minutes for crunchy winter biscuits.||Warm Ginger Rice: Toss steamed basmati rice in desi ghee with ¼ tsp ginger powder, cumin seeds, and roasted cashew nuts for a comforting fragrant side.||Morning Ginger Honey Shot: Dissolve ¼ tsp ginger powder in 1 tbsp pure honey and a squeeze of fresh lemon juice for an energizing morning digestive boost.'
+    when 'dhana-jeeru-powder-recipes', 'recipes/dhana-jeeru-powder-recipes'
+      assign handle_prep_time = '10 mins'
+      assign handle_cook_time = '15 mins'
+      assign handle_total_time = '25 mins'
+      assign handle_servings = '4 servings'
+      assign handle_difficulty = 'Easy'
+      assign handle_course = 'Everyday Main / Curry'
+      assign handle_diet = 'Vegetarian'
+      assign handle_chef_notes = 'Add dhana jeeru powder midway through cooking rather than at the very end — it needs a minute in warm oil and vegetable moisture to blossom and mellow its earthiness.'
+      assign handle_featured_product_handles = 'dhana-jeeru-powder'
+      assign handle_ingredients = '[Ingredients]||2 tsp DV Gold Dhana Jeeru Powder (Coriander-Cumin Blend)||3 medium potatoes (boiled & cubed or sliced)||1.5 tbsp groundnut oil or ghee||½ tsp mustard seeds (rai)||½ tsp turmeric powder (haldi)||1 tsp Kashmiri red chilli powder||½ tsp hing (asafoetida)||Salt to taste and fresh coriander for garnish'
+      assign handle_instructions = 'Everyday Gujarati Shaak: Heat oil in a pan, add mustard seeds and hing. Add chopped vegetables or boiled potatoes. Sprinkle 2 tsp DV Gold Dhana Jeeru, turmeric, and chilli powder. Toss well and cook covered for 8 minutes.||Crispy Batata Fry: Coat thinly sliced raw potatoes in dhana jeeru powder, rock salt, and chilli powder. Pan-fry in oil until edges turn delightfully crisp and golden.||Masala Khichdi: Stir 1 tsp dhana jeeru into moong dal and rice khichdi with ghee and roasted cumin for an instant wholesome one-pot dinner.||Stuffed Paratha Filling: Mix boiled mashed potatoes with chopped onions, fresh coriander, green chilli, and 1.5 tsp dhana jeeru powder for flavorful paratha stuffing.||Dhana Jeeru Sprinkle: Lightly toast the powder and dust over fresh thepla, fried snacks, or fafda as an aromatic finishing seasoning.'
+    when 'dhana-powder-recipes', 'recipes/dhana-powder-recipes'
+      assign handle_prep_time = '10 mins'
+      assign handle_cook_time = '15 mins'
+      assign handle_total_time = '25 mins'
+      assign handle_servings = '4 servings'
+      assign handle_difficulty = 'Easy'
+      assign handle_course = 'Side Dish / Curry'
+      assign handle_diet = 'Vegetarian'
+      assign handle_chef_notes = 'Always bloom pure coriander powder in warm ghee or oil for 20 seconds before adding liquids — raw dhana powder can taste dusty if not gently heated in fat.'
+      assign handle_featured_product_handles = 'dhana-powder'
+      assign handle_ingredients = '[Ingredients]||2 tsp DV Gold Pure Dhana (Coriander) Powder||3 potatoes (boiled & diced)||1 tbsp pure desi ghee||1 tsp cumin seeds (jeera)||1 tsp amchur (dry mango powder)||1 green chilli (chopped)||Salt to taste and fresh coriander'
+      assign handle_instructions = 'Dhana Aloo Sabzi: Melt ghee, add cumin seeds and green chilli. Add boiled potato cubes and toss with 2 tsp DV Gold Dhana Powder, amchur, and salt. Saute until nicely crusted.||Fresh Coriander Chutney: Blend fresh green coriander, green chillies, lemon juice, and 1 tsp dhana powder for rich body and intense fresh herb flavor.||Vegetable Marinade: Whisk hung curd with dhana powder, kasuri methi, ginger-garlic paste, and lemon to marinate paneer or vegetables before grilling.||Dhana Tadka for Dal: Bloom 1 tsp dhana powder in hot ghee with cumin and hing for 20 seconds, pouring immediately over hot simmered yellow dal.||Spiced Buttermilk (Chaas): Whisk fresh chilled yogurt and water with roasted dhana powder, black salt, and mint leaves for a refreshing digestive drink.'
+    when 'turmeric-powder-recipes', 'recipes/turmeric-powder-recipes'
+      assign handle_prep_time = '5 mins'
+      assign handle_cook_time = '8 mins'
+      assign handle_total_time = '13 mins'
+      assign handle_servings = '2 servings'
+      assign handle_difficulty = 'Easy'
+      assign handle_course = 'Healthy Beverage / Tonic'
+      assign handle_diet = 'Vegetarian'
+      assign handle_chef_notes = 'Always pair turmeric with a pinch of freshly ground black pepper and healthy fat (ghee or milk) — the piperine in pepper boosts curcumin bioavailability by up to 2000%.'
+      assign handle_featured_product_handles = 'turmeric-powder'
+      assign handle_ingredients = '[Ingredients]||½ tsp DV Gold Maharashtra Pure Turmeric (Haldi) Powder||2 cups whole milk (or almond / oat milk)||1 pinch freshly ground black pepper (essential for absorption)||1 tsp pure honey or organic jaggery||¼ tsp cinnamon powder or 1 crushed green cardamom||½ tsp pure cow ghee (optional, for maximum nutrient delivery)'
+      assign handle_instructions = 'Haldi Doodh (Golden Milk): Bring 2 cups of milk to a gentle simmer in a pot. Whisk in ½ tsp DV Gold Turmeric, a pinch of freshly cracked black pepper, and cardamom. Simmer for 3 minutes. Turn off heat, add honey or jaggery, and sip warm.||Fragrant Turmeric Rice: Stir ½ tsp turmeric into cooking basmati rice with whole spices (clove, bay leaf, ghee) for a vibrant golden restaurant-style pulao.||Golden Dal Tadka: Heat ghee, temper with cumin, garlic, and ½ tsp turmeric, pouring immediately over cooked toor or masoor dal.||Turmeric Wellness Tea: Simmer ¼ tsp turmeric powder, sliced ginger, and lemon in 2 cups of water for 5 minutes. Strain and sweeten with honey.||Golden Vegetable Soup: Blend roasted butternut squash or carrots with vegetable broth, turmeric powder, and fresh ginger for a nourishing golden soup.'
+    when 'dry-fruit-combination-recipes', 'recipes/dry-fruit-combination-recipes'
+      assign handle_prep_time = '15 mins'
+      assign handle_cook_time = '0 mins'
+      assign handle_total_time = '15 mins'
+      assign handle_servings = '6 servings'
+      assign handle_difficulty = 'Easy'
+      assign handle_course = 'Energy Snack / Breakfast'
+      assign handle_diet = 'Vegan / Gluten-Free'
+      assign handle_chef_notes = 'All five DV Gold dry fruits are 100% natural, preservative-free and FSSAI certified. Keep them sealed in an airtight container in a cool spot to preserve their crisp crunch and sweetness.'
+      assign handle_featured_product_handles = 'cashew-nuts,walnuts-kernel,pistachios,black-raisins,anjeer-figs'
+      assign handle_ingredients = '[The Five Dry Fruits]||½ cup DV Gold Whole Cashew Nuts||½ cup DV Gold Walnut Kernels||½ cup DV Gold Shelled Pistachios||½ cup DV Gold Sweet Black Raisins||½ cup DV Gold Dried Figs (Anjeer - chopped)||2 tbsp pumpkin or sunflower seeds||Pinch of sea salt and cinnamon powder'
+      assign handle_instructions = 'Signature Five-Nut Trail Mix: In a large bowl, combine equal parts DV Gold cashews, walnuts, pistachios, black raisins, and chopped anjeer with toasted pumpkin seeds and a touch of cinnamon. Store in an airtight jar for sustained clean energy.||No-Cook Energy Balls: Blend chopped anjeer and black raisins with cashews, walnuts, and pistachios in a food processor until a sticky dough forms. Roll into bite-sized balls and dust with desiccated coconut. Chill before serving.||High-Protein Breakfast Bowl: Layer thick Greek yogurt with fresh fruit slices, top with chopped anjeer, black raisins, crushed walnuts, cashews, and whole pistachios. Drizzle with raw honey.||Spiced Crunchy Party Mix: Lightly dry-roast cashews, walnuts, and pistachios in a skillet. Toss with black raisins, diced anjeer, chaat masala, and a dash of Himalayan pink salt.||Homemade Dry Fruit Snack Bars: Pulse the five dry fruits with rolled oats and honey. Press firmly into a lined square tin, chill for 1 hour, and slice into pocket-sized energy bars.'
+    when 'anjeer-fig-recipes', 'recipes/anjeer-fig-recipes'
+      assign handle_prep_time = '15 mins (+15 mins soak)'
+      assign handle_cook_time = '0 mins'
+      assign handle_total_time = '30 mins'
+      assign handle_servings = '4 servings'
+      assign handle_difficulty = 'Easy'
+      assign handle_course = 'Healthy Snack / Dessert'
+      assign handle_diet = 'Vegetarian / Vegan'
+      assign handle_chef_notes = 'Soak dried anjeer in warm milk or water for 15 minutes before blending — it rehydrates the fruit, making it effortlessly smooth while unlocking its natural caramel sweetness.'
+      assign handle_featured_product_handles = 'anjeer-figs'
+      assign handle_ingredients = '[Ingredients]||8-10 DV Gold Premium Anjeer (Dried Figs)||2 tbsp unsweetened almond or peanut butter||2 tbsp crushed DV Gold walnuts and pistachios||1 cup warm milk or water (for soaking)||¼ tsp cardamom powder||1 tbsp raw honey (optional)'
+      assign handle_instructions = 'Stuffed Gourmet Anjeer: Gently slit plump DV Gold dried figs along the side. Fill with creamy almond or peanut butter and press crushed walnuts and pistachios inside for a luxurious healthy dessert bite.||Anjeer Energy Laddoos: Soak figs in warm water for 15 minutes, drain, and blend with roasted walnuts, cashews, and cardamom. Roll into bite-sized guilt-free sweets.||Creamy Anjeer Milkshake: Blend 4 soaked figs with 1 cup cold milk, 1 ripe banana, and a pinch of cinnamon into a velvety, fiber-rich shake.||Anjeer Overnight Oats: Layer rolled oats with chia seeds, milk, and chopped soaked anjeer. Leave in the fridge overnight for an effortless morning breakfast.||Anjeer & Nut Slices: Press chopped soaked figs firmly with chopped pistachios and walnuts into a cylinder shape; chill and slice into discs.||Tangy Anjeer Chutney: Simmer chopped figs with grated ginger, chilli flakes, cumin, and a splash of lemon juice until thick and jammy.||Anjeer Dessert Toast: Spread hung curd or ricotta on toasted sourdough, arrange sliced anjeer, and top with crushed pistachios and honey.'
+    when 'pistachio-recipes', 'recipes/pistachio-recipes'
+      assign handle_prep_time = '10 mins'
+      assign handle_cook_time = '5 mins'
+      assign handle_total_time = '15 mins'
+      assign handle_servings = '4 servings'
+      assign handle_difficulty = 'Easy'
+      assign handle_course = 'Snack / Garnish'
+      assign handle_diet = 'Vegetarian / Gluten-Free'
+      assign handle_chef_notes = 'When coating paneer or creating salad toppings, crush pistachios coarsely with a mortar and pestle rather than grinding into powder — preserving the crunch is everything!'
+      assign handle_featured_product_handles = 'pistachios'
+      assign handle_ingredients = '[Ingredients]||1.5 cups DV Gold Shelled Green Pistachios||1 tsp chaat masala||½ tsp Kashmiri red chilli powder||¼ tsp roasted cumin powder||¼ tsp black salt (kala namak)||1 tsp pure cow ghee or fresh lemon juice'
+      assign handle_instructions = 'Spiced Masala Pistachios: Heat 1 tsp ghee in a pan on medium-low. Add DV Gold pistachios and roast gently for 3-4 minutes until aromatic. Toss with chaat masala, chilli powder, cumin, and black salt.||Pistachio Greek Yogurt Bowl: Spoon chilled Greek yogurt into a bowl, sprinkle generously with coarsely chopped pistachios, fresh berries, and raw clover honey.||Pistachio Overnight Chia Oats: Mix rolled oats, milk, chia seeds, and chopped pistachios; chill overnight and top with dates in the morning.||No-Bake Pistachio Energy Bites: Blend pitted dates, pistachios, coconut flakes, and a hint of cardamom; shape into green festive energy balls.||Pistachio Herb Pesto: Blend raw pistachios with fresh basil or mint, garlic cloves, extra virgin olive oil, and lemon juice for a rich Mediterranean sauce.||Pistachio-Crusted Paneer: Coat paneer slices with crushed pistachios and herbs, then sear gently on a tawa until golden and crispy.||Pistachio Kesar Smoothie: Blend milk, 1 tbsp soaked pistachios, saffron strands, and cardamom for a royal, refreshing afternoon cooler.'
+    when 'black-raisin-recipes', 'recipes/black-raisin-recipes'
+      assign handle_prep_time = '10 mins'
+      assign handle_cook_time = '5 mins'
+      assign handle_total_time = '15 mins'
+      assign handle_servings = '4 servings'
+      assign handle_difficulty = 'Easy'
+      assign handle_course = 'Healthy Snack / Breakfast'
+      assign handle_diet = 'Vegan / Gluten-Free'
+      assign handle_chef_notes = 'Soak black raisins in warm water for 10 minutes before folding into yogurt bowls or chutneys — they plump up double in size, turning extra juicy and soft.'
+      assign handle_featured_product_handles = 'black-raisins'
+      assign handle_ingredients = '[Ingredients]||1 cup DV Gold Sweet Black Raisins (seedless)||½ cup rolled oats||1.5 cups whole milk or oat milk||½ tsp ground cinnamon||2 tbsp crushed almonds and walnuts||1 tbsp pumpkin seeds||1 tsp raw honey (optional)'
+      assign handle_instructions = 'Raisin & Nut Trail Mix: Toss DV Gold Black Raisins with roasted cashews, walnuts, pumpkin seeds, and pistachios for a satisfying midday iron-rich energy bowl.||Cinnamon Raisin Warm Oats: Cook rolled oats in warm milk with black raisins and cinnamon. The plump raisins melt into natural sweetener pockets as the oatmeal thickens.||Raisin Peanut Chikki: Melt jaggery in a pan until hard-crack stage, stir in roasted peanuts and black raisins, pour onto a greased board, and roll flat into chewy brittle.||Sweet Yogurt Parfait: Combine hung curd, plump soaked black raisins, sliced bananas, and a dash of nutmeg for a gut-healthy dessert.||Royal Raisin Pulao: Saute black raisins and cashews in ghee with cumin, cardamom, and bay leaf; fold through cooked basmati rice for festive aroma.||Sweet-Tangy Raisin Chutney: Simmer black raisins with tamarind pulp, grated ginger, cumin, and a pinch of black salt; blend into a glossy dipping chutney for chaats and samosas.'
+    when 'walnut-recipes', 'recipes/walnut-recipes'
+      assign handle_prep_time = '10 mins'
+      assign handle_cook_time = '10 mins'
+      assign handle_total_time = '20 mins'
+      assign handle_servings = '4 servings'
+      assign handle_difficulty = 'Easy'
+      assign handle_course = 'Gourmet Snack / Salad'
+      assign handle_diet = 'Vegetarian / Vegan'
+      assign handle_chef_notes = 'Always lightly toast walnut kernels in a dry skillet for 2-3 minutes before tossing into chutneys or salads — toasting removes raw astringency and unlocks intense buttery aroma.'
+      assign handle_featured_product_handles = 'walnuts-kernel,walnuts-inshell'
+      assign handle_ingredients = '[Ingredients]||1.5 cups DV Gold Walnut Kernels||½ tsp Kashmiri chilli powder||½ tsp freshly cracked black pepper||½ tsp roasted cumin powder||1 tbsp pure maple syrup or raw honey||1 tsp olive oil or melted ghee||Flaky sea salt to taste'
+      assign handle_instructions = 'Spiced Maple-Glazed Walnuts: Heat olive oil and maple syrup in a skillet. Add DV Gold walnut halves and coat evenly on medium heat for 3-4 minutes. Dust with chilli powder, cumin, and flaky salt; spread on parchment paper to cool.||Walnut & Banana Gourmet Toast: Toast hearty sourdough bread, spread generously with almond butter, top with sliced banana, crushed walnuts, and a drizzle of honey.||Creamy Walnut Yogurt Bowl: Top cold Greek yogurt with toasted walnuts, fresh pomegranate seeds, and a pinch of cinnamon.||Green Walnut Chutney: Blend walnuts with fresh coriander, green chillies, garlic, lemon juice, and salt for a velvety rich green chutney.||Walnut Basil Pesto: Substitute walnuts in classic pesto with fresh basil leaves, garlic, olive oil, and parmesan — walnuts add an earthy, rich buttery body.||Crisp Apple & Walnut Salad: Toss crisp sliced apples, toasted walnuts, salad greens, and crumbled paneer/feta in a light honey-mustard vinaigrette.'
+    when 'cashew-nut-recipes', 'recipes/cashew-nut-recipes'
+      assign handle_prep_time = '5 mins'
+      assign handle_cook_time = '10 mins'
+      assign handle_total_time = '15 mins'
+      assign handle_servings = '4 servings'
+      assign handle_difficulty = 'Easy'
+      assign handle_course = 'Snack / Party Appetizer'
+      assign handle_diet = 'Vegetarian / Gluten-Free'
+      assign handle_chef_notes = 'Always roast cashews on a low flame! Cashews have a high natural sugar content and burn rapidly on high heat. Roasting on low heat ensures the cashew stays buttery and creamy inside while crisped outside.'
+      assign handle_featured_product_handles = 'cashew-nuts'
+      assign handle_ingredients = '[Ingredients]||1.5 cups DV Gold Whole Premium Cashew Nuts||1 tbsp pure desi ghee||½ tsp freshly ground black pepper||½ tsp Kashmiri red chilli powder||½ tsp roasted cumin powder||½ tsp chaat masala||Rock salt (sendha namak) to taste'
+      assign handle_instructions = 'Desi Ghee Masala Roasted Cashews: Heat 1 tbsp pure cow ghee in a heavy pan. Add whole DV Gold Cashews and roast on low flame, stirring continuously for 5–7 minutes until golden and crisp. Immediately toss with black pepper, chilli, cumin, chaat masala, and rock salt.||Honey-Cinnamon Glazed Cashews: Roast cashews lightly in butter, drizzle with warm honey, and sprinkle ground cinnamon and sea salt for a sweet-savory party snack.||Tangy Cashew Chaat: Toss roasted cashews with finely diced onions, tomatoes, green chillies, fresh coriander, lemon juice, and crunchy sev.||Cashew Date Energy Bites: Pulse cashews with pitted dates and desiccated coconut; shape into bite-sized balls for convenient grab-and-go fuel.||Royal Shahi Cashew Curry Paste: Soak ½ cup cashews in hot water for 15 minutes, then blend with a little water into an ultra-smooth velvety paste to enrich shahi paneer and vegetable curries.||Crunchy Cashew Granola: Toss whole and chopped cashews with rolled oats, pumpkin seeds, honey, and vanilla; bake until golden and crunchy.'
+  endcase
+
+  # Metafield lookups (take precedence if defined in Shopify Admin)
+  assign prep_time = recipe.metafields.custom.prep_time.value | default: recipe.metafields.custom.prep_time | default: handle_prep_time
+  assign cook_time = recipe.metafields.custom.cook_time.value | default: recipe.metafields.custom.cook_time | default: handle_cook_time
+  assign total_time = recipe.metafields.custom.total_time.value | default: recipe.metafields.custom.total_time | default: handle_total_time
+  assign servings = recipe.metafields.custom.servings.value | default: recipe.metafields.custom.servings | default: handle_servings
+  assign difficulty = recipe.metafields.custom.difficulty.value | default: recipe.metafields.custom.difficulty | default: handle_difficulty
+  assign course = recipe.metafields.custom.course.value | default: recipe.metafields.custom.course | default: handle_course
+  assign diet = recipe.metafields.custom.diet.value | default: recipe.metafields.custom.diet | default: handle_diet
+  assign chef_notes = recipe.metafields.custom.chef_notes.value | default: recipe.metafields.custom.chef_notes | default: handle_chef_notes
+
+  # Cooked dish gallery metafield (only render if actual images are assigned)
+  assign cooked_dish_gallery = recipe.metafields.custom.cooked_dish_images.value | default: recipe.metafields.custom.recipe_gallery.value
+
+  # Ingredients metafield
+  assign ingredients_meta = recipe.metafields.custom.ingredients.value | default: recipe.metafields.custom.ingredients
+
+  # Instructions metafield
+  assign instructions_meta = recipe.metafields.custom.instructions.value | default: recipe.metafields.custom.instructions | default: recipe.metafields.custom.method.value
+
+  # Featured products metafield
+  assign featured_products = recipe.metafields.custom.featured_products.value | default: recipe.metafields.custom.products.value
+%}
+
+<div class="section-background"></div>
+
+<article
+  class="section section--page-width recipe-article spacing-style"
+  style="{% render 'spacing-style', settings: section.settings %}"
+  id="RecipeArticle-{{ section.id }}"
+>
+  <div class="recipe-article__container">
+    {% # Header & Navigation %}
+    <nav class="recipe-article__nav" aria-label="Recipe Navigation">
+      <a class="recipe-article__back" href="{{ current_blog.url | default: '/blogs/recipes' }}">
+        <svg class="recipe-article__back-icon" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>{{ section.settings.back_label | default: 'Back to Recipes' }}</span>
+      </a>
+      {% if course != blank or diet != blank %}
+        <div class="recipe-article__tags">
+          {% if course != blank %}
+            <span class="recipe-article__tag">{{ course | escape }}</span>
+          {% endif %}
+          {% if diet != blank %}
+            <span class="recipe-article__tag recipe-article__tag--diet">{{ diet | escape }}</span>
+          {% endif %}
+        </div>
+      {% endif %}
+    </nav>
+
+    {% # Recipe Title & Description %}
+    <header class="recipe-article__header">
+      <h1 class="recipe-article__title">{{ recipe.title | escape }}</h1>
+
+      {% if recipe.excerpt != blank %}
+        <p class="recipe-article__excerpt">{{ recipe.excerpt | strip_html }}</p>
+      {% endif %}
+
+      <div class="recipe-article__byline">
+        {% if section.settings.show_date and recipe.published_at != blank %}
+          <span class="recipe-article__date">
+            {{ recipe.published_at | time_tag: format: 'date' }}
+          </span>
+        {% endif %}
+        {% if section.settings.show_author and recipe.author != blank %}
+          <span class="recipe-article__author">By {{ recipe.author | escape }}</span>
+        {% endif %}
+      </div>
+    </header>
+
+    {% # Recipe Quick Facts Badges Bar %}
+    {% if prep_time != blank or cook_time != blank or servings != blank or difficulty != blank %}
+      <div class="recipe-article__meta-bar" aria-label="Recipe quick facts">
+        <div class="recipe-article__meta-grid">
+          {% if prep_time != blank %}
+            <div class="recipe-article__meta-item">
+              <span class="recipe-article__meta-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                </svg>
+              </span>
+              <div class="recipe-article__meta-content">
+                <span class="recipe-article__meta-label">Prep Time</span>
+                <span class="recipe-article__meta-value">{{ prep_time | escape }}</span>
+              </div>
+            </div>
+          {% endif %}
+
+          {% if cook_time != blank %}
+            <div class="recipe-article__meta-item">
+              <span class="recipe-article__meta-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>
+                </svg>
+              </span>
+              <div class="recipe-article__meta-content">
+                <span class="recipe-article__meta-label">Cook Time</span>
+                <span class="recipe-article__meta-value">{{ cook_time | escape }}</span>
+              </div>
+            </div>
+          {% endif %}
+
+          {% if servings != blank %}
+            <div class="recipe-article__meta-item">
+              <span class="recipe-article__meta-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/>
+                </svg>
+              </span>
+              <div class="recipe-article__meta-content">
+                <span class="recipe-article__meta-label">Servings</span>
+                <span class="recipe-article__meta-value">{{ servings | escape }}</span>
+              </div>
+            </div>
+          {% endif %}
+
+          {% if difficulty != blank %}
+            <div class="recipe-article__meta-item">
+              <span class="recipe-article__meta-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M6 13.87A4 4 0 0 1 7.41 6a5.11 5.11 0 0 1 1.05-1.54 5 5 0 0 1 7.08 0A5.11 5.11 0 0 1 16.59 6 4 4 0 0 1 18 13.87V21H6Z"/><line x1="6" y1="17" x2="18" y2="17"/>
+                </svg>
+              </span>
+              <div class="recipe-article__meta-content">
+                <span class="recipe-article__meta-label">Difficulty</span>
+                <span class="recipe-article__meta-value">{{ difficulty | escape }}</span>
+              </div>
+            </div>
+          {% endif %}
+        </div>
+
+        {% # Quick Actions: Jump to Recipe & Click to Print %}
+        <div class="recipe-article__actions">
+          <a class="recipe-article__action-btn recipe-article__action-btn--jump" href="#RecipeMethod-{{ section.id }}">
+            <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <path d="M10 4V16M10 16L5 11M10 16L15 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>Jump to Recipe</span>
+          </a>
+          <button
+            type="button"
+            class="recipe-article__action-btn recipe-article__action-btn--print"
+            onclick="window.print()"
+            aria-label="Print this recipe"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/>
+            </svg>
+            <span>Print Recipe</span>
+          </button>
+        </div>
+      </div>
+    {% endif %}
+
+    {% # Recipe Banner Image (only if image uploaded on article) %}
+    {% if recipe.image != blank %}
+      <div class="recipe-article__banner-wrapper">
+        {{
+          recipe.image
+          | image_url: width: 1600
+          | image_tag:
+            class: 'recipe-article__banner',
+            widths: '400, 600, 800, 1000, 1200, 1600',
+            sizes: '(min-width: 1440px) 1360px, (min-width: 750px) calc(100vw - 80px), calc(100vw - 32px)',
+            loading: 'eager',
+            alt: recipe.image.alt | default: recipe.title
+        }}
+      </div>
+    {% endif %}
+
+    {% # Cooked Dish Gallery (only if actual images are assigned) %}
+    {% if cooked_dish_gallery != blank and cooked_dish_gallery.size > 0 %}
+      <div class="recipe-article__gallery" aria-label="Cooked Dish Gallery">
+        <div class="recipe-article__gallery-header">
+          <h2 class="recipe-article__gallery-title">Gallery of the Cooked Dish</h2>
+          <span class="recipe-article__gallery-count">{{ cooked_dish_gallery.size }} photos</span>
+        </div>
+        <div class="recipe-article__gallery-grid">
+          {% for img in cooked_dish_gallery %}
+            {% liquid
+              assign gallery_img = img.preview_image | default: img
+              assign gallery_alt = img.alt | default: recipe.title | append: ' - Dish view ' | append: forloop.index
+            %}
+            <figure class="recipe-article__gallery-item">
+              {{
+                gallery_img
+                | image_url: width: 800
+                | image_tag:
+                  class: 'recipe-article__gallery-img',
+                  widths: '240, 360, 480, 640, 800',
+                  sizes: '(min-width: 990px) 25vw, (min-width: 750px) 33vw, 50vw',
+                  loading: 'lazy',
+                  alt: gallery_alt
+              }}
+            </figure>
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
+
+    {% # Main Recipe Content: Split 2-Column Grid %}
+    <div class="recipe-article__body" id="RecipeMethod-{{ section.id }}">
+      {% # Left Column: Ingredients Checklist %}
+      <aside class="recipe-article__ingredients-card" aria-label="Ingredients">
+        <div class="recipe-article__card-header">
+          <div class="recipe-article__card-heading-group">
+            <h2 class="recipe-article__card-title">Ingredients</h2>
+            {% if servings != blank %}
+              <span class="recipe-article__servings-badge">For {{ servings | escape }}</span>
+            {% endif %}
+          </div>
+          <span class="recipe-article__checklist-tip" aria-hidden="true">Click items to check off</span>
+        </div>
+
+        <ul class="recipe-article__ingredients-list" role="list">
+          {% if ingredients_meta != blank %}
+            {% if ingredients_meta.list? %}
+              {% for item in ingredients_meta %}
+                <li class="recipe-article__ingredient-item">
+                  <label class="recipe-article__ingredient-label">
+                    <input type="checkbox" class="recipe-article__checkbox">
+                    <span class="recipe-article__checkbox-custom" aria-hidden="true"></span>
+                    <span class="recipe-article__ingredient-text">{{ item | escape }}</span>
+                  </label>
+                </li>
+              {% endfor %}
+            {% else %}
+              {% assign ingredient_lines = ingredients_meta | newline_to_br | split: '<br />' %}
+              {% for line in ingredient_lines %}
+                {% assign cleaned_line = line | strip %}
+                {% if cleaned_line != blank %}
+                  {% if cleaned_line contains '---' or cleaned_line contains '[' %}
+                    <li class="recipe-article__ingredient-subheading">
+                      <strong>{{ cleaned_line | remove: '---' | remove: '[' | remove: ']' | strip }}</strong>
+                    </li>
+                  {% else %}
+                    <li class="recipe-article__ingredient-item">
+                      <label class="recipe-article__ingredient-label">
+                        <input type="checkbox" class="recipe-article__checkbox">
+                        <span class="recipe-article__checkbox-custom" aria-hidden="true"></span>
+                        <span class="recipe-article__ingredient-text">{{ cleaned_line | escape }}</span>
+                      </label>
+                    </li>
+                  {% endif %}
+                {% endif %}
+              {% endfor %}
+            {% endif %}
+          {% elsif handle_ingredients != blank %}
+            {% assign ing_items = handle_ingredients | split: '||' %}
+            {% for item in ing_items %}
+              {% assign cleaned_item = item | strip %}
+              {% if cleaned_item != blank %}
+                {% if cleaned_item contains '[' and cleaned_item contains ']' %}
+                  <li class="recipe-article__ingredient-subheading">
+                    <strong>{{ cleaned_item | remove: '[' | remove: ']' | strip }}</strong>
+                  </li>
+                {% else %}
+                  <li class="recipe-article__ingredient-item">
+                    <label class="recipe-article__ingredient-label">
+                      <input type="checkbox" class="recipe-article__checkbox">
+                      <span class="recipe-article__checkbox-custom" aria-hidden="true"></span>
+                      <span class="recipe-article__ingredient-text">{{ cleaned_item | escape }}</span>
+                    </label>
+                  </li>
+                {% endif %}
+              {% endif %}
+            {% endfor %}
+          {% else %}
+            <li class="recipe-article__ingredient-item">
+              <label class="recipe-article__ingredient-label">
+                <input type="checkbox" class="recipe-article__checkbox">
+                <span class="recipe-article__checkbox-custom" aria-hidden="true"></span>
+                <span class="recipe-article__ingredient-text">Fresh ingredients per recipe instructions below</span>
+              </label>
+            </li>
+          {% endif %}
+        </ul>
+      </aside>
+
+      {% # Right Column: Step-by-Step Method / Instructions %}
+      <section class="recipe-article__method-card" aria-label="Preparation Method">
+        <h2 class="recipe-article__card-title">Preparation Method</h2>
+
+        <div class="recipe-article__method-steps">
+          {% if instructions_meta != blank %}
+            {% if instructions_meta.list? %}
+              <ol class="recipe-article__steps-list">
+                {% for step in instructions_meta %}
+                  <li class="recipe-article__step-item">
+                    <span class="recipe-article__step-number" aria-hidden="true">{{ forloop.index }}</span>
+                    <div class="recipe-article__step-text">
+                      <p>{{ step | escape | newline_to_br }}</p>
+                    </div>
+                  </li>
+                {% endfor %}
+              </ol>
+            {% else %}
+              {% assign step_lines = instructions_meta | newline_to_br | split: '<br />' %}
+              <ol class="recipe-article__steps-list">
+                {% assign step_idx = 0 %}
+                {% for line in step_lines %}
+                  {% assign cleaned_step = line | strip %}
+                  {% if cleaned_step != blank %}
+                    {% assign step_idx = step_idx | plus: 1 %}
+                    <li class="recipe-article__step-item">
+                      <span class="recipe-article__step-number" aria-hidden="true">{{ step_idx }}</span>
+                      <div class="recipe-article__step-text">
+                        <p>{{ cleaned_step | escape }}</p>
+                      </div>
+                    </li>
+                  {% endif %}
+                {% endfor %}
+              </ol>
+            {% endif %}
+          {% elsif handle_instructions != blank %}
+            <ol class="recipe-article__steps-list">
+              {% assign step_items = handle_instructions | split: '||' %}
+              {% for step in step_items %}
+                {% assign cleaned_step = step | strip %}
+                {% if cleaned_step != blank %}
+                  <li class="recipe-article__step-item">
+                    <span class="recipe-article__step-number" aria-hidden="true">{{ forloop.index }}</span>
+                    <div class="recipe-article__step-text">
+                      <p>{{ cleaned_step | escape }}</p>
+                    </div>
+                  </li>
+                {% endif %}
+              {% endfor %}
+            </ol>
+          {% else %}
+            {% # Render standard article content with styled numbered steps %}
+            <div class="recipe-article__content-rte rte">
+              {{ recipe.content }}
+            </div>
+          {% endif %}
+        </div>
+
+        {% # Chef's Tips & Notes Box %}
+        {% if chef_notes != blank %}
+          <div class="recipe-article__chef-notes">
+            <div class="recipe-article__notes-header">
+              <svg class="recipe-article__notes-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/>
+              </svg>
+              <h3 class="recipe-article__notes-title">Chef's Secret Tips</h3>
+            </div>
+            <div class="recipe-article__notes-body">
+              <p>{{ chef_notes | escape | newline_to_br }}</p>
+            </div>
+          </div>
+        {% endif %}
+      </section>
+    </div>
+
+    {% # Featured Products: Shop Genuine DV Gold Ingredients %}
+    {% liquid
+      # Products selected from metafield product list type: custom.featured_products
+      assign recipe_products = recipe.metafields.custom.featured_products.value | default: recipe.metafields.custom.recipe_products.value
+
+      # Fallback to handle defaults if metafield not yet populated
+      assign fallback_handles = ''
+      if recipe_products == blank or recipe_products.size == 0
+        if handle_featured_product_handles != blank
+          assign fallback_handles = handle_featured_product_handles | split: ','
+        endif
+      endif
+    %}
+
+    {% if recipe_products != blank or fallback_handles != blank %}
+      <section class="recipe-article__products" aria-label="Shop Genuine DV Gold Ingredients">
+        <header class="recipe-article__products-header">
+          <h2 class="recipe-article__products-title">{{ section.settings.products_heading | default: 'Shop Genuine DV Gold Ingredients' }}</h2>
+          <p class="recipe-article__products-subtitle">Get the authentic taste with pure, preservative-free DV Gold products.</p>
+        </header>
+
+        <ul class="recipe-article__products-grid" role="list">
+          {% if recipe_products != blank and recipe_products.size > 0 %}
+            {% for prod in recipe_products limit: 5 %}
+              {% capture card_children %}
+                <div
+                  ref="cardGallery"
+                  class="card-gallery spacing-style border-style card-gallery--badge-top-right"
+                  style="--gallery-aspect-ratio: 1;"
+                  data-product-id="{{ prod.id }}"
+                  data-image-ratio="adapt"
+                >
+                  <a
+                    class="contents"
+                    ref="cardGalleryLink"
+                    href="{{ prod.url }}"
+                    aria-label="{{ prod.title | escape }}"
+                  >
+                    <div
+                      class="product-media-container media-fit product-media-container--image"
+                      style="--product-media-fit: cover;"
+                    >
+                      <div class="product-media" style="--ratio: 1">
+                        {% if prod.featured_media %}
+                          {{
+                            prod.featured_media.preview_image
+                            | image_url: width: 800
+                            | image_tag:
+                              class: 'product-media__image',
+                              widths: '240, 352, 500, 800',
+                              sizes: '(min-width: 1200px) 20vw, (min-width: 750px) 33vw, 50vw',
+                              loading: 'lazy',
+                              alt: prod.title
+                          }}
+                        {% else %}
+                          {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                        {% endif %}
+                      </div>
+                    </div>
+                  </a>
+
+                  {% if prod.available == false %}
+                    <div
+                      class="product-badges product-badges--top-right"
+                      style="--badge-border-radius: 100px; --badge-font-family: var(--font-body--family); --badge-font-weight: var(--font-body--weight); --badge-text-transform: none;"
+                    >
+                      <div class="product-badges__badge product-badges__badge--rectangle color-custom-badge-sold-out">
+                        {{ 'content.product_badge_sold_out' | t | default: 'Sold out' }}
+                      </div>
+                    </div>
+                  {% elsif prod.compare_at_price > prod.price %}
+                    <div
+                      class="product-badges product-badges--top-right"
+                      style="--badge-border-radius: 100px; --badge-font-family: var(--font-body--family); --badge-font-weight: var(--font-body--weight); --badge-text-transform: none;"
+                    >
+                      <div class="product-badges__badge product-badges__badge--rectangle color-custom-badge-sale">
+                        {{ 'content.product_badge_sale' | t | default: 'Sale' }}
+                      </div>
+                    </div>
+                  {% endif %}
+                </div>
+
+                <div class="product-grid-view-zoom-out--details">
+                  <h3 class="h4">{{ prod.title | escape }}</h3>
+                </div>
+
+                <a
+                  class="contents user-select-text"
+                  ref="productTitleLink"
+                  href="{{ prod.url }}"
+                >
+                  <div
+                    class="spacing-style text-block paragraph text-block--align-left rte"
+                    style="margin-inline: var(--padding-lg); --padding-block-start: 4px; --padding-block-end: 0px; --padding-inline-start: 0px; --padding-inline-end: 0px; --width: 100%; --max-width: var(--max-width--body-normal); --text-align: left;"
+                  >
+                    <p role="heading" aria-level="3" style="font-family: var(--font-body--family); font-weight: 600; font-size: var(--font-size--base); color: var(--color-foreground); margin: 0; line-height: 1.3;">
+                      {{ prod.title | escape }}
+                    </p>
+                  </div>
+                </a>
+
+                <product-price
+                  class="text-block text-block--align-left text-left h6 spacing-style"
+                  data-product-id="{{ prod.id }}"
+                  style="--padding-block-start: 0px; --padding-block-end: 0px; --padding-inline-start: 0px; --padding-inline-end: 0px; --width: 100%;"
+                >
+                  {% render 'price', product_resource: prod, show_sale_price_first: true %}
+                </product-price>
+              {% endcapture %}
+
+              <li class="product-grid__item" data-product-id="{{ prod.id }}">
+                {% render 'product-card',
+                  product: prod,
+                  children: card_children,
+                  product_card_gap: 4,
+                  product_view_context: 'collection'
+                %}
+              </li>
+            {% endfor %}
+          {% elsif fallback_handles != blank %}
+            {% for prod_handle in fallback_handles limit: 5 %}
+              {% assign prod = all_products[prod_handle] %}
+              {% if prod != blank and prod.title != blank %}
+                {% capture card_children %}
+                  <div
+                    ref="cardGallery"
+                    class="card-gallery spacing-style border-style card-gallery--badge-top-right"
+                    style="--gallery-aspect-ratio: 1;"
+                    data-product-id="{{ prod.id }}"
+                    data-image-ratio="adapt"
+                  >
+                    <a
+                      class="contents"
+                      ref="cardGalleryLink"
+                      href="{{ prod.url }}"
+                      aria-label="{{ prod.title | escape }}"
+                    >
+                      <div
+                        class="product-media-container media-fit product-media-container--image"
+                        style="--product-media-fit: cover;"
+                      >
+                        <div class="product-media" style="--ratio: 1">
+                          {% if prod.featured_media %}
+                            {{
+                              prod.featured_media.preview_image
+                              | image_url: width: 800
+                              | image_tag:
+                                class: 'product-media__image',
+                                widths: '240, 352, 500, 800',
+                                sizes: '(min-width: 1200px) 20vw, (min-width: 750px) 33vw, 50vw',
+                                loading: 'lazy',
+                                alt: prod.title
+                            }}
+                          {% else %}
+                            {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                          {% endif %}
+                        </div>
+                      </div>
+                    </a>
+
+                    {% if prod.available == false %}
+                      <div
+                        class="product-badges product-badges--top-right"
+                        style="--badge-border-radius: 100px; --badge-font-family: var(--font-body--family); --badge-font-weight: var(--font-body--weight); --badge-text-transform: none;"
+                      >
+                        <div class="product-badges__badge product-badges__badge--rectangle color-custom-badge-sold-out">
+                          {{ 'content.product_badge_sold_out' | t | default: 'Sold out' }}
+                        </div>
+                      </div>
+                    {% elsif prod.compare_at_price > prod.price %}
+                      <div
+                        class="product-badges product-badges--top-right"
+                        style="--badge-border-radius: 100px; --badge-font-family: var(--font-body--family); --badge-font-weight: var(--font-body--weight); --badge-text-transform: none;"
+                      >
+                        <div class="product-badges__badge product-badges__badge--rectangle color-custom-badge-sale">
+                          {{ 'content.product_badge_sale' | t | default: 'Sale' }}
+                        </div>
+                      </div>
+                    {% endif %}
+                  </div>
+
+                  <div class="product-grid-view-zoom-out--details">
+                    <h3 class="h4">{{ prod.title | escape }}</h3>
+                  </div>
+
+                  <a
+                    class="contents user-select-text"
+                    ref="productTitleLink"
+                    href="{{ prod.url }}"
+                  >
+                    <div
+                      class="spacing-style text-block paragraph text-block--align-left rte"
+                      style="margin-inline: var(--padding-lg); --padding-block-start: 4px; --padding-block-end: 0px; --padding-inline-start: 0px; --padding-inline-end: 0px; --width: 100%; --max-width: var(--max-width--body-normal); --text-align: left;"
+                    >
+                      <p role="heading" aria-level="3" style="font-family: var(--font-body--family); font-weight: 600; font-size: var(--font-size--base); color: var(--color-foreground); margin: 0; line-height: 1.3;">
+                        {{ prod.title | escape }}
+                      </p>
+                    </div>
+                  </a>
+
+                  <product-price
+                    class="text-block text-block--align-left text-left h6 spacing-style"
+                    data-product-id="{{ prod.id }}"
+                    style="--padding-block-start: 0px; --padding-block-end: 0px; --padding-inline-start: 0px; --padding-inline-end: 0px; --width: 100%;"
+                  >
+                    {% render 'price', product_resource: prod, show_sale_price_first: true %}
+                  </product-price>
+                {% endcapture %}
+
+                <li class="product-grid__item" data-product-id="{{ prod.id }}">
+                  {% render 'product-card',
+                    product: prod,
+                    children: card_children,
+                    product_card_gap: 4,
+                    product_view_context: 'collection'
+                  %}
+                </li>
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+        </ul>
+
+        {% render 'product-card-styles' %}
+        {% render 'quantity-selector-styles' %}
+        {% render 'buy-buttons-styles' %}
+        {% render 'gift-card-recipient-form-styles' %}
+        {% render 'quick-add-styles' %}
+        {% render 'quick-add-modal-styles' %}
+        {% render 'swatch-styles' %}
+        {% render 'variant-picker-styles' %}
+        {% render 'product-badges-styles' %}
+        {% render 'price-styles' %}
+        {% render 'product-card-gallery-zoom-details-styles' %}
+      </section>
+    {% endif %}
+  </div>
+</article>
+
+{% stylesheet %}
+  .recipe-article {
+    width: 100%;
+    color: var(--color-foreground);
+    background-color: var(--color-background);
+  }
+
+  .recipe-article__container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: var(--narrow-page-width);
+    margin: 0 auto;
+    gap: 32px;
+  }
+
+  /* Navigation */
+  .recipe-article__nav {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--gap-sm);
+  }
+
+  .recipe-article__back {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--color-foreground);
+    font-family: var(--font-body--family);
+    font-weight: 600;
+    font-size: var(--font-size--sm);
+    text-decoration: none;
+    transition: color 0.15s ease-in-out;
+  }
+
+  .recipe-article__back:hover {
+    color: var(--color-heading);
+  }
+
+  .recipe-article__back-icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  .recipe-article__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .recipe-article__tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 14px;
+    font-family: var(--font-body--family);
+    font-weight: 600;
+    font-size: var(--font-size--xs);
+    color: var(--color-foreground);
+    background: var(--color-white);
+    border: var(--style-border-width) solid var(--color-card-border-warm);
+    border-radius: 40px;
+    letter-spacing: 0.02em;
+  }
+
+  .recipe-article__tag--diet {
+    color: #1b5e20;
+    background: #e8f5e9;
+    border-color: rgba(27, 94, 32, 0.2);
+  }
+
+  /* Header */
+  .recipe-article__header {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+    max-width: 52rem;
+    margin: 0 auto;
+  }
+
+  .recipe-article__title {
+    margin: 0;
+    font-family: var(--font-heading--family);
+    font-weight: 400;
+    font-size: clamp(2rem, 4.5vw, 3.25rem);
+    line-height: 1.15;
+    color: var(--color-heading);
+    text-wrap: balance;
+  }
+
+  .recipe-article__excerpt {
+    margin: 0;
+    font-family: var(--font-body--family);
+    font-weight: 500;
+    font-size: var(--font-size--lg);
+    line-height: var(--font-paragraph--line-height);
+    color: var(--color-foreground);
+    text-wrap: pretty;
+  }
+
+  .recipe-article__byline {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    font-family: var(--font-body--family);
+    font-size: var(--font-size--sm);
+    color: rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text));
+  }
+
+  /* Quick Facts Meta Bar */
+  .recipe-article__meta-bar {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 24px;
+    background: var(--color-white);
+    border: var(--style-border-width) solid var(--color-card-border-warm);
+    border-radius: var(--style-border-radius-lg);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+  }
+
+  @media (min-width: 990px) {
+    .recipe-article__meta-bar {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 32px;
+    }
+  }
+
+  .recipe-article__meta-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    flex: 1;
+  }
+
+  @media (min-width: 750px) {
+    .recipe-article__meta-grid {
+      grid-template-columns: repeat(4, auto);
+      gap: 32px;
+    }
+  }
+
+  .recipe-article__meta-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .recipe-article__meta-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    color: var(--color-heading);
+    background: var(--color-background);
+    border-radius: var(--style-border-radius-50);
+    flex-shrink: 0;
+  }
+
+  .recipe-article__meta-icon svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .recipe-article__meta-content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .recipe-article__meta-label {
+    font-family: var(--font-body--family);
+    font-size: var(--font-size--xs);
+    font-weight: 500;
+    color: rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text));
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .recipe-article__meta-value {
+    font-family: var(--font-body--family);
+    font-size: var(--font-size--md);
+    font-weight: 700;
+    color: var(--color-foreground);
+  }
+
+  /* Actions (Jump & Print) */
+  .recipe-article__actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+  }
+
+  .recipe-article__action-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 20px;
+    font-family: var(--font-body--family);
+    font-weight: 600;
+    font-size: var(--font-size--sm);
+    text-decoration: none;
+    border-radius: var(--style-border-radius-buttons-primary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .recipe-article__action-btn svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .recipe-article__action-btn--jump {
+    color: var(--color-foreground);
+    background: var(--color-background);
+    border: var(--style-border-width) solid var(--color-card-border-warm);
+  }
+
+  .recipe-article__action-btn--jump:hover {
+    background: #f4edd4;
+    color: var(--color-foreground);
+  }
+
+  .recipe-article__action-btn--print {
+    color: var(--color-white);
+    background: var(--color-heading);
+    border: var(--style-border-width) solid var(--color-heading);
+  }
+
+  .recipe-article__action-btn--print:hover {
+    background: #ba8f4e;
+    border-color: #ba8f4e;
+  }
+
+  /* Hero Banner */
+  .recipe-article__banner-wrapper {
+    width: 100%;
+    border-radius: var(--style-border-radius-lg);
+    overflow: hidden;
+    border: var(--style-border-width) solid var(--color-card-border-warm);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+  }
+
+  .recipe-article__banner {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 480px;
+    object-fit: cover;
+    background: var(--color-background-secondary);
+  }
+
+  /* Gallery */
+  .recipe-article__gallery {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 24px;
+    background: var(--color-white);
+    border: var(--style-border-width) solid var(--color-card-border-warm);
+    border-radius: var(--style-border-radius-lg);
+  }
+
+  .recipe-article__gallery-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .recipe-article__gallery-title {
+    margin: 0;
+    font-family: var(--font-heading--family);
+    font-size: var(--font-size--lg);
+    color: var(--color-heading);
+    font-weight: 400;
+  }
+
+  .recipe-article__gallery-count {
+    font-family: var(--font-body--family);
+    font-size: var(--font-size--xs);
+    font-weight: 600;
+    color: rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text));
+  }
+
+  .recipe-article__gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  @media (min-width: 750px) {
+    .recipe-article__gallery-grid {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+  }
+
+  .recipe-article__gallery-item {
+    margin: 0;
+    border-radius: var(--style-border-radius-sm);
+    overflow: hidden;
+    border: var(--style-border-width) solid var(--color-card-border-warm);
+    background: var(--color-background);
+  }
+
+  .recipe-article__gallery-img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+  }
+
+  .recipe-article__gallery-img:hover {
+    transform: scale(1.03);
+  }
+
+  /* Split Layout */
+  .recipe-article__body {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 32px;
+    align-items: start;
+  }
+
+  @media (min-width: 990px) {
+    .recipe-article__body {
+      grid-template-columns: 340px 1fr;
+      gap: 40px;
+    }
+  }
+
+  /* Left Column: Ingredients Card */
+  .recipe-article__ingredients-card {
+    background: var(--color-white);
+    border: var(--style-border-width) solid var(--color-card-border-warm);
+    border-radius: var(--style-border-radius-lg);
+    padding: 28px 24px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  }
+
+  @media (min-width: 990px) {
+    .recipe-article__ingredients-card {
+      position: sticky;
+      top: calc(var(--header-height, 90px) + 24px);
+    }
+  }
+
+  .recipe-article__card-header {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-bottom: 18px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--color-card-border-warm);
+  }
+
+  .recipe-article__card-heading-group {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .recipe-article__card-title {
+    margin: 0;
+    font-family: var(--font-heading--family);
+    font-weight: 400;
+    font-size: var(--font-size--xl);
+    color: var(--color-heading);
+  }
+
+  .recipe-article__servings-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    font-family: var(--font-body--family);
+    font-size: var(--font-size--xs);
+    font-weight: 600;
+    color: var(--color-heading);
+    background: var(--color-background);
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+
+  .recipe-article__checklist-tip {
+    font-family: var(--font-body--family);
+    font-size: var(--font-size--xs);
+    color: rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text));
+    font-style: italic;
+  }
+
+  .recipe-article__ingredients-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .recipe-article__ingredient-subheading {
+    padding-top: 10px;
+    font-family: var(--font-body--family);
+    font-weight: 700;
+    font-size: var(--font-size--sm);
+    color: var(--color-heading);
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+
+  .recipe-article__ingredient-item {
+    display: flex;
+    align-items: flex-start;
+  }
+
+  .recipe-article__ingredient-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    width: 100%;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .recipe-article__checkbox {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .recipe-article__checkbox-custom {
+    position: relative;
+    top: 2px;
+    width: 18px;
+    height: 18px;
+    border: 1.5px solid #a8a49c;
+    border-radius: 4px;
+    background: var(--color-white);
+    flex-shrink: 0;
+    transition: all 0.15s ease-in-out;
+  }
+
+  .recipe-article__checkbox:checked + .recipe-article__checkbox-custom {
+    background: var(--color-heading);
+    border-color: var(--color-heading);
+  }
+
+  .recipe-article__checkbox:checked + .recipe-article__checkbox-custom::after {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 2px;
+    width: 4px;
+    height: 8px;
+    border: solid #ffffff;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+
+  .recipe-article__ingredient-text {
+    font-family: var(--font-body--family);
+    font-size: var(--font-size--sm);
+    line-height: 1.45;
+    color: var(--color-foreground);
+    transition: all 0.15s ease-in-out;
+  }
+
+  .recipe-article__checkbox:checked ~ .recipe-article__ingredient-text {
+    text-decoration: line-through;
+    color: rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text));
+  }
+
+  /* Right Column: Method Card */
+  .recipe-article__method-card {
+    background: var(--color-white);
+    border: var(--style-border-width) solid var(--color-card-border-warm);
+    border-radius: var(--style-border-radius-lg);
+    padding: 32px 28px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  @media (min-width: 750px) {
+    .recipe-article__method-card {
+      padding: 40px 36px;
+    }
+  }
+
+  .recipe-article__steps-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .recipe-article__step-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+  }
+
+  .recipe-article__step-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--color-background);
+    color: var(--color-heading);
+    font-family: var(--font-heading--family);
+    font-weight: 400;
+    font-size: var(--font-size--md);
+    flex-shrink: 0;
+    border: 1px solid var(--color-card-border-warm);
+  }
+
+  .recipe-article__step-text {
+    flex: 1;
+    font-family: var(--font-body--family);
+    font-size: var(--font-size--md);
+    line-height: var(--font-paragraph--line-height);
+    color: var(--color-foreground);
+  }
+
+  .recipe-article__step-text p {
+    margin: 0;
+  }
+
+  .recipe-article__content-rte {
+    font-family: var(--font-body--family);
+    font-size: var(--font-size--md);
+    line-height: var(--font-paragraph--line-height);
+    color: var(--color-foreground);
+  }
+
+  .recipe-article__content-rte h2,
+  .recipe-article__content-rte h3 {
+    font-family: var(--font-heading--family);
+    color: var(--color-heading);
+    font-weight: 400;
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+  }
+
+  /* Chef's Secret Tips Box */
+  .recipe-article__chef-notes {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background: var(--color-background);
+    border-left: 4px solid var(--color-heading);
+    border-radius: 0 var(--style-border-radius-md) var(--style-border-radius-md) 0;
+    padding: 20px 24px;
+    margin-top: 8px;
+  }
+
+  .recipe-article__notes-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .recipe-article__notes-icon {
+    width: 20px;
+    height: 20px;
+    color: var(--color-heading);
+    flex-shrink: 0;
+  }
+
+  .recipe-article__notes-title {
+    margin: 0;
+    font-family: var(--font-body--family);
+    font-weight: 700;
+    font-size: var(--font-size--sm);
+    color: var(--color-heading);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .recipe-article__notes-body p {
+    margin: 0;
+    font-family: var(--font-body--family);
+    font-size: var(--font-size--sm);
+    line-height: 1.6;
+    color: var(--color-foreground);
+  }
+
+  /* Featured Products Section */
+  .recipe-article__products {
+    margin-top: 24px;
+    padding-top: 40px;
+    border-top: 1px solid rgba(207, 165, 100, 0.25);
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    scroll-margin-top: 80px;
+  }
+
+  .recipe-article__products-header {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .recipe-article__products-title {
+    margin: 0;
+    font-family: var(--font-heading--family);
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
+    color: var(--color-heading);
+    font-weight: 400;
+  }
+
+  .recipe-article__products-subtitle {
+    margin: 0;
+    font-family: var(--font-body--family);
+    font-size: var(--font-size--base);
+    color: var(--color-foreground);
+    opacity: 0.85;
+  }
+
+  .recipe-article__products-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 16px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+  }
+
+  @media (min-width: 750px) {
+    .recipe-article__products-grid {
+      grid-template-columns: repeat(3, 1fr) !important;
+      gap: 20px;
+    }
+  }
+
+  @media (min-width: 990px) {
+    .recipe-article__products-grid {
+      grid-template-columns: repeat(4, 1fr) !important;
+      gap: 24px;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .recipe-article__products-grid {
+      grid-template-columns: repeat(5, 1fr) !important;
+      gap: 24px;
+    }
+  }
+
+  .recipe-article__products-grid .product-grid__item {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+  }
+
+  .recipe-article__products-grid product-card {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .recipe-article__products-grid .product-card__content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background: var(--color-white, #ffffff);
+    border: 1px solid rgba(207, 165, 100, 0.25);
+    border-radius: var(--style-border-radius-lg, 16px);
+    padding: 12px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .recipe-article__products-grid .product-card__content > .quick-add {
+    margin-top: auto;
+    padding-top: 12px;
+  }
+
+  .recipe-article__products-grid .product-card__content:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
+  }
+
+  /* Print Stylesheet */
+  @media print {
+    header, footer, nav, .header, .footer,
+    .recipe-article__nav,
+    .recipe-article__actions,
+    .recipe-article__checklist-tip,
+    .recipe-article__products,
+    .section-background {
+      display: none !important;
+    }
+
+    body, .recipe-article {
+      background: #ffffff !important;
+      color: #000000 !important;
+    }
+
+    .recipe-article__container {
+      max-width: 100% !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      gap: 16px !important;
+    }
+
+    .recipe-article__body {
+      display: block !important;
+    }
+
+    .recipe-article__ingredients-card,
+    .recipe-article__method-card,
+    .recipe-article__meta-bar {
+      border: 1px solid #cccccc !important;
+      box-shadow: none !important;
+      position: static !important;
+      margin-bottom: 20px !important;
+      page-break-inside: avoid;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Main Recipe Article",
+  "class": "section-wrapper",
+  "settings": [
+    {
+      "type": "text",
+      "id": "back_label",
+      "label": "Back button label",
+      "default": "Back to Recipes"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_date",
+      "label": "Show published date",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_author",
+      "label": "Show author name",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "products_heading",
+      "label": "Featured Products Heading",
+      "default": "Shop Genuine DV Gold Ingredients"
+    },
+    {
+      "type": "header",
+      "content": "Section Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 48
+    }
+  ]
+}
+{% endschema %}

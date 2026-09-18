@@ -73,7 +73,11 @@
   class="section section--page-width judgeme-reviews spacing-style"
   style="
     {% render 'spacing-style', settings: section.settings %}
-    --judgeme-reviews-heading-color: {{ section.settings.heading_color | default: '#8C1D2F' }};
+    {% if section.settings.heading_color != blank and section.settings.heading_color != '#8c1d2f' and section.settings.heading_color != '#8C1D2F' %}
+      --judgeme-reviews-heading-color: {{ section.settings.heading_color }};
+    {% else %}
+      --judgeme-reviews-heading-color: var(--color-heading);
+    {% endif %}
   "
   aria-label="{{ section.settings.accessibility_label | escape }}"
 >
@@ -148,13 +152,13 @@
 
   .judgeme-reviews__heading {
     margin: 0 auto;
-    color: var(--judgeme-reviews-heading-color, #8C1D2F);
-    font-family: var(--font-heading--family), "Cinzel", "Playfair Display", Georgia, serif;
+    color: var(--judgeme-reviews-heading-color, var(--color-heading));
+    font-family: var(--font-heading--family);
     font-style: normal;
-    font-weight: 700;
+    font-weight: 400;
     font-size: clamp(2rem, 3.5vw, 2.75rem);
     line-height: 1.2;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.04em;
     text-align: center;
     text-transform: uppercase;
     text-wrap: balance;
@@ -534,14 +538,14 @@
     color: #111111 !important;
   }
 
-  /* Active page button: Maroon brand color #8C1D2F */
+  /* Active page button: Brand warm gold */
   .judgeme-reviews .jm-pagination-controls__button--active,
   .judgeme-reviews__page-btn[aria-current="true"] {
-    background: #8C1D2F !important;
-    border-color: #8C1D2F !important;
-    color: #FFFFFF !important;
+    background: var(--color-primary-button-background, var(--color-heading)) !important;
+    border-color: var(--color-primary-button-background, var(--color-heading)) !important;
+    color: var(--color-primary-button-text, #FFFFFF) !important;
     font-weight: 700 !important;
-    box-shadow: 0 2px 8px rgba(140, 29, 47, 0.25) !important;
+    box-shadow: 0 2px 8px rgba(207, 165, 100, 0.3) !important;
     cursor: default !important;
   }
 
@@ -694,8 +698,9 @@
     }
 
     .judgeme-reviews__pagination-button[aria-current="true"] {
-      background: #8C1D2F;
+      background: var(--color-primary-button-background, var(--color-heading));
       transform: scale(1.2);
+      box-shadow: 0 0 0 2px rgba(207, 165, 100, 0.25);
     }
   }
 
@@ -751,7 +756,7 @@
       "type": "color",
       "id": "heading_color",
       "label": "Heading color",
-      "default": "#8C1D2F"
+      "default": "#cfa564"
     },
     {
       "type": "text",
