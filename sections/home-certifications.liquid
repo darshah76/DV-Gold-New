@@ -31,30 +31,46 @@
     {% if has_content %}
       <div class="home-certifications__content">
         {% if section.blocks.size > 0 %}
-          <ul class="home-certifications__cards" role="list">
-            {% for block in section.blocks %}
-              <li class="home-certifications__card" {{ block.shopify_attributes }}>
-                {% if block.settings.logo != blank %}
-                  <div class="home-certifications__logo-wrapper">
-                    {{
-                      block.settings.logo
-                      | image_url: width: 320
-                      | image_tag:
-                        class: 'home-certifications__logo',
-                        widths: '96, 144, 192, 240, 320',
-                        sizes: '(min-width: 750px) 96px, 80px',
-                        loading: 'lazy',
-                        alt: block.settings.logo.alt
-                    }}
-                  </div>
-                {% endif %}
+          {% assign repeat_set = 1 %}
+          {% if section.blocks.size < 5 %}
+            {% assign repeat_set = 2 %}
+          {% endif %}
+          {% if section.blocks.size < 3 %}
+            {% assign repeat_set = 3 %}
+          {% endif %}
 
-                {% if block.settings.text != blank %}
-                  <p class="home-certifications__card-text">{{ block.settings.text | escape | newline_to_br }}</p>
-                {% endif %}
-              </li>
-            {% endfor %}
-          </ul>
+          <div class="home-certifications__marquee" tabindex="0" role="region" aria-label="Certifications carousel">
+            <div class="home-certifications__track">
+              {% for half in (1..2) %}
+                <ul class="home-certifications__cards" role="list"{% if forloop.index == 2 %} aria-hidden="true"{% endif %}>
+                  {% for r in (1..repeat_set) %}
+                    {% for block in section.blocks %}
+                      <li class="home-certifications__card"{% if forloop.first and half == 1 and forloop.parentloop.first %} {{ block.shopify_attributes }}{% endif %}>
+                        {% if block.settings.logo != blank %}
+                          <div class="home-certifications__logo-wrapper">
+                            {{
+                              block.settings.logo
+                              | image_url: width: 320
+                              | image_tag:
+                                class: 'home-certifications__logo',
+                                widths: '96, 144, 192, 240, 320',
+                                sizes: '(min-width: 750px) 96px, 80px',
+                                loading: 'lazy',
+                                alt: block.settings.logo.alt
+                            }}
+                          </div>
+                        {% endif %}
+
+                        {% if block.settings.text != blank %}
+                          <p class="home-certifications__card-text">{{ block.settings.text | escape | newline_to_br }}</p>
+                        {% endif %}
+                      </li>
+                    {% endfor %}
+                  {% endfor %}
+                </ul>
+              {% endfor %}
+            </div>
+          </div>
         {% endif %}
 
         {% if section.settings.description != blank %}
@@ -71,7 +87,7 @@
     width: 100%;
     max-width: var(--normal-content-width);
     margin-inline: auto;
-    padding: var(--padding-2xl);
+    padding: var(--padding-lg);
     color: var(--color-foreground);
     background: var(--color-background-secondary);
     border-radius: var(--style-border-radius-lg);
@@ -93,32 +109,59 @@
     gap: var(--gap-2xl);
   }
 
+  .home-certifications__marquee {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    padding-block: var(--padding-xs);
+    mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+  }
+
+  .home-certifications__track {
+    display: flex;
+    width: max-content;
+    animation: home-certifications-marquee 35s linear infinite;
+    will-change: transform;
+  }
+
+  .home-certifications__marquee:hover .home-certifications__track,
+  .home-certifications__marquee:focus-within .home-certifications__track {
+    animation-play-state: paused;
+  }
+
   .home-certifications__cards {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--gap-lg);
+    display: flex;
+    flex-shrink: 0;
+    align-items: stretch;
+    gap: var(--gap-md);
+    padding-inline-end: var(--gap-md);
     margin: 0;
-    padding: 0;
+    padding-block: var(--padding-xs);
+    padding-inline-start: 0;
     list-style: none;
   }
 
   .home-certifications__card {
-    display: grid;
-    min-width: 0;
-    align-content: center;
-    justify-items: center;
-    gap: var(--gap-sm);
-    padding: var(--padding-xl);
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 160px;
+    width: 160px;
+    min-width: 160px;
+    align-items: center;
+    justify-content: flex-start;
+    gap: var(--gap-xs);
+    padding: var(--padding-md) var(--padding-xs);
     text-align: center;
-    background: var(--color-background-tertiary);
-    border: var(--style-border-width) solid var(--color-card-border-warm);
+    background: transparent;
+    border: var(--style-border-width) solid var(--color-background-tertiary);
     border-radius: var(--style-border-radius-lg);
   }
 
   .home-certifications__logo-wrapper {
     display: grid;
     width: 100%;
-    height: calc(var(--padding-6xl) + var(--padding-xl));
+    height: 52px;
     place-items: center;
   }
 
@@ -136,7 +179,7 @@
     font-family: var(--font-body--family);
     font-style: normal;
     font-weight: var(--font-body--weight);
-    font-size: var(--font-size--lg);
+    font-size: var(--font-size--sm);
     line-height: var(--font-paragraph--line-height);
     text-wrap: pretty;
   }
@@ -154,18 +197,51 @@
     text-wrap: pretty;
   }
 
+  @keyframes home-certifications-marquee {
+    0% {
+      transform: translate3d(0, 0, 0);
+    }
+    100% {
+      transform: translate3d(-50%, 0, 0);
+    }
+  }
+
   @media (min-width: 750px) {
     .home-certifications__container {
       padding: var(--padding-5xl);
     }
 
     .home-certifications__cards {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: var(--gap-2xl);
+      gap: var(--gap-xl);
+      padding-inline-end: var(--gap-xl);
     }
 
     .home-certifications__card {
-      padding: var(--padding-2xl) var(--padding-lg);
+      flex: 0 0 220px;
+      width: 220px;
+      min-width: 220px;
+      gap: var(--gap-sm);
+      padding: var(--padding-xl) var(--padding-lg);
+    }
+
+    .home-certifications__logo-wrapper {
+      height: calc(var(--padding-6xl) + var(--padding-xl));
+    }
+
+    .home-certifications__card-text {
+      font-size: var(--font-size--lg);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .home-certifications__track {
+      animation: none;
+    }
+
+    .home-certifications__marquee {
+      overflow-x: auto;
+      mask-image: none;
+      -webkit-mask-image: none;
     }
   }
 {% endstylesheet %}
@@ -179,7 +255,7 @@
       "footer"
     ]
   },
-  "max_blocks": 6,
+  "max_blocks": 9,
   "settings": [
     {
       "type": "text",
@@ -231,7 +307,7 @@
   "blocks": [
     {
       "type": "certification",
-      "name": "Certification",
+      "name": "Logo",
       "settings": [
         {
           "type": "image_picker",
@@ -274,6 +350,42 @@
           "type": "certification",
           "settings": {
             "text": "Registered & verified"
+          }
+        },
+        {
+          "type": "certification",
+          "settings": {
+            "text": "100% Natural"
+          }
+        },
+        {
+          "type": "certification",
+          "settings": {
+            "text": "Quality tested"
+          }
+        },
+        {
+          "type": "certification",
+          "settings": {
+            "text": "Ethically sourced"
+          }
+        },
+        {
+          "type": "certification",
+          "settings": {
+            "text": "Export grade quality"
+          }
+        },
+        {
+          "type": "certification",
+          "settings": {
+            "text": "Hygienically packed"
+          }
+        },
+        {
+          "type": "certification",
+          "settings": {
+            "text": "Trusted since 1957"
           }
         }
       ]

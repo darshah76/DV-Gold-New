@@ -209,22 +209,61 @@
     overflow: visible;
   }
 
-  .home-bestsellers__dots {
+  .home-bestsellers slideshow-controls,
+  slideshow-controls.home-bestsellers__dots {
+    mix-blend-mode: normal !important;
     justify-content: center;
   }
 
   .home-bestsellers__dots .slideshow-controls__dots {
-    gap: var(--gap-2xs);
-    padding: var(--padding-xs);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--gap-xs);
+    padding: var(--padding-xs) 0;
     background: transparent;
+    border-radius: 0;
+    overflow: visible;
+  }
+
+  .home-bestsellers__dots .slideshow-controls__dots li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .home-bestsellers__dots .slideshow-controls__dots .slideshow-control {
-    background-color: var(--color-foreground-subdued);
+    width: 24px;
+    height: 24px;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent !important;
+    border: none;
+    cursor: pointer;
   }
 
-  .home-bestsellers__dots .slideshow-controls__dots .slideshow-control[aria-selected='true'] {
+  .home-bestsellers__dots .slideshow-controls__dots .slideshow-control::after {
+    content: '';
+    display: block;
+    width: 8px;
+    height: 8px;
+    border-radius: var(--style-border-radius-50);
+    background-color: rgb(var(--color-foreground-rgb) / var(--opacity-30));
+    box-shadow: none;
+    transition: background-color var(--animation-speed-hover, 0.25s) ease, transform var(--animation-speed-hover, 0.25s) ease, box-shadow var(--animation-speed-hover, 0.25s) ease;
+  }
+
+  .home-bestsellers__dots .slideshow-controls__dots .slideshow-control:hover::after {
+    background-color: rgb(var(--color-foreground-rgb) / var(--opacity-50));
+  }
+
+  .home-bestsellers__dots .slideshow-controls__dots .slideshow-control[aria-selected='true']::after {
     background-color: var(--color-primary-button-background);
+    transform: scale(1.25);
+    box-shadow: 0 0 0 2px rgba(207, 165, 100, 0.25);
   }
 
   @media screen and (min-width: 750px) {

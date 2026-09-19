@@ -7,6 +7,12 @@
       --information-bar-icon-size: {{ section.settings.icon_size }}px;
       --information-bar-gap: {{ section.settings.column_spacing }}px;
       --information-bar-block-padding: {{ section.settings.vertical_spacing }}px;
+      {% if section.settings.margin_top != blank %}
+        --information-bar-margin-top: {{ section.settings.margin_top }}px;
+      {% endif %}
+      {% if section.settings.margin_bottom != blank %}
+        --information-bar-margin-bottom: {{ section.settings.margin_bottom }}px;
+      {% endif %}
     "
   >
     <ul class="mobile-information-bar__list" role="list">
@@ -47,6 +53,8 @@
     .mobile-information-bar {
       display: block;
       width: 100%;
+      margin-top: var(--information-bar-margin-top, var(--margin-md));
+      margin-bottom: var(--information-bar-margin-bottom, var(--margin-md));
       padding: var(--information-bar-block-padding) clamp(8px, 2.5vw, 16px);
       color: var(--information-bar-text);
       background: var(--information-bar-background);
@@ -182,6 +190,30 @@
       "min": 4,
       "max": 24,
       "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Margins"
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "label": "Margin top",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "label": "Margin bottom",
+      "min": 0,
+      "max": 32,
+      "step": 2,
       "unit": "px",
       "default": 12
     }

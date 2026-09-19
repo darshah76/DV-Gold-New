@@ -140,7 +140,9 @@
         "text_color": "#ffffff",
         "icon_size": 28,
         "column_spacing": 12,
-        "vertical_spacing": 12
+        "vertical_spacing": 12,
+        "margin_top": 12,
+        "margin_bottom": 12
       }
     }
   },

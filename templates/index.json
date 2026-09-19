@@ -367,12 +367,60 @@
             "logo": "shopify://shop_images/tea-board.jpg",
             "text": "Registered & verified"
           }
+        },
+        "certification_block_4": {
+          "type": "certification",
+          "settings": {
+            "logo": "shopify://shop_images/fssai.jpg",
+            "text": "100% Natural Quality"
+          }
+        },
+        "certification_block_5": {
+          "type": "certification",
+          "settings": {
+            "logo": "shopify://shop_images/iso.jpg",
+            "text": "Quality Tested Batch"
+          }
+        },
+        "certification_block_6": {
+          "type": "certification",
+          "settings": {
+            "logo": "shopify://shop_images/tea-board.jpg",
+            "text": "Tea Board of India"
+          }
+        },
+        "certification_block_7": {
+          "type": "certification",
+          "settings": {
+            "logo": "shopify://shop_images/fssai.jpg",
+            "text": "Export Grade Standard"
+          }
+        },
+        "certification_block_8": {
+          "type": "certification",
+          "settings": {
+            "logo": "shopify://shop_images/iso.jpg",
+            "text": "Hygienically Packed"
+          }
+        },
+        "certification_block_9": {
+          "type": "certification",
+          "settings": {
+            "logo": "shopify://shop_images/tea-board.jpg",
+            "text": "Trusted Heritage 1957"
+          }
         }
       },
       "block_order": [
         "certification_dNrKN3",
         "certification_GVG6Ag",
-        "certification_iKHRUB"
+        "certification_iKHRUB",
+        "certification_block_4",
+        "certification_block_5",
+        "certification_block_6",
+        "certification_block_7",
+        "certification_block_8",
+        "certification_block_9"
       ],
       "name": "Home Certifications",
       "settings": {

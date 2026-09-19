@@ -264,11 +264,40 @@
     .homepicked-masala__media {
       grid-column: 1;
       grid-row: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .homepicked-masala__media picture {
+      display: block;
+      margin-inline: auto;
+    }
+
+    .homepicked-masala__image {
+      margin-inline: auto;
     }
 
     .homepicked-masala__content {
       grid-column: 1;
       grid-row: 2;
+      align-items: flex-start;
+      text-align: left;
+    }
+
+    .homepicked-masala__heading,
+    .homepicked-masala__description,
+    .homepicked-masala__description p,
+    .homepicked-masala__description > * {
+      margin-inline-start: 0;
+      margin-inline-end: auto;
+      text-align: left;
+    }
+
+    .homepicked-masala__button {
+      margin-inline-start: 0;
+      margin-inline-end: auto;
+      align-self: flex-start;
     }
   }
 

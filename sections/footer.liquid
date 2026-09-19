@@ -11,7 +11,7 @@
 
 <div class="section-background{% if section.settings.background_color != blank %} color-custom-{{ section.id }}{% endif %}"></div>
 <footer
-  class="section section--page-width dv-footer{% if section.settings.background_color != blank %} color-custom-{{ section.id }}{% endif %}"
+  class="section section--page-width dv-footer{% if section.settings.background_color != blank %} color-custom-{{ section.id }}{% endif %}{% if template.name == 'index' %} dv-footer--home{% endif %}"
   aria-label="Footer"
 >
   <div
@@ -156,6 +156,11 @@
     .dv-footer__menu a:hover { color: inherit; }
     .dv-footer__social-link:hover { background: rgb(var(--color-foreground-rgb) / var(--opacity-10)); }
     .dv-footer__bottom a:hover { text-decoration-thickness: var(--style-border-width); }
+  }
+  @media screen and (max-width: 749px) {
+    .dv-footer--home .dv-footer__inner {
+      --padding-block-start: max(20px, calc(var(--spacing-scale) * 32px)) !important;
+    }
   }
   @media screen and (min-width: 750px) {
     .dv-footer__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
