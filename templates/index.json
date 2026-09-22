@@ -15,25 +15,29 @@
         "slide_hero": {
           "type": "slide",
           "settings": {
-            "desktop_image": "shopify://shop_images/PC_Banner_4.jpg"
+            "desktop_image": "shopify://shop_images/PC_Banner_4.jpg",
+            "mobile_image": "shopify://shop_images/DV_banner_600x900_YS_Sep_-_4_jpg.jpg"
           }
         },
         "slide_VNWBBM": {
           "type": "slide",
           "settings": {
-            "desktop_image": "shopify://shop_images/PC_Banner_2.jpg"
+            "desktop_image": "shopify://shop_images/PC_Banner_2.jpg",
+            "mobile_image": "shopify://shop_images/DV_banner_600x900_YS_Sep_-_2_jpg.jpg"
           }
         },
         "slide_BxKLXK": {
           "type": "slide",
           "settings": {
-            "desktop_image": "shopify://shop_images/PC_Banner_3.jpg"
+            "desktop_image": "shopify://shop_images/PC_Banner_3.jpg",
+            "mobile_image": "shopify://shop_images/DV_banner_600x900_YS_Sep_-_3_jpg.jpg"
           }
         },
         "slide_KPyDKH": {
           "type": "slide",
           "settings": {
-            "desktop_image": "shopify://shop_images/PC_Banner_1.jpg"
+            "desktop_image": "shopify://shop_images/PC_Banner_1.jpg",
+            "mobile_image": "shopify://shop_images/DV_banner_600x900_YS_Sep_-_1_jpg.jpg"
           }
         }
       },
