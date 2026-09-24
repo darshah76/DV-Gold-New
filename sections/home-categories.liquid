@@ -58,7 +58,7 @@
               </div>
 
               {% if block.settings.name != blank %}
-                <h3 class="home-categories__name h4" style="color: var(--home-categories-title-color, var(--color-foreground));">{{ block.settings.name | escape }}</h3>
+                <h3 class="home-categories__name h4" style="color: var(--home-categories-title-color, var(--color-heading));">{{ block.settings.name | escape }}</h3>
               {% endif %}
 
               {% if block.settings.link != blank %}
@@ -174,16 +174,38 @@
   .home-categories__name {
     position: absolute;
     inset-inline: 0;
-    inset-block-end: 0;
-    margin: 0;
-    padding: var(--padding-lg);
+    inset-block-end: var(--padding-md, 16px);
+    margin-inline: auto;
+    width: fit-content;
+    max-width: calc(100% - (var(--padding-md, 16px) * 2));
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-block: 0;
+    padding: 8px 24px;
+    background-color: var(--color-white, #ffffff);
+    border-radius: 9999px;
+    box-shadow: 0 4px 12px rgb(0 0 0 / 0.1);
     overflow: hidden;
-    color: var(--home-categories-title-color, var(--color-foreground));
+    color: var(--home-categories-title-color, var(--color-heading));
     font-family: var(--font-offerings-card--family);
     font-style: normal;
     font-weight: 400;
     text-overflow: ellipsis;
     text-wrap: nowrap;
+    white-space: nowrap;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  @media (max-width: 749px) {
+    .home-categories__card .home-categories__name.h4,
+    .home-categories__name.h4,
+    .home-categories__name {
+      inset-block-end: 12px;
+      padding: 6px 16px;
+      font-size: var(--font-size--md, 1rem);
+    }
   }
 
   .home-categories__card:focus-visible {
@@ -398,7 +420,7 @@
       "type": "color",
       "id": "card_title_color",
       "label": "Card title color",
-      "default": "#F9C800"
+      "default": "#cfa564"
     },
     {
       "type": "header",

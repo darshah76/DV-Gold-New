@@ -115,7 +115,18 @@
   >
     {{ children }}
     {% unless onboarding %}
-      {% if product.variants_count > 1 %}
+      {% liquid
+        assign show_variants = false
+        if product.variants_count > 1
+          assign show_variants = true
+        elsif product.has_only_default_variant == false
+          assign first_opt_val = product.options_with_values.first.values.first.name
+          if first_opt_val != 'Default Title' and first_opt_val != blank
+            assign show_variants = true
+          endif
+        endif
+      %}
+      {% if show_variants %}
         {% render 'product-card-variant-options', product: product %}
       {% endif %}
       {% if product.available and settings.quick_add or settings.mobile_quick_add %}

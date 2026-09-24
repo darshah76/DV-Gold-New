@@ -374,16 +374,16 @@ p:empty {
     --gap-scale: var(--spacing-scale-default);
   }
 
-  main .section:not(.home-faq, .homepicked-masala) {
+  main .section:not(.home-faq, .homepicked-masala, .product-information) {
     text-align: center;
   }
 
-  main .section:not(.home-faq, .homepicked-masala) :is(h1, h2, h3, h4, h5, h6, p) {
+  main .section:not(.home-faq, .homepicked-masala, .product-information) :is(h1, h2, h3, h4, h5, h6, p) {
     margin-inline: auto;
     text-align: center;
   }
 
-  main .section:not(.home-faq, .homepicked-masala) .section-content-wrapper {
+  main .section:not(.home-faq, .homepicked-masala, .product-information) .section-content-wrapper {
     align-items: center;
   }
 }

@@ -37,10 +37,59 @@
 </div>
 
 {% stylesheet %}
-  /* Clear padding on mobile, if not full-width */
+  /* Clear padding on mobile, if not full-width and ensure left alignment */
   @media screen and (max-width: 749px) {
     .product-information.section--page-width .product-details > .group-block {
       padding-inline: 0;
+    }
+
+    .product-details {
+      justify-content: flex-start;
+      text-align: start;
+    }
+
+    .product-details > .group-block {
+      margin-inline: 0;
+      text-align: start;
+    }
+
+    .product-details .group-block-content {
+      align-items: flex-start;
+      text-align: start;
+    }
+
+    .product-details :is(h1, h2, h3, h4, h5, h6, p) {
+      margin-inline: 0;
+      text-align: start;
+    }
+
+    .product-details .product-basic-information {
+      align-items: flex-start;
+      text-align: start;
+    }
+
+    .product-details .product-basic-information__rating {
+      margin-inline: 0;
+      align-self: flex-start;
+    }
+
+    .product-details .product-price-label {
+      margin-inline: 0;
+      text-align: start;
+    }
+
+    .product-details product-price {
+      margin-inline: 0;
+      text-align: start;
+    }
+
+    .product-details .variant-picker {
+      margin-inline: 0;
+      text-align: start;
+    }
+
+    .product-details .variant-option--buttons {
+      justify-content: flex-start;
     }
   }
 

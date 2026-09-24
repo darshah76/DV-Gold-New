@@ -32,9 +32,12 @@
 
   .product-card .quick-add {
     position: static;
-    width: calc(100% - (var(--padding-lg) * 2));
+    width: calc(100% - (var(--product-card-gutter, var(--padding-lg)) * 2));
+    max-width: calc(100% - (var(--product-card-gutter, var(--padding-lg)) * 2));
     height: auto;
-    margin-inline: var(--padding-lg);
+    margin-inline: var(--product-card-gutter, var(--padding-lg));
+    box-sizing: border-box;
+    margin-top: auto;
   }
 
   .quick-add .variant-option__button-label input[data-option-available='false'] {
@@ -119,39 +122,74 @@
     }
   }
 
-  .product-card button.quick-add__button {
-    display: flex;
-    position: static;
-    width: 100%;
-    max-inline-size: none;
-    min-block-size: var(--minimum-touch-target);
-    height: auto;
-    justify-content: center;
-    gap: var(--gap-sm);
-    padding-block: var(--button-padding-block);
-    padding-inline: var(--button-padding-inline);
-    border: var(--style-border-width) solid var(--color-primary-button-border);
-    border-radius: var(--style-border-radius-buttons-primary);
-    background: var(--color-primary-button-background);
-    color: var(--color-primary-button-text);
-    opacity: 1;
-    backdrop-filter: none;
-  }
-
   .product-card .quick-add__product-form-component,
   .product-card .quick-add__product-form-component .shopify-product-form,
   .product-card .quick-add__product-form-component add-to-cart-component {
     display: block;
     width: 100%;
+    max-width: 100%;
     height: auto;
+    box-sizing: border-box;
+  }
+
+  .product-card button.quick-add__button {
+    display: flex;
+    position: static;
+    width: 100%;
+    max-width: 100%;
+    max-inline-size: 100%;
+    min-block-size: var(--minimum-touch-target);
+    height: auto;
+    justify-content: center;
+    align-items: center;
+    gap: var(--gap-sm);
+    padding-block: var(--padding-xs, 8px);
+    padding-inline: var(--padding-md, 16px);
+    border: var(--style-border-width) solid var(--color-primary-button-border);
+    border-radius: var(--style-border-radius-buttons-primary);
+    background: var(--color-primary-button-background);
+    color: var(--color-primary-button-text);
+    font-family: var(--font-button--family, var(--font-body--family));
+    font-size: var(--font-size--base);
+    font-weight: 600;
+    opacity: 1;
+    backdrop-filter: none;
+    box-sizing: border-box;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
   }
 
   .product-card button.quick-add__button:is(:hover, :focus-visible) {
     width: 100%;
-    padding-inline: var(--button-padding-inline);
+    max-width: 100%;
+    padding-inline: var(--padding-md, 16px);
     background: var(--color-primary-button-hover-background);
     color: var(--color-primary-button-hover-text);
     border-color: var(--color-primary-button-hover-border);
+  }
+
+  @media screen and (max-width: 749px) {
+    .product-card button.quick-add__button {
+      min-block-size: 38px;
+      padding-block: 8px;
+      padding-inline: var(--padding-xs, 8px);
+      font-size: var(--font-size--sm, 0.875rem);
+      gap: var(--gap-xs, 6px);
+    }
+
+    .product-card button.quick-add__button:is(:hover, :focus-visible) {
+      padding-inline: var(--padding-xs, 8px);
+    }
+
+    .product-card .product-card-cart-icons,
+    .product-card .product-card-cart-icons .svg-wrapper,
+    .product-card .product-card-cart-icons svg {
+      inline-size: 16px;
+      block-size: 16px;
+      flex: 0 0 16px;
+    }
   }
 
   .product-card-cart-icons,

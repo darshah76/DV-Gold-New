@@ -9,8 +9,9 @@
 {%- enddoc -%}
 
 {% assign product_option = product.options_with_values | first %}
+{% assign first_val_name = product_option.values.first.name %}
 
-{% if product_option != blank %}
+{% if product_option != blank and product.has_only_default_variant == false and first_val_name != 'Default Title' %}
   <div class="product-card__variant-options">
     <swatches-variant-picker-component
       data-product-id="{{ product.id }}"

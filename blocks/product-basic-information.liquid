@@ -147,9 +147,22 @@
   }
 
   @media screen and (max-width: 749px) {
-    .product-information .product-basic-information :is(p, h1),
+    .product-basic-information,
+    .product-information .product-basic-information {
+      align-items: flex-start;
+      text-align: start;
+    }
+
+    .product-basic-information :is(p, h1),
+    .product-information .product-basic-information :is(p, h1) {
+      margin-inline: 0;
+      text-align: start;
+    }
+
+    .product-basic-information .product-basic-information__rating,
     .product-information .product-basic-information__rating {
       margin-inline: 0;
+      align-self: flex-start;
       text-align: start;
     }
   }
