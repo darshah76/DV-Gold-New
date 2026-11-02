@@ -16,7 +16,7 @@
       "name": "Main footer",
       "settings": {
         "logo": "shopify://shop_images/favicon.png",
-        "brand_text": "<p>Curating exceptional products and memorable experiences.</p>",
+        "brand_text": "<p>Curating exceptional products and memorable experiences.</p><p>M/S Dahyabhai Vithaldas<br/>Address: 1450 New Madhavpura<br/>Nr Ambaji Mata Temple,<br/>Outside Delhi Gate<br/>Ahmedabad, Maharashtra<br/>India - 380004<br/>GSTIN : 24AABFD2921Q1ZF</p>",
         "menu_1_title": "Quick links",
         "menu_1": "footer",
         "menu_2_title": "Policies",
@@ -30,6 +30,7 @@
         "youtube_url": "https://youtube.com",
         "copyright_text": "DV Gold Foods. Made with ♡ in India",
         "background_color": "#363334",
+        "text_color": "#ffffff",
         "home-padding-block-start": 264,
         "padding-block-start": 32,
         "padding-block-end": 32
